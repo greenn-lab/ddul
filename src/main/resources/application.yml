@@ -7,6 +7,8 @@ spring:
       prefix: "/WEB-INF/pages/"
       suffix: ".jsp"
 
+
+
 logging:
   pattern:
     console: "%highlight(%-5level) %d{HH:mm:ss.SSS}[%green(%thread)]%magenta(%logger{36}) %msg %n"
@@ -15,3 +17,5 @@ logging:
 
 
 server.port: 8089
+mybatis:
+
