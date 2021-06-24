@@ -1,0 +1,2 @@
+# disabled p6spy
+decorator.datasource.enabled: false

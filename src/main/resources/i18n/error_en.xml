@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+  <entry key="error">Occurred error.</entry>
+  <entry key="error.input">Invalid input {0} value.</entry>
+
+  <entry key="javax.validation.constraints.Size.message">길이를 잘 못 맞추셨네요.</entry>
+</properties>

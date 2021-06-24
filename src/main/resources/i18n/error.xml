@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+  <entry key="error">오류가 났어요.</entry>
+  <entry key="error.input">잘못된 입력값이네요.</entry>
+
+
+  <!--
+  Exceptions
+  -->
+  <entry key="java.lang.Throwable">오류가 났어요.</entry>
+  <entry key="org.springframework.security.access.AccessDeniedException">접근 권한이 없군요.</entry>
+  <entry key="org.springframework.dao.DataAccessException">DB 처리하면서 오류가 났어요.</entry>
+  <entry key="org.springframework.dao.DuplicateKeyException">이미 동일한 데이터(중복 키)가 있어서 오류가 났어요.</entry>
+
+  <!--
+  jsr303
+  -->
+  <entry key="javax.validation.constraints.NotNull.message">값을 채워주세요.</entry>
+  <entry key="javax.validation.constraints.NotEmpty.message">값을 채워주세요.</entry>
+  <entry key="javax.validation.constraints.NotBlank.message">값을 채워주세요.</entry>
+  <entry key="javax.validation.constraints.Email.message">${validatedValue}은(는) 이메일이 아니군요.</entry>
+  <entry key="javax.validation.constraints.Size.message">길이가 맞지 않아요.</entry>
+  <entry key="org.hibernate.validator.constraints.Length.message">길이가 맞지 않아요. (최소: {min} ${max >= 999 ? '' : ', 최대: ' += max})</entry>
+</properties>
