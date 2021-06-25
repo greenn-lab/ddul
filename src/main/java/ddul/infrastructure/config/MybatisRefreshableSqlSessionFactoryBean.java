@@ -152,7 +152,7 @@ public class MybatisRefreshableSqlSessionFactoryBean
       running = false;
     }
 
-    timer.schedule(task, 0, 500);
+    timer.schedule(task, 0, 5000);
     running = true;
   }
 
