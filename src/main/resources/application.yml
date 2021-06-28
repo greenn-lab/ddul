@@ -8,6 +8,12 @@ spring:
       suffix: ".jsp"
 
 
+mybatis:
+  type-aliases-package: "ddul"
+  configuration:
+    map-underscore-to-camel-case: true
+    jdbc-type-for-null: VARCHAR
+
 
 logging:
   pattern:
@@ -17,5 +23,4 @@ logging:
 
 
 server.port: 8089
-mybatis:
 

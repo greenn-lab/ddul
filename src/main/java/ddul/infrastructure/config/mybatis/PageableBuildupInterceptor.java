@@ -1,5 +1,6 @@
-package ddul.infrastructure.mybatis;
+package ddul.infrastructure.config.mybatis;
 
+import ddul.sample.mybatis.MybatisTestDao;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -44,6 +45,8 @@ public class PageableBuildupInterceptor implements Interceptor {
 
   public Object intercept(Invocation invocation) throws Throwable {
     final MappedStatement ms = (MappedStatement) invocation.getArgs()[0];
+
+    //ms.getConfiguration().getMapperRegistry().addMapper(MybatisTestDao.class);
 
     if (SqlCommandType.SELECT == ms.getSqlCommandType()) {
       Object pageableParameter = null;

@@ -1,4 +1,4 @@
-package ddul.infrastructure.config;
+package ddul.infrastructure.config.mybatis;
 
 import java.io.IOException;
 import java.lang.reflect.Proxy;
@@ -17,7 +17,7 @@ import org.springframework.beans.factory.DisposableBean;
 import org.springframework.core.io.Resource;
 
 @Slf4j
-public class MybatisRefreshableSqlSessionFactoryBean
+public class RefreshableSqlSessionFactoryBean
     extends SqlSessionFactoryBean implements DisposableBean {
 
   private SqlSessionFactory proxy;
@@ -30,8 +30,8 @@ public class MybatisRefreshableSqlSessionFactoryBean
   private boolean running = false;
 
   private final ReentrantReadWriteLock rwl = new ReentrantReadWriteLock();
-  private final Lock r = rwl.readLock();
-  private final Lock w = rwl.writeLock();
+  private final Lock readLock = rwl.readLock();
+  private final Lock writeLock = rwl.writeLock();
 
   @Override
   public void setMapperLocations(Resource[] mapperLocations) {
@@ -42,13 +42,13 @@ public class MybatisRefreshableSqlSessionFactoryBean
   public void refresh() {
     logger.info("loading sql mappers ...");
 
-    w.lock();
+    writeLock.lock();
     try {
       super.afterPropertiesSet();
     } catch (Exception e) {
       logger.error(e.getMessage(), e);
     } finally {
-      w.unlock();
+      writeLock.unlock();
     }
   }
 
@@ -63,10 +63,11 @@ public class MybatisRefreshableSqlSessionFactoryBean
     proxy = (SqlSessionFactory) Proxy.newProxyInstance(
         SqlSessionFactory.class.getClassLoader(),
         new Class[]{SqlSessionFactory.class},
-        (proxy, method, args) -> method.invoke(getParentObject(), args));
+        (proxied, method, args) -> method.invoke(getParentObject(), args));
 
+
+    final Map<Resource, Long> map = new HashMap<>();
     task = new TimerTask() {
-      private final Map<Resource, Long> map = new HashMap<>();
 
       public void run() {
         if (isModified()) {
@@ -126,12 +127,12 @@ public class MybatisRefreshableSqlSessionFactoryBean
   }
 
   private Object getParentObject() throws Exception {
-    r.lock();
+    readLock.lock();
     try {
       return super.getObject();
 
     } finally {
-      r.unlock();
+      readLock.unlock();
     }
   }
 
@@ -152,7 +153,7 @@ public class MybatisRefreshableSqlSessionFactoryBean
       running = false;
     }
 
-    timer.schedule(task, 0, 5000);
+    timer.schedule(task, 0, 1000);
     running = true;
   }
 
