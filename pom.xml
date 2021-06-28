@@ -10,12 +10,12 @@
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
 
-  <groupId>ddul</groupId>
+  <groupId>com.github.greenn-lab</groupId>
   <artifactId>ddul</artifactId>
   <version>0.1.0</version>
-  <packaging>war</packaging>
-  <name>ddul</name>
-  <description><![CDATA[ DDUL is ground in korean]]></description>
+  <packaging>jar</packaging>
+  <name>ddul-egovframe</name>
+  <description><![CDATA[ DDUL is ground in egovframe]]></description>
 
   <properties>
     <java.version>1.8</java.version>

@@ -29,3 +29,11 @@ spring:
       hibernate.format_sql: true
     hibernate:
       ddl-auto: update
+
+
+
+mybatis:
+  type-aliases-package: "ddul"
+  configuration:
+    map-underscore-to-camel-case: true
+    jdbc-type-for-null: VARCHAR
