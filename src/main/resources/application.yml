@@ -1,18 +1,11 @@
 spring:
   profiles:
-    default: "development"
+    active: "development"
 
   mvc:
     view:
       prefix: "/WEB-INF/pages/"
       suffix: ".jsp"
-
-
-mybatis:
-  type-aliases-package: "ddul"
-  configuration:
-    map-underscore-to-camel-case: true
-    jdbc-type-for-null: VARCHAR
 
 
 logging:
@@ -22,5 +15,5 @@ logging:
     com.solideos.cms: DEBUG
 
 
-server.port: 8089
+server.port: 8088
 

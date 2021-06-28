@@ -46,8 +46,6 @@ public class PageableBuildupInterceptor implements Interceptor {
   public Object intercept(Invocation invocation) throws Throwable {
     final MappedStatement ms = (MappedStatement) invocation.getArgs()[0];
 
-    //ms.getConfiguration().getMapperRegistry().addMapper(MybatisTestDao.class);
-
     if (SqlCommandType.SELECT == ms.getSqlCommandType()) {
       Object pageableParameter = null;
 
@@ -72,7 +70,6 @@ public class PageableBuildupInterceptor implements Interceptor {
               )
           );
         } finally {
-          logger.debug("Clean ThreadLocal variables about PAGEABLE!");
           PAGEABLE_VARIABLE.remove();
         }
       }
@@ -111,6 +108,7 @@ public class PageableBuildupInterceptor implements Interceptor {
   @Override
   public void setProperties(Properties properties) {
     // empty
+    logger.info("props", properties);
   }
 
 

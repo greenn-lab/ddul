@@ -7,7 +7,7 @@
     <![CDATA[
     SELECT *
     FROM COM_CODE
-    ORDER BY CODE_GRP_ID
+    ORDER BY CODE_GRP_ID, CODE_ID
     ]]>
   </select>
 

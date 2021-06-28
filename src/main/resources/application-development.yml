@@ -8,11 +8,6 @@ spring:
       pageable:
         default-page-size: 5
 
-  sql:
-    init:
-      schema-locations:
-        - "classpath:db.sql"
-
   datasource:
     driver-class-name: "org.h2.Driver"
     url: "jdbc:h2:./db;AUTO_SERVER=TRUE"
@@ -31,9 +26,11 @@ spring:
       ddl-auto: update
 
 
-
 mybatis:
   type-aliases-package: "ddul"
   configuration:
     map-underscore-to-camel-case: true
     jdbc-type-for-null: VARCHAR
+  configuration-properties:
+    pagination-wrapped-sql: "${sql} LIMIT ${size} OFFSET (${size} * ${page})"
+    pagination-counted-sql: "SELECT count(1) FROM ( ${sql} )"

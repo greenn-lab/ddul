@@ -14,8 +14,8 @@
   <artifactId>ddul</artifactId>
   <version>0.1.0</version>
   <packaging>jar</packaging>
-  <name>ddul-egovframe</name>
-  <description><![CDATA[ DDUL is ground in egovframe]]></description>
+  <name>ddul</name>
+  <description><![CDATA[ "DDUL" is ground]]></description>
 
   <properties>
     <java.version>1.8</java.version>

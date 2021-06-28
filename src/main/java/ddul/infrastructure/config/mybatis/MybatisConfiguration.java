@@ -1,4 +1,4 @@
-package ddul.infrastructure.config;
+package ddul.infrastructure.config.mybatis;
 
 import static java.nio.file.StandardWatchEventKinds.ENTRY_MODIFY;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.ClosedWatchServiceException;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -18,23 +19,26 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Set;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import javax.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.binding.MapperRegistry;
 import org.apache.ibatis.mapping.MappedStatement;
-import org.apache.ibatis.mapping.VendorDatabaseIdProvider;
 import org.apache.ibatis.reflection.MetaObject;
 import org.apache.ibatis.reflection.SystemMetaObject;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.type.JdbcType;
 import org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration;
 import org.mybatis.spring.mapper.MapperFactoryBean;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
+import org.springframework.core.env.Environment;
+import org.springframework.core.env.Profiles;
 
 @Configuration
 @AutoConfigureAfter(MybatisAutoConfiguration.class)
@@ -58,27 +62,25 @@ public class MybatisConfiguration implements DisposableBean {
 
   final SqlSessionFactory sqlSessionFactory;
   final MapperFactoryBean<?> mapperFactoryBean;
+  final Environment environment;
 
-  //  @Bean
-  VendorDatabaseIdProvider databaseIdProvider() {
-    VendorDatabaseIdProvider databaseIdProvider = new VendorDatabaseIdProvider();
-    Properties properties = new Properties();
-    properties.put("SQL Server", "sqlserver");
-    properties.put("DB2", "db2");
-    properties.put("H2", "h2");
-    properties.put("Oracle", "oracle");
-    databaseIdProvider.setProperties(properties);
 
-    return databaseIdProvider;
+  @Override
+  public void destroy() throws Exception {
+    mapperXMLWatchService.close();
   }
 
   @PostConstruct
-  void watchModifiedXMLMapper() throws IOException, URISyntaxException {
+  void settings() throws IOException, URISyntaxException {
     final org.apache.ibatis.session.Configuration configuration = sqlSessionFactory
         .getConfiguration();
 
     configuration.addInterceptor(new PageableBuildupInterceptor());
     configuration.addInterceptor(new PageableExecuteInterceptor());
+
+    if (!environment.acceptsProfiles(Profiles.of("development"))) {
+      return;
+    }
 
     final Map<String, Class<?>> pathWithMapper = new HashMap<>();
 
@@ -87,7 +89,7 @@ public class MybatisConfiguration implements DisposableBean {
       final URL resource = mapper
           .getResource(String.format("/%s.xml", mapper.getName().replace('.', '/')));
 
-      logger.info("file watcher at {}", resource);
+      logger.info("watching to mapper XML {}", resource);
 
       if (null != resource) {
         final URI uri = resource.toURI();
@@ -98,15 +100,12 @@ public class MybatisConfiguration implements DisposableBean {
       }
     }
 
-    Executors
-        .newSingleThreadExecutor()
-        .execute(new RefreshMapperXML(pathWithMapper, mapperRegistry, configuration));
+    final ExecutorService executorService = Executors.newSingleThreadExecutor();
+    executorService.execute(
+        new RefreshMapperXML(pathWithMapper, mapperRegistry, configuration)
+    );
   }
 
-  @Override
-  public void destroy() throws Exception {
-    mapperXMLWatchService.close();
-  }
 
   @RequiredArgsConstructor
   private static class RefreshMapperXML implements Runnable {
@@ -159,7 +158,7 @@ public class MybatisConfiguration implements DisposableBean {
           });
 
           poll = take.reset();
-        } catch (InterruptedException e) {
+        } catch (InterruptedException | ClosedWatchServiceException e) {
           Thread.currentThread().interrupt();
         }
       }

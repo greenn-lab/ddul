@@ -35,9 +35,13 @@ public class PageableExecuteInterceptor implements Interceptor {
       final MappedStatement ms = variable.getMappedStatement();
       final BoundSql boundSql = ((StatementHandler) invocation.getTarget()).getBoundSql();
 
+      final Properties properties = ms.getConfiguration().getVariables();
       final Connection connection = (Connection) invocation.getArgs()[0];
 
-      final String countingSql = String.format("SELECT count(1) FROM ( %s )", boundSql.getSql());
+      final String countingSql = properties
+          .getProperty("pagination-counted-sql", "SELECT count(1) FROM ( ${sql} )")
+          .replace("${sql}", boundSql.getSql());
+
       try (final PreparedStatement ps = connection.prepareStatement(countingSql)) {
         new DefaultParameterHandler(ms, parameter, boundSql).setParameters(ps);
 
@@ -47,12 +51,12 @@ public class PageableExecuteInterceptor implements Interceptor {
         }
       }
 
-      final String sql = String.format("%s LIMIT %d OFFSET (%d * %d)",
-          boundSql.getSql(),
-          variable.getPageSize(),
-          variable.getPageSize(),
-          variable.getPageNumber()
-      );
+      final String sql = properties
+          .getProperty("pagination-wrapped-sql", "${sql} LIMIT ${size} OFFSET (${size} * ${page})")
+          .replace("${sql}", boundSql.getSql())
+          .replace("${size}", Integer.toString(variable.getPageSize()))
+          .replace("${page}", Integer.toString(variable.getPageNumber()));
+
       ReflectionUtils.setField(BoundSql.class.getDeclaredField("sql"), boundSql, sql);
     }
 
