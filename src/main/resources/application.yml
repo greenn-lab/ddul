@@ -2,6 +2,13 @@ spring:
   main:
     banner-mode: off
 
+
+mybatis:
+  configuration-properties:
+    pagination-wrapped-sql: "${sql} LIMIT ${size} OFFSET (${size} * ${page})"
+    pagination-counted-sql: "SELECT count(1) FROM ( ${sql} )"
+
+
 logging:
   pattern:
     console: "%highlight(%-5level) %d{HH:mm:ss.SSS}[%green(%thread)]%magenta(%logger{36}) %msg %n"

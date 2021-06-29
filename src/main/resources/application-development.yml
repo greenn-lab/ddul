@@ -24,13 +24,3 @@ spring:
       hibernate.format_sql: true
     hibernate:
       ddl-auto: update
-
-
-mybatis:
-  type-aliases-package: "com.github.greennlab.ddul"
-  configuration:
-    map-underscore-to-camel-case: true
-    jdbc-type-for-null: VARCHAR
-  configuration-properties:
-    pagination-wrapped-sql: "${sql} LIMIT ${size} OFFSET (${size} * ${page})"
-    pagination-counted-sql: "SELECT count(1) FROM ( ${sql} )"

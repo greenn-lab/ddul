@@ -1,4 +1,4 @@
-package com.github.greennlab.ddul.infrastructure.config.mybatis;
+package com.github.greennlab.ddul.config.mybatis;
 
 import java.util.Collections;
 import java.util.List;
@@ -107,7 +107,6 @@ public class PageableBuildupInterceptor implements Interceptor {
   @Override
   public void setProperties(Properties properties) {
     // empty
-    logger.info("props", properties);
   }
 
 

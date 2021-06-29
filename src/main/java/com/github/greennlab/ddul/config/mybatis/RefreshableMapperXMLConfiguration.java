@@ -1,4 +1,4 @@
-package com.github.greennlab.ddul.infrastructure.config.mybatis;
+package com.github.greennlab.ddul.config.mybatis;
 
 import static java.nio.file.StandardWatchEventKinds.ENTRY_MODIFY;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;

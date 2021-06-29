@@ -1,0 +1,29 @@
+### failure
+POST {{host}}/sample/validation
+Content-Type: application/json
+
+{
+"name": "",
+"age": 459,
+"birthday": "2011-06-29T14:36:41.519Z"
+}
+
+### failure
+POST {{host}}/sample/validation
+Content-Type: application/json
+
+{
+"name": "Test",
+"age": 120,
+"birthday": "2099-01-01T00:00:00"
+}
+
+### success
+POST {{host}}/sample/validation
+Content-Type: application/json
+
+{
+"name": "Tester",
+"age": 120,
+"birthday": "1900-06-29T14:36:41.519Z"
+}
