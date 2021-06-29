@@ -1,4 +1,4 @@
-package ddul.infrastructure.config;
+package com.github.greennlab.ddul.infrastructure.config;
 
 import com.p6spy.engine.spy.P6ModuleManager;
 import com.p6spy.engine.spy.P6SpyOptions;

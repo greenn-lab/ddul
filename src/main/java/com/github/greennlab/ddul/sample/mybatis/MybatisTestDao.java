@@ -1,4 +1,4 @@
-package ddul.sample.mybatis;
+package com.github.greennlab.ddul.sample.mybatis;
 
 import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;

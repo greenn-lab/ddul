@@ -1,6 +1,5 @@
-package ddul.infrastructure.config.mybatis;
+package com.github.greennlab.ddul.infrastructure.config.mybatis;
 
-import ddul.sample.mybatis.MybatisTestDao;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;

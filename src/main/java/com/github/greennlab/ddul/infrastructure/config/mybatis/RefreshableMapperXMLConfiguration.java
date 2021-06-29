@@ -1,10 +1,8 @@
-package ddul.infrastructure.config.mybatis;
+package com.github.greennlab.ddul.infrastructure.config.mybatis;
 
 import static java.nio.file.StandardWatchEventKinds.ENTRY_MODIFY;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
-import ddul.infrastructure.config.mybatis.PageableBuildupInterceptor;
-import ddul.infrastructure.config.mybatis.PageableExecuteInterceptor;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -30,13 +28,11 @@ import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.reflection.MetaObject;
 import org.apache.ibatis.reflection.SystemMetaObject;
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.ibatis.type.JdbcType;
 import org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration;
 import org.mybatis.spring.mapper.MapperFactoryBean;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
 import org.springframework.core.env.Profiles;
 
@@ -44,7 +40,7 @@ import org.springframework.core.env.Profiles;
 @AutoConfigureAfter(MybatisAutoConfiguration.class)
 @RequiredArgsConstructor
 @Slf4j
-public class MybatisConfiguration implements DisposableBean {
+public class RefreshableMapperXMLConfiguration implements DisposableBean {
 
   private static final WatchService mapperXMLWatchService;
 
@@ -72,8 +68,8 @@ public class MybatisConfiguration implements DisposableBean {
 
   @PostConstruct
   void settings() throws IOException, URISyntaxException {
-    final org.apache.ibatis.session.Configuration configuration = sqlSessionFactory
-        .getConfiguration();
+    final org.apache.ibatis.session.Configuration configuration
+        = sqlSessionFactory.getConfiguration();
 
     configuration.addInterceptor(new PageableBuildupInterceptor());
     configuration.addInterceptor(new PageableExecuteInterceptor());
@@ -93,10 +89,13 @@ public class MybatisConfiguration implements DisposableBean {
 
       if (null != resource) {
         final URI uri = resource.toURI();
-        final Path self = Paths.get(uri);
 
-        pathWithMapper.put(self.getFileName().toString(), mapper);
-        self.getParent().register(mapperXMLWatchService, ENTRY_MODIFY);
+        if ("file".equals(uri.getScheme())) {
+          final Path self = Paths.get(uri);
+
+          pathWithMapper.put(self.getFileName().toString(), mapper);
+          self.getParent().register(mapperXMLWatchService, ENTRY_MODIFY);
+        }
       }
     }
 

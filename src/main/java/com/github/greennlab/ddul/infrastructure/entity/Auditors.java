@@ -1,4 +1,4 @@
-package ddul.infrastructure.entity;
+package com.github.greennlab.ddul.infrastructure.entity;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;

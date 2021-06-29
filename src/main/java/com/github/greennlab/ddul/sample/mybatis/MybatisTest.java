@@ -1,12 +1,11 @@
-package ddul.sample.mybatis;
+package com.github.greennlab.ddul.sample.mybatis;
 
+import com.github.greennlab.ddul.infrastructure.entity.Mappable;
 import java.time.LocalDateTime;
 import lombok.Data;
-import org.apache.ibatis.type.Alias;
 
 @Data
-@Alias("MybatisTest")
-public class MybatisTest {
+public class MybatisTest implements Mappable {
 
   private static final long serialVersionUID = 2606142038336726913L;
 

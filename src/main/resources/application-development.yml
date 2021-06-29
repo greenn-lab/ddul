@@ -10,7 +10,7 @@ spring:
 
   datasource:
     driver-class-name: "org.h2.Driver"
-    url: "jdbc:h2:./db;AUTO_SERVER=TRUE"
+    url: "jdbc:h2:./ddul;AUTO_SERVER=TRUE"
     username: "sa"
     password: "11"
   h2:
@@ -27,7 +27,7 @@ spring:
 
 
 mybatis:
-  type-aliases-package: "ddul"
+  type-aliases-package: "com.github.greennlab.ddul"
   configuration:
     map-underscore-to-camel-case: true
     jdbc-type-for-null: VARCHAR

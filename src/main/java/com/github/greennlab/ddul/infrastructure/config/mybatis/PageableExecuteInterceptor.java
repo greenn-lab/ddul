@@ -1,8 +1,8 @@
-package ddul.infrastructure.config.mybatis;
+package com.github.greennlab.ddul.infrastructure.config.mybatis;
 
-import static ddul.infrastructure.config.mybatis.PageableBuildupInterceptor.PAGEABLE_VARIABLE;
+import static com.github.greennlab.ddul.infrastructure.config.mybatis.PageableBuildupInterceptor.PAGEABLE_VARIABLE;
 
-import ddul.infrastructure.config.mybatis.PageableBuildupInterceptor.PageableVariable;
+import com.github.greennlab.ddul.infrastructure.config.mybatis.PageableBuildupInterceptor.PageableVariable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

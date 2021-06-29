@@ -1,19 +1,11 @@
 spring:
-  profiles:
-    active: "development"
-
-  mvc:
-    view:
-      prefix: "/WEB-INF/pages/"
-      suffix: ".jsp"
-
+  main:
+    banner-mode: off
 
 logging:
   pattern:
     console: "%highlight(%-5level) %d{HH:mm:ss.SSS}[%green(%thread)]%magenta(%logger{36}) %msg %n"
-  level:
-    com.solideos.cms: DEBUG
 
 
-server.port: 8088
+server.port: 8090
 

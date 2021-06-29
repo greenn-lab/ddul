@@ -1,7 +1,6 @@
-package ddul.sample.mybatis;
+package com.github.greennlab.ddul.sample.mybatis;
 
 import java.util.Map;
-import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
