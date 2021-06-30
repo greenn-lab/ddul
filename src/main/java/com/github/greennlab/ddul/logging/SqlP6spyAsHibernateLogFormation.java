@@ -1,4 +1,4 @@
-package com.github.greennlab.ddul.config;
+package com.github.greennlab.ddul.logging;
 
 import com.p6spy.engine.spy.P6ModuleManager;
 import com.p6spy.engine.spy.P6SpyOptions;

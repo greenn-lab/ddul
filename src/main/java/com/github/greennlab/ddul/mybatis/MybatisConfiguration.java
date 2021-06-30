@@ -1,10 +1,9 @@
-package com.github.greennlab.ddul.config.mybatis;
+package com.github.greennlab.ddul.mybatis;
 
 import static org.springframework.context.ConfigurableApplicationContext.CONFIG_LOCATION_DELIMITERS;
 
 import com.github.greennlab.ddul.Application;
 import com.github.greennlab.ddul.entity.Mappable;
-import com.github.greennlab.ddul.mybatis.MapperType;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashSet;

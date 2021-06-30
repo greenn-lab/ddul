@@ -1,4 +1,4 @@
-package com.github.greennlab.ddul.config.mybatis;
+package com.github.greennlab.ddul.mybatis;
 
 import static java.nio.file.StandardWatchEventKinds.ENTRY_MODIFY;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
@@ -14,7 +14,6 @@ import java.nio.file.Paths;
 import java.nio.file.WatchKey;
 import java.nio.file.WatchService;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -25,8 +24,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.binding.MapperRegistry;
 import org.apache.ibatis.mapping.MappedStatement;
-import org.apache.ibatis.reflection.MetaObject;
-import org.apache.ibatis.reflection.SystemMetaObject;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration;
 import org.mybatis.spring.mapper.MapperFactoryBean;
@@ -35,6 +32,7 @@ import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.core.env.Profiles;
+import org.springframework.security.util.FieldUtils;
 
 @Configuration
 @AutoConfigureAfter(MybatisAutoConfiguration.class)
@@ -137,20 +135,7 @@ public class RefreshableMapperXMLConfiguration implements DisposableBean {
             if (null != mapper) {
               logger.info("detect changed mapper xml {}!", file);
 
-              final MetaObject meta = SystemMetaObject.forObject(mapperRegistry);
-              ((Map<?, ?>) meta.getValue("knownMappers")).remove(mapper);
-
-              final MetaObject metaObject = SystemMetaObject.forObject(configuration);
-              final String mapperXMLResource = String
-                  .format("%s.xml", mapper.getName().replace('.', '/'));
-
-              @SuppressWarnings("unchecked") final Set<String> loadedResources
-                  = (Set<String>) metaObject.getValue("loadedResources");
-              loadedResources.removeAll(Arrays.asList(mapper.toString(), mapperXMLResource));
-
-              @SuppressWarnings("unchecked") final Collection<MappedStatement> mss
-                  = (Collection<MappedStatement>) metaObject.getValue("mappedStatements");
-              mss.removeIf(ms -> ms.getResource().equals(mapperXMLResource));
+              cleanupPreviousMapper(mapper);
 
               configuration.addMapper(mapper);
             }
@@ -161,6 +146,25 @@ public class RefreshableMapperXMLConfiguration implements DisposableBean {
           Thread.currentThread().interrupt();
         }
       }
+    }
+
+    @SuppressWarnings("unchecked")
+    private void cleanupPreviousMapper(Class<?> mapper) {
+      ((Map<?, ?>)
+          FieldUtils.getProtectedFieldValue("knownMappers", mapperRegistry)
+      ).remove(mapper);
+
+      final String mapperXMLResource = String
+          .format("%s.xml", mapper.getName().replace('.', '/'));
+
+      ((Set<String>)
+          FieldUtils.getProtectedFieldValue("loadedResources", configuration)
+      ).removeAll(Arrays.asList(mapper.toString(), mapperXMLResource));
+
+      ((Map<String, MappedStatement>)
+          FieldUtils.getProtectedFieldValue("mappedStatements", configuration)
+      ).entrySet()
+          .removeIf(entry -> mapperXMLResource.equals(entry.getValue().getResource()));
     }
 
   }

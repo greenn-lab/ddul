@@ -1,4 +1,4 @@
-package com.github.greennlab.ddul.config.mybatis;
+package com.github.greennlab.ddul.mybatis;
 
 import java.io.IOException;
 import java.lang.reflect.Proxy;

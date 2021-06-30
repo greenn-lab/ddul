@@ -21,5 +21,9 @@
   <entry key="javax.validation.constraints.NotBlank.message">값을 채워주세요.</entry>
   <entry key="javax.validation.constraints.Email.message">${validatedValue}은(는) 이메일이 아니군요.</entry>
   <entry key="javax.validation.constraints.Size.message">길이가 맞지 않아요.</entry>
+  <entry key="javax.validation.constraints.PastOrPresent.message">오늘 또는 이전으로 입력해주세요.</entry>
+  <entry key="javax.validation.constraints.Past.message">오늘 이전으로 입력해주세요.</entry>
+  <entry key="javax.validation.constraints.FutureOrPresent.message">오늘 또는 이후로 입력해주세요.</entry>
+  <entry key="javax.validation.constraints.Future.message">오늘 이후로 입력해주세요.</entry>
   <entry key="org.hibernate.validator.constraints.Length.message">길이가 맞지 않아요. (최소: {min} ${max >= 999 ? '' : ', 최대: ' += max})</entry>
 </properties>
