@@ -4,35 +4,25 @@ import static org.springframework.context.ConfigurableApplicationContext.CONFIG_
 
 import com.github.greennlab.ddul.mybatis.Mappable;
 import com.github.greennlab.ddul.mybatis.MapperType;
-import java.io.IOException;
+import com.github.greennlab.ddul.mybatis.PageableBuildupInterceptor;
+import com.github.greennlab.ddul.mybatis.PageableExecuteInterceptor;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
-import javax.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.TypeAliasRegistry;
-import org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration;
+import org.mybatis.spring.boot.autoconfigure.ConfigurationCustomizer;
 import org.mybatis.spring.boot.autoconfigure.MybatisProperties;
+import org.reflections.Reflections;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.boot.autoconfigure.AutoConfigurationPackages;
-import org.springframework.boot.autoconfigure.AutoConfigureBefore;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.AnnotationUtils;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
-import org.springframework.core.io.support.ResourcePatternResolver;
-import org.springframework.core.type.classreading.CachingMetadataReaderFactory;
-import org.springframework.core.type.classreading.MetadataReader;
-import org.springframework.core.type.classreading.MetadataReaderFactory;
+import org.springframework.context.annotation.Bean;
 import org.springframework.util.StringUtils;
 
-@Configuration
-@EnableConfigurationProperties(MybatisProperties.class)
-@AutoConfigureBefore(MybatisAutoConfiguration.class)
+@org.springframework.context.annotation.Configuration
 @RequiredArgsConstructor
 @Slf4j
 public class MybatisConfiguration {
@@ -41,16 +31,27 @@ public class MybatisConfiguration {
   private final MybatisProperties properties;
 
 
-  @PostConstruct
-  public void setup() throws IOException, ClassNotFoundException {
+  @Bean
+  ConfigurationCustomizer mybatisConfigurationCustomizer() {
     final Set<String> basePackages = getBasePackages();
-
     properties.setTypeAliasesPackage(String.join(",", basePackages));
     properties.setTypeAliasesSuperType(Mappable.class);
-    properties.setConfiguration(configuration(basePackages));
+
+    final Configuration newConfiguration = new Configuration();
+    properties.setConfiguration(newConfiguration);
+
+    final TypeAliasRegistry typeAliasRegistry = newConfiguration.getTypeAliasRegistry();
+    registryAlias(basePackages, typeAliasRegistry);
+
+    return configuration -> {
+      configuration.addInterceptor(new PageableBuildupInterceptor());
+      configuration.addInterceptor(new PageableExecuteInterceptor());
+      configuration.setJdbcTypeForNull(JdbcType.VARCHAR);
+      configuration.setMapUnderscoreToCamelCase(true);
+    };
   }
 
-  private Set<String> getBasePackages() {
+  Set<String> getBasePackages() {
     final Set<String> basePackages = new HashSet<>();
     basePackages.add(Application.class.getPackage().getName());
     basePackages.addAll(AutoConfigurationPackages.get(beanFactory));
@@ -63,54 +64,25 @@ public class MybatisConfiguration {
     return basePackages;
   }
 
-  private org.apache.ibatis.session.Configuration configuration(Set<String> basePackages)
-      throws IOException, ClassNotFoundException {
-
-    final org.apache.ibatis.session.Configuration configuration
-        = new org.apache.ibatis.session.Configuration();
-
-    registryAlias(basePackages, configuration.getTypeAliasRegistry());
-    configuration.setJdbcTypeForNull(JdbcType.VARCHAR);
-    configuration.setMapUnderscoreToCamelCase(true);
-
-    return configuration;
-  }
-
-  private void registryAlias(Set<String> basePackages, TypeAliasRegistry registry)
-      throws IOException, ClassNotFoundException {
-    final ResourcePatternResolver patternResolver = new PathMatchingResourcePatternResolver();
-    final MetadataReaderFactory metadataFactory = new CachingMetadataReaderFactory();
-
+  private void registryAlias(Set<String> basePackages, TypeAliasRegistry registry) {
     for (final String basePackage : basePackages) {
-      final Resource[] resources = patternResolver.getResources(
-          String.format("classpath*:%s/**/*.class", basePackage.replace('.', '/'))
-      );
+      final Set<Class<?>> mappers = new Reflections(basePackage)
+          .getTypesAnnotatedWith(MapperType.class);
 
-      for (Resource classResource : resources) {
-        final Class<?> clazz = getClassByResource(metadataFactory, classResource);
-        registryAliasByMapperType(registry, clazz);
+      for (Class<?> mapper : mappers) {
+        registryAliasByMapperType(mapper, registry);
       }
     }
   }
 
-  private Class<?> getClassByResource(MetadataReaderFactory metadataFactory, Resource classResource)
-      throws IOException, ClassNotFoundException {
-    final MetadataReader metadataReader = metadataFactory.getMetadataReader(classResource);
-    final String className = metadataReader.getClassMetadata().getClassName();
-    return Resources.classForName(className);
+  private void registryAliasByMapperType(Class<?> mapper, TypeAliasRegistry registry) {
+    final MapperType mapperType = mapper.getAnnotation(MapperType.class);
+
+    final String alias = StringUtils.hasText(mapperType.value())
+        ? mapperType.value()
+        : mapper.getSimpleName();
+
+    registry.registerAlias(alias, mapper);
   }
 
-  private void registryAliasByMapperType(TypeAliasRegistry registry, Class<?> clazz) {
-    final MapperType mapperType = AnnotationUtils.findAnnotation(clazz, MapperType.class);
-
-    if (null != mapperType) {
-      final String alias = StringUtils.hasText(mapperType.value())
-          ? mapperType.value()
-          : clazz.getSimpleName();
-
-      if (!registry.getTypeAliases().containsKey(alias)) {
-        registry.registerAlias(alias, clazz);
-      }
-    }
-  }
 }

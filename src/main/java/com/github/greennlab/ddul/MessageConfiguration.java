@@ -39,7 +39,7 @@ public class MessageConfiguration {
     resources.addAll(Arrays.asList(resolver.getResources("classpath*:i18n/**/*.properties")));
     resources.addAll(Arrays.asList(
         resolver.getResources(
-            String.format("classpath*:%s/**/*.xml", Application.PACKAGE.replace('.', '/'))
+            String.format("classpath*:%s/i18n/**/*.xml", Application.PACKAGE.replace('.', '/'))
         )
     ));
 

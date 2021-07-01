@@ -65,8 +65,7 @@ public class PageableBuildupInterceptor implements Interceptor {
           final Pageable pageable = variable.pageable;
 
           return Collections.singletonList(
-              new PageImpl<>(list, pageable, variable.total
-              )
+              new PageImpl<>(list, pageable, variable.total)
           );
         } finally {
           PAGEABLE_VARIABLE.remove();

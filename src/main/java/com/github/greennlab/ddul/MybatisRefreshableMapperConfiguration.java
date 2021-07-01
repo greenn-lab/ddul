@@ -1,11 +1,10 @@
-package com.github.greennlab.ddul.mybatis;
+package com.github.greennlab.ddul;
 
 import static java.nio.file.StandardWatchEventKinds.ENTRY_MODIFY;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
 import java.io.IOException;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.ClosedWatchServiceException;
 import java.nio.file.FileSystems;
@@ -19,26 +18,23 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import javax.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.binding.MapperRegistry;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.mapping.MappedStatement;
+import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration;
-import org.mybatis.spring.mapper.MapperFactoryBean;
+import org.reflections.Reflections;
 import org.springframework.beans.factory.DisposableBean;
-import org.springframework.boot.autoconfigure.AutoConfigureAfter;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.core.env.Environment;
-import org.springframework.core.env.Profiles;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.util.FieldUtils;
 
-@Configuration
-@AutoConfigureAfter(MybatisAutoConfiguration.class)
+@Profile('!' + Application.PRODUCTION)
+@org.springframework.context.annotation.Configuration
 @RequiredArgsConstructor
 @Slf4j
-public class RefreshableMapperXMLConfiguration implements DisposableBean {
+public class MybatisRefreshableMapperConfiguration implements InitializingBean, DisposableBean {
 
   private static final WatchService mapperXMLWatchService;
 
@@ -53,63 +49,60 @@ public class RefreshableMapperXMLConfiguration implements DisposableBean {
     mapperXMLWatchService = watchService;
   }
 
-
-  final SqlSessionFactory sqlSessionFactory;
-  final MapperFactoryBean<?> mapperFactoryBean;
-  final Environment environment;
-
+  private final MybatisConfiguration mybatisConfiguration;
+  private final SqlSessionFactory sqlSessionFactory;
 
   @Override
   public void destroy() throws Exception {
     mapperXMLWatchService.close();
   }
 
-  @PostConstruct
-  void settings() throws IOException, URISyntaxException {
-    final org.apache.ibatis.session.Configuration configuration
-        = sqlSessionFactory.getConfiguration();
-
-    configuration.addInterceptor(new PageableBuildupInterceptor());
-    configuration.addInterceptor(new PageableExecuteInterceptor());
-
-    if (!environment.acceptsProfiles(Profiles.of("development"))) {
-      return;
-    }
-
+  @Override
+  public void afterPropertiesSet() throws Exception {
     final Map<String, Class<?>> pathWithMapper = new HashMap<>();
 
-    final MapperRegistry mapperRegistry = configuration.getMapperRegistry();
-    for (Class<?> mapper : mapperRegistry.getMappers()) {
-      final URL resource = mapper
-          .getResource(String.format("/%s.xml", mapper.getName().replace('.', '/')));
+    for (String basePackage : mybatisConfiguration.getBasePackages()) {
+      final Set<Class<?>> mappers = new Reflections(basePackage)
+          .getTypesAnnotatedWith(Mapper.class);
 
-      logger.info("watching to mapper XML {}", resource);
+      for (Class<?> mapper : mappers) {
+        final URL resource = mapper
+            .getResource(
+                String.format("/%s.xml", mapper.getName().replace('.', '/'))
+            );
 
-      if (null != resource) {
-        final URI uri = resource.toURI();
+        logger.info("watching to mapper XML {}", resource);
 
-        if ("file".equals(uri.getScheme())) {
-          final Path self = Paths.get(uri);
+        if (null != resource) {
+          final URI uri = resource.toURI();
 
-          pathWithMapper.put(self.getFileName().toString(), mapper);
-          self.getParent().register(mapperXMLWatchService, ENTRY_MODIFY);
+          if ("file".equals(uri.getScheme())) {
+            final Path self = Paths.get(uri);
+
+            pathWithMapper.put(self.getFileName().toString(), mapper);
+            self.getParent().register(mapperXMLWatchService, ENTRY_MODIFY);
+          }
         }
       }
     }
 
     final ExecutorService executorService = Executors.newSingleThreadExecutor();
     executorService.execute(
-        new RefreshMapperXML(pathWithMapper, mapperRegistry, configuration)
+        new RefreshMapperXML(pathWithMapper, sqlSessionFactory.getConfiguration())
     );
+
   }
 
 
-  @RequiredArgsConstructor
   private static class RefreshMapperXML implements Runnable {
 
     private final Map<String, Class<?>> pathWithMapper;
-    private final MapperRegistry mapperRegistry;
-    private final org.apache.ibatis.session.Configuration configuration;
+    private final Configuration configuration;
+
+    public RefreshMapperXML(Map<String, Class<?>> pathWithMapper, Configuration configuration) {
+      this.pathWithMapper = pathWithMapper;
+      this.configuration = configuration;
+    }
 
     @Override
     public void run() {
@@ -151,7 +144,8 @@ public class RefreshableMapperXMLConfiguration implements DisposableBean {
     @SuppressWarnings("unchecked")
     private void cleanupPreviousMapper(Class<?> mapper) {
       ((Map<?, ?>)
-          FieldUtils.getProtectedFieldValue("knownMappers", mapperRegistry)
+          FieldUtils.getProtectedFieldValue("knownMappers",
+              configuration.getMapperRegistry())
       ).remove(mapper);
 
       final String mapperXMLResource = String

@@ -17,6 +17,7 @@ import org.springframework.beans.factory.DisposableBean;
 import org.springframework.core.io.Resource;
 
 @Slf4j
+@SuppressWarnings("unused")
 public class RefreshableSqlSessionFactoryBean
     extends SqlSessionFactoryBean implements DisposableBean {
 

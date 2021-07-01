@@ -81,6 +81,11 @@
       <artifactId>p6spy-spring-boot-starter</artifactId>
       <version>1.7.1</version>
     </dependency>
+    <dependency>
+      <groupId>org.reflections</groupId>
+      <artifactId>reflections</artifactId>
+      <version>0.9.12</version>
+    </dependency>
   </dependencies>
 
   <build>
@@ -95,6 +100,7 @@
         <directory>src/main/resources</directory>
         <includes>
           <include>**/*.xml</include>
+          <include>**/*.yml</include>
         </includes>
       </resource>
     </resources>
