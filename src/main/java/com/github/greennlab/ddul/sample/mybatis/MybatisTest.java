@@ -1,6 +1,5 @@
 package com.github.greennlab.ddul.sample.mybatis;
 
-import com.github.greennlab.ddul.entity.Mappable;
 import com.github.greennlab.ddul.mybatis.MapperType;
 import java.time.LocalDateTime;
 import lombok.Data;

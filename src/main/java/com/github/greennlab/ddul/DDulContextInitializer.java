@@ -9,7 +9,7 @@ public class DDulContextInitializer implements
 
   @Override
   public void initialize(AnnotationConfigServletWebServerApplicationContext context) {
-    context.scan("com.github.greennlab.ddul");
+    context.scan(Application.PACKAGE);
   }
 
   @Override

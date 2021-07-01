@@ -2,6 +2,7 @@ package com.github.greennlab.ddul;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -32,17 +33,26 @@ public class MessageConfiguration {
 
   private String[] findOutBasename() throws IOException {
     final PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-    final Resource[] resources = resolver.getResources("classpath:i18n/**/*.xml");
+    final List<Resource> resources = new ArrayList<>();
+
+    resources.addAll(Arrays.asList(resolver.getResources("classpath*:i18n/**/*.xml")));
+    resources.addAll(Arrays.asList(resolver.getResources("classpath*:i18n/**/*.properties")));
+    resources.addAll(Arrays.asList(
+        resolver.getResources(
+            String.format("classpath*:%s/**/*.xml", Application.PACKAGE.replace('.', '/'))
+        )
+    ));
+
     final List<String> sources = new ArrayList<>();
 
     String group = "*";
-    for (Resource res : resources) {
-      final String filename = res.getFilename();
+    for (Resource resource : resources) {
+      final String filename = resource.getURL().toString();
       assert filename != null;
 
       if (!filename.startsWith(group)) {
         group = filename.substring(0, filename.lastIndexOf("."));
-        sources.add("classpath:i18n/" + group);
+        sources.add(group);
       }
     }
 
