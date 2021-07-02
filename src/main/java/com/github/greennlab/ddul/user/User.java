@@ -1,7 +1,7 @@
 package com.github.greennlab.ddul.user;
 
 import com.github.greennlab.ddul.authority.Authority;
-import com.github.greennlab.ddul.entity.EntityAuditor;
+import com.github.greennlab.ddul.entity.Auditor;
 import com.github.greennlab.ddul.mapstruct.EntityDtoMapping;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -28,7 +28,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter
-public class User extends EntityAuditor implements UserDetails {
+public class User extends Auditor implements UserDetails {
 
   private static final long serialVersionUID = -7382145646927293876L;
 

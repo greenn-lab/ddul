@@ -14,23 +14,24 @@ import org.springframework.data.annotation.LastModifiedDate;
 @MappedSuperclass
 @Getter
 @Setter
-@SuppressWarnings("serial")
-public class EntityAuditor implements Serializable {
+public class Auditor implements Serializable {
 
-  private boolean deleted;
+  public static final String NOT_DELETED = "DELETED IS NULL";
+
+  private LocalDateTime deleted;
 
   @CreatedBy
   @Column(updatable = false)
-  private String createBy;
+  private String creator;
 
   @LastModifiedBy
-  private String modifyBy;
+  private String updater;
 
   @CreatedDate
   @Column(updatable = false)
-  private LocalDateTime createDt;
+  private LocalDateTime created;
 
   @LastModifiedDate
-  private LocalDateTime modifyDt;
+  private LocalDateTime updated;
 
 }

@@ -1,6 +1,6 @@
 package com.github.greennlab.ddul.user;
 
-import com.github.greennlab.ddul.entity.EntityAuditor;
+import com.github.greennlab.ddul.entity.Auditor;
 import com.github.greennlab.ddul.authority.Authority;
 import java.io.Serializable;
 import javax.persistence.Entity;
@@ -20,7 +20,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Getter
 @Setter
 
-public class UserAuthority extends EntityAuditor implements Serializable {
+public class UserAuthority extends Auditor implements Serializable {
 
   private static final long serialVersionUID = -6254442608026678057L;
 

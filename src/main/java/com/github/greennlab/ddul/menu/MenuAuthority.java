@@ -1,6 +1,6 @@
 package com.github.greennlab.ddul.menu;
 
-import com.github.greennlab.ddul.entity.EntityAuditor;
+import com.github.greennlab.ddul.entity.Auditor;
 import com.github.greennlab.ddul.authority.Authority;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
@@ -18,7 +18,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter
-public class MenuAuthority extends EntityAuditor {
+public class MenuAuthority extends Auditor {
 
   private static final long serialVersionUID = -7034907455336320332L;
 

@@ -1,7 +1,10 @@
 package com.github.greennlab.ddul.menu;
 
-import com.github.greennlab.ddul.entity.EntityAuditor;
+import static com.github.greennlab.ddul.entity.Auditor.NOT_DELETED;
+
+import com.github.greennlab.ddul.entity.Auditor;
 import com.github.greennlab.ddul.mapstruct.EntityDtoMapping;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
@@ -12,44 +15,49 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
-import javax.validation.constraints.NotEmpty;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Where;
-import org.hibernate.validator.constraints.URL;
 import org.mapstruct.Mapper;
+import org.mapstruct.factory.Mappers;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
-@Where(clause = "DELETED = 'N'")
+@Where(clause = NOT_DELETED)
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter
-public class Menu extends EntityAuditor {
+public class Menu extends Auditor {
 
   private static final long serialVersionUID = -8379883687091265040L;
+
 
   @Id
   @GeneratedValue
   private Long id;
 
+  private Long upperId;
+
   @Column(nullable = false)
   private String name;
 
+  private String nameAid;
   private String uri;
-  private Long upperId;
-
-  @Column(name = "ORD")
-  private int order;
 
   @Column(name = "DSC", scale = 1000)
   private String description;
 
-  private String icon;
-  private String classes;
+  @Column(name = "ORD")
+  private int order;
+
   private String badge;
-  private boolean inactive;
-  private boolean use;
+  private String icon;
+
+  @Column(name = "ATTR")
+  private String attr;
+
+  private LocalDateTime opened;
 
   @OneToMany(mappedBy = "upperId", fetch = FetchType.EAGER)
   @OrderBy("order asc")
@@ -57,35 +65,30 @@ public class Menu extends EntityAuditor {
 
 
   // -------------------------------------------------------
-  // DTO
+  // Underling
   // -------------------------------------------------------
-  @Getter
-  @Setter
-  static class Dto {
+  @Mapper
+  public interface Of extends EntityDtoMapping<Menu, Dto> {
 
-    private Long id;
-
-    @NotEmpty
-    private String name;
-
-    private String nameEn;
-
-    @URL
-    private String uri;
-
-    private int order = 0;
-    private String description;
-    private String icon;
-    private String classes;
-    private String badge;
-    private boolean inactive = false;
-    private boolean use = true;
+    Of map = Mappers.getMapper(Of.class);
 
   }
 
+  @Data
+  public static class Dto {
 
-  @Mapper
-  public interface Mapping extends EntityDtoMapping<Menu, Dto> {
+    private Long id;
+    private Long upperId;
+    private String name;
+    private String nameAid;
+    private String uri;
+    private String description;
+    private int order;
+    private String badge;
+    private String icon;
+    private String attr;
+    private LocalDateTime opened;
+    private List<Dto> children;
 
   }
 

@@ -1,6 +1,6 @@
 package com.github.greennlab.ddul.authority;
 
-import com.github.greennlab.ddul.entity.EntityAuditor;
+import com.github.greennlab.ddul.entity.Auditor;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
@@ -25,7 +25,7 @@ import org.springframework.security.core.GrantedAuthority;
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter
-public class Authority extends EntityAuditor implements GrantedAuthority {
+public class Authority extends Auditor implements GrantedAuthority {
 
   private static final long serialVersionUID = 6109880835618935721L;
 
