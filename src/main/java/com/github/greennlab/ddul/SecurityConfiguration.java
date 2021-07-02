@@ -7,7 +7,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 @Configuration
-@ConditionalOnMissingBean(name = "springSecurityFilterChain")
+@ConditionalOnMissingBean(
+    name = {"springSecurityFilterChain", "securityAutoConfiguration"}
+)
 @Order
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
