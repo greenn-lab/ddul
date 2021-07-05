@@ -55,7 +55,7 @@ public class Menu extends Auditor {
   private String icon;
 
   @Column(name = "ATTR")
-  private String attr;
+  private String attribute;
 
   private LocalDateTime opened;
 

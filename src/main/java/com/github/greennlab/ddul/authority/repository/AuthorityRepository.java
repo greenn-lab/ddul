@@ -1,8 +1,8 @@
 package com.github.greennlab.ddul.authority.repository;
 
 import com.github.greennlab.ddul.authority.Authority;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.github.greennlab.ddul.entity.AFewRepository;
 
-public interface AuthorityRepository extends JpaRepository<Authority, Long> {
+public interface AuthorityRepository extends AFewRepository<Authority, Long> {
 
 }

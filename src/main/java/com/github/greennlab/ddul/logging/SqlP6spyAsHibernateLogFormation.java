@@ -1,5 +1,6 @@
 package com.github.greennlab.ddul.logging;
 
+import com.github.greennlab.ddul.Application;
 import com.p6spy.engine.spy.P6ModuleManager;
 import com.p6spy.engine.spy.P6SpyOptions;
 import com.p6spy.engine.spy.appender.MessageFormattingStrategy;
@@ -8,8 +9,8 @@ import org.hibernate.engine.jdbc.internal.FormatStyle;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
+@Profile('!' + Application.PRODUCTION)
 @Configuration
-@Profile("development")
 public class SqlP6spyAsHibernateLogFormation implements MessageFormattingStrategy {
 
   @PostConstruct

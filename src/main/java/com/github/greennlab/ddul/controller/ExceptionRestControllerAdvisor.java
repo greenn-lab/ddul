@@ -1,5 +1,6 @@
 package com.github.greennlab.ddul.controller;
 
+import com.github.greennlab.ddul.Application;
 import com.github.greennlab.ddul.MessageConfiguration.ExceptionMessageSource;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -27,7 +28,8 @@ public class ExceptionRestControllerAdvisor {
 
   @PostConstruct
   public void setup() {
-    notProduction = !environment.acceptsProfiles(Profiles.of("production"));
+    final Profiles production = Profiles.of(Application.PRODUCTION);
+    notProduction = !environment.acceptsProfiles(production);
   }
 
 

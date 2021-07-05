@@ -19,6 +19,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Where;
 import org.mapstruct.Mapper;
+import org.mapstruct.factory.Mappers;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -104,10 +105,9 @@ public class User extends Auditor implements UserDetails {
 
   }
 
-
   @Mapper
-  public interface Mapping extends EntityDtoMapping<User, Dto> {
-
+  public interface Of extends EntityDtoMapping<User, Dto> {
+    Of mapped = Mappers.getMapper(Of.class);
   }
 
 }

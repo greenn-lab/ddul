@@ -7,7 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class Application {
 
   public static final String PACKAGE = Application.class.getPackage().getName();
-  public static final String DEVELOPMENT = "development";
   public static final String PRODUCTION = "production";
 
 
