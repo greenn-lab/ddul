@@ -25,7 +25,7 @@ import org.springframework.util.StringUtils;
 @org.springframework.context.annotation.Configuration
 @RequiredArgsConstructor
 @Slf4j
-public class MybatisConfiguration {
+public class DDulMybatisConfiguration {
 
   private final BeanFactory beanFactory;
   private final MybatisProperties properties;

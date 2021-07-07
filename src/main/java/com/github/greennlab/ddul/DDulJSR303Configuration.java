@@ -16,7 +16,7 @@ import org.springframework.validation.beanvalidation.MessageSourceResourceBundle
 
 @Configuration
 @RequiredArgsConstructor
-public class JSR303Configuration {
+public class DDulJSR303Configuration {
 
   private final MessageSource messageSource;
 

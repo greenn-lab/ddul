@@ -15,7 +15,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 @Configuration
-public class MessageConfiguration {
+public class DDulMessageConfiguration {
 
   @Bean
   ReloadableResourceBundleMessageSource messageSource(

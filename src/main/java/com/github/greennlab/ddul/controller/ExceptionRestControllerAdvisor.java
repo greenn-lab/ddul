@@ -1,7 +1,7 @@
 package com.github.greennlab.ddul.controller;
 
 import com.github.greennlab.ddul.Application;
-import com.github.greennlab.ddul.MessageConfiguration.ExceptionMessageSource;
+import com.github.greennlab.ddul.DDulMessageConfiguration.ExceptionMessageSource;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;

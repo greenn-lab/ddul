@@ -1,7 +1,5 @@
 package com.github.greennlab.ddul.menu;
 
-import static com.github.greennlab.ddul.entity.Auditor.NOT_DELETED;
-
 import com.github.greennlab.ddul.entity.Auditor;
 import com.github.greennlab.ddul.mapstruct.EntityDtoMapping;
 import java.time.LocalDateTime;
@@ -18,13 +16,11 @@ import javax.persistence.OrderBy;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.Where;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
-@Where(clause = NOT_DELETED)
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter
@@ -89,6 +85,7 @@ public class Menu extends Auditor {
     private String attr;
     private LocalDateTime opened;
     private List<Dto> children;
+    private LocalDateTime deleted;
 
   }
 

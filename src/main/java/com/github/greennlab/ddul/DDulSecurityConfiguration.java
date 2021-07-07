@@ -11,7 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
     name = {"springSecurityFilterChain", "securityAutoConfiguration"}
 )
 @Order
-public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+public class DDulSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
   @Override
   public void configure(HttpSecurity http) throws Exception {

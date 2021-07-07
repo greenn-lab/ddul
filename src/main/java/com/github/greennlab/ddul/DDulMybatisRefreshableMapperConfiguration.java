@@ -34,7 +34,7 @@ import org.springframework.security.util.FieldUtils;
 @org.springframework.context.annotation.Configuration
 @RequiredArgsConstructor
 @Slf4j
-public class MybatisRefreshableMapperConfiguration implements InitializingBean, DisposableBean {
+public class DDulMybatisRefreshableMapperConfiguration implements InitializingBean, DisposableBean {
 
   private static final WatchService mapperXMLWatchService;
 
@@ -49,7 +49,7 @@ public class MybatisRefreshableMapperConfiguration implements InitializingBean, 
     mapperXMLWatchService = watchService;
   }
 
-  private final MybatisConfiguration mybatisConfiguration;
+  private final DDulMybatisConfiguration DDulMybatisConfiguration;
   private final SqlSessionFactory sqlSessionFactory;
 
   @Override
@@ -61,7 +61,7 @@ public class MybatisRefreshableMapperConfiguration implements InitializingBean, 
   public void afterPropertiesSet() throws Exception {
     final Map<String, Class<?>> pathWithMapper = new HashMap<>();
 
-    for (String basePackage : mybatisConfiguration.getBasePackages()) {
+    for (String basePackage : DDulMybatisConfiguration.getBasePackages()) {
       final Set<Class<?>> mappers = new Reflections(basePackage)
           .getTypesAnnotatedWith(Mapper.class);
 
