@@ -106,8 +106,8 @@ public class User extends Auditor implements UserDetails {
   }
 
   @Mapper
-  public interface Of extends EntityDtoMapping<User, Dto> {
-    Of mapped = Mappers.getMapper(Of.class);
+  public interface UserOf extends EntityDtoMapping<User, Dto> {
+    UserOf mapped = Mappers.getMapper(UserOf.class);
   }
 
 }

@@ -3,7 +3,7 @@ package com.github.greennlab.ddul.repository;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.github.greennlab.ddul.authority.Authority;
-import com.github.greennlab.ddul.authority.repository.AuthorityRepository;
+import com.github.greennlab.ddul.authority.repository.DDulAuthorityRepository;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -12,10 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 @DataJpaTest
-class AuthorityRepositoryTest {
+class DDulAuthorityRepositoryTest {
 
   @Autowired
-  private AuthorityRepository repository;
+  private DDulAuthorityRepository repository;
 
   @Test
   void shouldGetHierarchyAuthorities() {
