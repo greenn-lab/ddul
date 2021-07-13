@@ -3,13 +3,12 @@ package com.github.greennlab.ddul;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 @Configuration
-@ConditionalOnMissingBean(
-    name = {"springSecurityFilterChain", "securityAutoConfiguration"}
-)
+@ConditionalOnMissingBean(AuthenticationConfiguration.class)
 @Order
 public class DDulSecurityConfiguration extends WebSecurityConfigurerAdapter {
 

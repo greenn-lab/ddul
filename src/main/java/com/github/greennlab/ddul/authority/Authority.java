@@ -38,7 +38,7 @@ public class Authority extends Auditor implements GrantedAuthority {
 
   @OneToMany
   @JoinColumn(name = "UPPER_ID")
-  private List<Authority> branches = new ArrayList<>();
+  private List<Authority> children = new ArrayList<>();
 
 
   //--------------------------------------------------
@@ -50,7 +50,7 @@ public class Authority extends Auditor implements GrantedAuthority {
   }
 
   public Stream<Authority> getAllAsFlat() {
-    return Stream.concat(Stream.of(this), branches.stream().flatMap(Authority::getAllAsFlat));
+    return Stream.concat(Stream.of(this), children.stream().flatMap(Authority::getAllAsFlat));
   }
 
 }
