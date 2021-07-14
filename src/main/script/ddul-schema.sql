@@ -95,3 +95,49 @@ insert into MENU (ID, UPPER_ID, NAME, NAME_AID, URI, DSC, ORD)
 values (998, 999, 'jqGrid', null, null, null, 1);
 insert into MENU (ID, UPPER_ID, NAME, NAME_AID, URI, DSC, ORD)
 values (999, 0, '예제', null, null, null, 2);
+
+
+DROP TABLE IF EXISTS CODE CASCADE;
+CREATE TABLE IF NOT EXISTS CODE
+(
+    ID      BIGINT PRIMARY KEY,
+    SYS     VARCHAR(256) NOT NULL,
+    GRP     VARCHAR(256) NOT NULL,
+    GRP_NM  VARCHAR(256),
+    COD     VARCHAR(256) NOT NULL,
+    COD_NM  VARCHAR(256),
+    ORD     NUMBER  DEFAULT 0,
+    USE     CHAR(1) DEFAULT 'Y' CHECK (USE = 'Y' OR USE = 'N'),
+    -- auditors
+    DELETED TIMESTAMP COMMENT '삭제일시',
+    CREATED TIMESTAMP COMMENT '생성일시',
+    CREATOR VARCHAR(32) COMMENT '생성자',
+    UPDATED TIMESTAMP COMMENT '수정일시',
+    UPDATER VARCHAR(32) COMMENT '수정자'
+);
+COMMENT ON TABLE CODE IS '공통코드';
+COMMENT ON COLUMN CODE.SYS IS '시스템 구분';
+COMMENT ON COLUMN CODE.GRP IS '그룹 코드';
+COMMENT ON COLUMN CODE.GRP_NM IS '그룹 이름';
+COMMENT ON COLUMN CODE.COD IS '코드';
+COMMENT ON COLUMN CODE.COD_NM IS '코드 이름';
+COMMENT ON COLUMN CODE.ORD IS '순서';
+
+insert into CODE (ID, SYS, GRP, GRP_NM, COD, COD_NM, ORD) values (1,  'SAMPLE', '344', 'POSITION',  '002', 'Director', 0);
+insert into CODE (ID, SYS, GRP, GRP_NM, COD, COD_NM, ORD) values (2,  'SAMPLE', '344', 'POSITION',  '001', 'CEO', 0);
+insert into CODE (ID, SYS, GRP, GRP_NM, COD, COD_NM, ORD) values (3,  'SAMPLE', '344', 'POSITION',  '005', 'Team member', 0);
+insert into CODE (ID, SYS, GRP, GRP_NM, COD, COD_NM, ORD) values (4,  'SAMPLE', '344', 'POSITION',  '004', 'Team leader', 0);
+insert into CODE (ID, SYS, GRP, GRP_NM, COD, COD_NM, ORD) values (5,  'SAMPLE', '344', 'POSITION',  '003', 'Manager', 0);
+insert into CODE (ID, SYS, GRP, GRP_NM, COD, COD_NM, ORD) values (6,  'SAMPLE', '345', 'JOB_GRADE', '004', 'executive director', 0);
+insert into CODE (ID, SYS, GRP, GRP_NM, COD, COD_NM, ORD) values (7,  'SAMPLE', '345', 'JOB_GRADE', '005', 'director', 0);
+insert into CODE (ID, SYS, GRP, GRP_NM, COD, COD_NM, ORD) values (8,  'SAMPLE', '345', 'JOB_GRADE', '006', 'department manager', 0);
+insert into CODE (ID, SYS, GRP, GRP_NM, COD, COD_NM, ORD) values (9,  'SAMPLE', '345', 'JOB_GRADE', '008', 'Deputy General Manager', 0);
+insert into CODE (ID, SYS, GRP, GRP_NM, COD, COD_NM, ORD) values (10, 'SAMPLE', '345', 'JOB_GRADE', '003', 'vice-president', 0);
+insert into CODE (ID, SYS, GRP, GRP_NM, COD, COD_NM, ORD) values (11, 'SAMPLE', '345', 'JOB_GRADE', '002', 'representative', 0);
+insert into CODE (ID, SYS, GRP, GRP_NM, COD, COD_NM, ORD) values (12, 'SAMPLE', '345', 'JOB_GRADE', '001', 'CEO', 0);
+insert into CODE (ID, SYS, GRP, GRP_NM, COD, COD_NM, ORD) values (13, 'SAMPLE', '345', 'JOB_GRADE', '010', 'Assistant Manager', 0);
+insert into CODE (ID, SYS, GRP, GRP_NM, COD, COD_NM, ORD) values (14, 'SAMPLE', '345', 'JOB_GRADE', '007', 'Head of team', 0);
+insert into CODE (ID, SYS, GRP, GRP_NM, COD, COD_NM, ORD) values (15, 'SAMPLE', '345', 'JOB_GRADE', '012', 'Staff', 0);
+insert into CODE (ID, SYS, GRP, GRP_NM, COD, COD_NM, ORD) values (16, 'SAMPLE', '345', 'JOB_GRADE', '009', 'Manager', 0);
+insert into CODE (ID, SYS, GRP, GRP_NM, COD, COD_NM, ORD) values (17, 'SAMPLE', '345', 'JOB_GRADE', '011', 'Senior staff', 0);
+
