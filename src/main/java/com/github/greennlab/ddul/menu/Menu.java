@@ -64,9 +64,9 @@ public class Menu extends Auditor {
   // Underling
   // -------------------------------------------------------
   @Mapper
-  public interface Of extends EntityDtoMapping<Menu, Dto> {
+  public interface MenuOf extends EntityDtoMapping<Menu, Dto> {
 
-    Of map = Mappers.getMapper(Of.class);
+    MenuOf map = Mappers.getMapper(MenuOf.class);
 
   }
 

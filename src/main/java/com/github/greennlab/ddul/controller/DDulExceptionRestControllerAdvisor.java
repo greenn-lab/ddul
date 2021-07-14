@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 @RequiredArgsConstructor
 @Slf4j
-public class ExceptionRestControllerAdvisor {
+public class DDulExceptionRestControllerAdvisor {
 
   private final ExceptionMessageSource exceptionMessageSource;
   private final Environment environment;
