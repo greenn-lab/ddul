@@ -26,6 +26,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Setter
 public class Menu extends Auditor {
 
+  public static final MenuOf mapped = Mappers.getMapper(MenuOf.class);
+
   private static final long serialVersionUID = -8379883687091265040L;
 
 
@@ -65,8 +67,6 @@ public class Menu extends Auditor {
   // -------------------------------------------------------
   @Mapper
   public interface MenuOf extends EntityDtoMapping<Menu, Dto> {
-
-    MenuOf map = Mappers.getMapper(MenuOf.class);
 
   }
 

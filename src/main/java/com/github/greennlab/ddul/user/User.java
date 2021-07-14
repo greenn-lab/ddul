@@ -31,6 +31,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Setter
 public class User extends Auditor implements UserDetails {
 
+  public static final UserOf mapped = Mappers.getMapper(UserOf.class);
+
   private static final long serialVersionUID = -7382145646927293876L;
 
 
@@ -83,8 +85,13 @@ public class User extends Auditor implements UserDetails {
   }
 
 
+  @Mapper
+  public interface UserOf extends EntityDtoMapping<User, Dto> {
+
+  }
+
   // -------------------------------------------------------
-  // DTO
+  // Underling
   // -------------------------------------------------------
   @Getter
   @Setter
@@ -103,11 +110,6 @@ public class User extends Auditor implements UserDetails {
 
     private boolean locked;
 
-  }
-
-  @Mapper
-  public interface UserOf extends EntityDtoMapping<User, Dto> {
-    UserOf mapped = Mappers.getMapper(UserOf.class);
   }
 
 }
