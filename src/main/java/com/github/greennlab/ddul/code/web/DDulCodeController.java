@@ -5,8 +5,8 @@ import com.github.greennlab.ddul.code.repository.DDulCodeRepository;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,21 +19,18 @@ public class DDulCodeController {
 
 
   @GetMapping
-  public List<CommonCode.Dto> getGroupCodes(String system, String keyword) {
-    if (!StringUtils.hasText(system)) {
-      system = null;
-    }
-
-    return repository.findAllByGroups(system, keyword).stream()
+  public List<CommonCode.Dto> getGroupCodes(String group, String keyword) {
+    return repository.findAllByGroupAndNameContainsOrderByOrder(group, keyword).stream()
         .map(CommonCode.mapped::to)
         .collect(Collectors.toList());
   }
 
   @GetMapping("/{group}")
-  public List<CommonCode.Dto> getCodes(String group) {
-    return repository.findAllByGroup(group).stream()
+  public List<CommonCode.Dto> getCodes(@PathVariable String group) {
+    return repository.findAllByGroupOrderByOrder(group).stream()
         .map(CommonCode.mapped::to)
         .collect(Collectors.toList());
   }
+
 
 }
