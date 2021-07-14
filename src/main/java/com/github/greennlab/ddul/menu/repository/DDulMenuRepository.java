@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface DDulMenuRepository extends AFewRepository<Menu, Long> {
 
+  <S extends Menu> S findByIdAndDeletedIsNull(long id);
+
   <S extends Menu> List<S> saveAll(Iterable<S> var1);
 
 }
