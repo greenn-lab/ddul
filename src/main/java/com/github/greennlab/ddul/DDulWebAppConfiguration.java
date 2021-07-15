@@ -3,6 +3,7 @@ package com.github.greennlab.ddul;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.deser.std.StdScalarDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import java.io.IOException;
 import java.time.Instant;
@@ -49,10 +50,28 @@ public class DDulWebAppConfiguration {
   @Bean
   public Jackson2ObjectMapperBuilderCustomizer jacksonCustomizer() {
     return builder ->
-        builder.deserializers(new MilliToLocalDateTimeDeserializer());
+        builder.deserializers(
+            new StringToBooleanDeserializer(),
+            new MilliToLocalDateTimeDeserializer()
+        );
   }
 
+  static class StringToBooleanDeserializer extends StdScalarDeserializer<Boolean> {
 
+    public StringToBooleanDeserializer() {
+      super(Boolean.TYPE);
+    }
+
+    @Override
+    public Boolean deserialize(JsonParser parser, DeserializationContext context)
+        throws IOException {
+      final String valueAsString = parser.getValueAsString();
+      return valueAsString.toLowerCase().matches("on|y|yes");
+    }
+
+  }
+
+  @SuppressWarnings("java:S110")
   static class MilliToLocalDateTimeDeserializer extends LocalDateTimeDeserializer {
 
     @Override
