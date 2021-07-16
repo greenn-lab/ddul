@@ -9,15 +9,16 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.Where;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -25,7 +26,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
-@Where(clause = "DELETED = 'N'")
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter
@@ -40,11 +40,15 @@ public class User extends Auditor implements UserDetails {
   @GeneratedValue
   private Long id;
 
-  private String email;
   private String username;
   private String password;
+
+  @Column(name = "PASSWORD_EXP")
   private LocalDate passwordExpired;
-  private boolean locked;
+
+  private String email;
+  private String name;
+  private boolean lock;
 
   @OneToMany(mappedBy = "user")
   private List<UserAuthority> userAuthorities = new ArrayList<>();
@@ -71,7 +75,7 @@ public class User extends Auditor implements UserDetails {
 
   @Override
   public boolean isAccountNonLocked() {
-    return !isLocked();
+    return !isLock();
   }
 
   @Override
@@ -85,30 +89,34 @@ public class User extends Auditor implements UserDetails {
   }
 
 
+  // -------------------------------------------------------
+  // Underling
+  // -------------------------------------------------------
   @Mapper
   public interface UserOf extends EntityDtoMapping<User, Dto> {
 
   }
 
-  // -------------------------------------------------------
-  // Underling
-  // -------------------------------------------------------
   @Getter
   @Setter
   public static class Dto {
 
     private Long id;
 
-    @Email
-    private String email;
-
+    @NotEmpty
     private String username;
 
+    @NotEmpty
     private String password;
 
     private LocalDate passwordExpired;
 
-    private boolean locked;
+    @Email
+    private String email;
+
+    private String name;
+
+    private boolean lock;
 
   }
 
