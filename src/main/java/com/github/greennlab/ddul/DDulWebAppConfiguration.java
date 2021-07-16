@@ -66,7 +66,7 @@ public class DDulWebAppConfiguration {
     public Boolean deserialize(JsonParser parser, DeserializationContext context)
         throws IOException {
       final String valueAsString = parser.getValueAsString();
-      return valueAsString.toLowerCase().matches("on|y|yes");
+      return valueAsString.toLowerCase().matches("true|on|y|yes");
     }
 
   }
