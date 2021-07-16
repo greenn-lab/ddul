@@ -2,7 +2,9 @@ package com.github.greennlab.ddul.controller;
 
 import com.github.greennlab.ddul.Application;
 import com.github.greennlab.ddul.DDulMessageConfiguration.ExceptionMessageSource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -49,7 +51,11 @@ public class DDulExceptionRestControllerAdvisor {
       logger.error(throwable.getMessage(), throwable);
     }
 
-    return exceptionMessageSource.get(throwable.getClass());
+    final Map<String, Object> message = new HashMap<>(2);
+    message.put("message", exceptionMessageSource.get(throwable.getClass()));
+    message.put("exception", throwable.getMessage());
+
+    return message;
   }
 
 
