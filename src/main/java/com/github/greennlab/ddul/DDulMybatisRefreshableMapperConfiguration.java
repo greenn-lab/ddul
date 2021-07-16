@@ -36,6 +36,8 @@ import org.springframework.security.util.FieldUtils;
 @Slf4j
 public class DDulMybatisRefreshableMapperConfiguration implements InitializingBean, DisposableBean {
 
+  private static final ExecutorService executorService = Executors.newSingleThreadExecutor();
+
   private static final WatchService mapperXMLWatchService;
 
   static {
@@ -49,19 +51,24 @@ public class DDulMybatisRefreshableMapperConfiguration implements InitializingBe
     mapperXMLWatchService = watchService;
   }
 
-  private final DDulMybatisConfiguration DDulMybatisConfiguration;
+  private final DDulMybatisConfiguration ddulMybatisConfiguration;
   private final SqlSessionFactory sqlSessionFactory;
 
   @Override
   public void destroy() throws Exception {
     mapperXMLWatchService.close();
+    executorService.shutdown();
+
+    if (!executorService.isTerminated()) {
+      System.exit(1);
+    }
   }
 
   @Override
   public void afterPropertiesSet() throws Exception {
     final Map<String, Class<?>> pathWithMapper = new HashMap<>();
 
-    for (String basePackage : DDulMybatisConfiguration.getBasePackages()) {
+    for (String basePackage : ddulMybatisConfiguration.getBasePackages()) {
       final Set<Class<?>> mappers = new Reflections(basePackage)
           .getTypesAnnotatedWith(Mapper.class);
 
@@ -86,11 +93,9 @@ public class DDulMybatisRefreshableMapperConfiguration implements InitializingBe
       }
     }
 
-    final ExecutorService executorService = Executors.newSingleThreadExecutor();
     executorService.execute(
         new RefreshMapperXML(pathWithMapper, sqlSessionFactory.getConfiguration())
     );
-
   }
 
 
