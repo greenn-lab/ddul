@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,6 +18,7 @@ import org.mapstruct.factory.Mappers;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
+@Table(name = "CODE")
 @EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor
 @Getter
@@ -59,8 +62,13 @@ public class CommonCode extends Auditor {
   public static class Dto {
 
     private Long id;
+
+    @NotEmpty
     private String group;
+
+    @NotEmpty
     private String code;
+
     private String name;
     private int order;
     private boolean use;
