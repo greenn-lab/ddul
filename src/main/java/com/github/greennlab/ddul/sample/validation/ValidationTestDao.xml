@@ -3,10 +3,10 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.github.greennlab.ddul.sample.validation.ValidationTestDao">
 
-  <select id="test" resultType="ValidationTest"><![CDATA[
+  <select id="test" resultType="Map"><![CDATA[
     SELECT *
-    FROM COM_CODE
-    ORDER BY CODE_GRP_ID, CODE_ID
+    FROM CODE
+    ORDER BY ORD, GRP_COD
     ]]></select>
 
 </mapper>
