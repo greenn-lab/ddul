@@ -51,7 +51,7 @@ public class DDulMybatisConfiguration {
     };
   }
 
-  Set<String> getBasePackages() {
+  protected Set<String> getBasePackages() {
     final Set<String> basePackages = new HashSet<>();
     basePackages.add(Application.class.getPackage().getName());
     basePackages.addAll(AutoConfigurationPackages.get(beanFactory));
