@@ -34,7 +34,7 @@ public class CommonCode extends Auditor {
   @GeneratedValue
   private Long id;
 
-  @Column(name = "GROUP_COD")
+  @Column(name = "GRP_COD")
   private String group;
 
   @Column(name = "COD")
