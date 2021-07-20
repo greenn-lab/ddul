@@ -1,14 +1,10 @@
 package com.github.greennlab.ddul;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
-import java.nio.file.NoSuchFileException;
-import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.attribute.FileTime;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -17,7 +13,6 @@ import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
-import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -39,11 +34,9 @@ import org.springframework.security.util.FieldUtils;
 @Slf4j
 public class DDulRefreshMapperConfiguration implements InitializingBean, DisposableBean {
 
-  private final DDulMybatisConfiguration ddulMybatisConfiguration;
-
-  private final SqlSessionFactory sqlSessionFactory;
-
   private static final ExecutorService refreshMapperService = Executors.newSingleThreadExecutor();
+  private final DDulMybatisConfiguration ddulMybatisConfiguration;
+  private final SqlSessionFactory sqlSessionFactory;
 
   @Override
   public void destroy() throws InterruptedException {
@@ -79,11 +72,7 @@ public class DDulRefreshMapperConfiguration implements InitializingBean, Disposa
         logger.debug("watching to mapper XML {}", resource);
 
         if (null != resource) {
-          final Path xml = Paths.get(resource.toURI());
-          final FileTime lastModifiedTime = Files.getLastModifiedTime(xml);
-          final MapperBundle bundle = new MapperBundle(mapper, xml, lastModifiedTime.toMillis());
-
-          mapperBundles.add(bundle);
+          mapperBundles.add(new MapperBundle(mapper, resource));
         }
       }
     }
@@ -92,19 +81,50 @@ public class DDulRefreshMapperConfiguration implements InitializingBean, Disposa
         .execute(new RefreshMapper(mapperBundles, sqlSessionFactory.getConfiguration()));
   }
 
-  @AllArgsConstructor
+
   @EqualsAndHashCode(exclude = {"xml", "lastModified"})
   @Getter
   static class MapperBundle {
 
     private final Class<?> mapper;
-    private final Path xml;
+    private final URL xml;
 
     @Setter
     private long lastModified;
 
-  }
 
+    MapperBundle(Class<?> mapper, URL xml) {
+      this.mapper = mapper;
+      this.xml = xml;
+      this.lastModified = getXmlLastModified();
+    }
+
+    public boolean isModified() {
+      return this.lastModified != getXmlLastModified();
+    }
+
+    public void resetLastModified() {
+      this.lastModified = getXmlLastModified();
+    }
+
+
+    private long getXmlLastModified() {
+      try {
+        switch (xml.getProtocol()) {
+          case "jar":
+            return xml.openConnection().getLastModified();
+          case "file":
+            return Files.getLastModifiedTime(Paths.get(xml.toURI())).toMillis();
+          default:
+            break;
+        }
+      } catch (IOException | URISyntaxException e) {
+        logger.error(e.getMessage(), e);
+      }
+
+      return 0L;
+    }
+  }
 
   @RequiredArgsConstructor
   static class RefreshMapper implements Runnable {
@@ -117,9 +137,9 @@ public class DDulRefreshMapperConfiguration implements InitializingBean, Disposa
     public void run() {
       while (!refreshMapperService.isShutdown() && !refreshMapperService.isTerminated()) {
         final Iterator<MapperBundle> iterator = bundles.iterator();
+
         while (iterator.hasNext()) {
-          final MapperBundle bundle = iterator.next();
-          checkModifiedAndRefresh(bundle);
+          refresh(iterator.next());
         }
 
         try {
@@ -130,25 +150,15 @@ public class DDulRefreshMapperConfiguration implements InitializingBean, Disposa
       }
     }
 
-    private void checkModifiedAndRefresh(MapperBundle bundle) {
-      final Path xml = bundle.getXml();
-      try {
-        final long millis = Files.getLastModifiedTime(xml).toMillis();
+    private void refresh(MapperBundle bundle) {
+      if (bundle.isModified()) {
+        final Class<?> mapper = bundle.getMapper();
 
-        if (millis != bundle.getLastModified()) {
-          final Class<?> mapper = bundle.getMapper();
+        cleanupPreviousMapper(mapper);
+        configuration.addMapper(mapper);
 
-          cleanupPreviousMapper(mapper);
-          configuration.addMapper(mapper);
-
-          bundle.setLastModified(millis);
-          logger.info("detect changed bundle: {}", xml);
-        }
-      } catch (FileNotFoundException | NoSuchFileException e) {
-        bundles.remove(bundle);
-      } catch (IOException e) {
-        logger.debug(e.getMessage(), e);
-        // empty
+        bundle.resetLastModified();
+        logger.info("detect changed bundle: {}", bundle.getXml());
       }
     }
 
