@@ -32,8 +32,7 @@ public class AuditorParameterInterceptor implements Interceptor {
 
     final String auditor = auditorAware.getCurrentAuditor().orElse("");
 
-    boundSql.setAdditionalParameter("creator", auditor);
-    boundSql.setAdditionalParameter("updater", auditor);
+    boundSql.setAdditionalParameter("!user", auditor);
 
     return invocation.proceed();
   }
