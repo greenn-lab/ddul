@@ -10,6 +10,7 @@ public class MybatisTest {
 
   private static final long serialVersionUID = 2606142038336726913L;
 
+  private Long id;
   private String code;
   private String test;
   private String codeId;

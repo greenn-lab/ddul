@@ -4,9 +4,28 @@
 <mapper namespace="com.github.greennlab.ddul.sample.mybatis.MybatisTestDao">
 
   <select id="test" resultType="Map"><![CDATA[
-    SELECT *
-    FROM CODE
-    ORDER BY GRP_COD, ORD
+    SELECT C.*
+    FROM CODE C
+    WHERE COD = NVL(#{code}, COD)
+       OR COD = NVL(#{!user}, COD)
+    ORDER BY ORD
     ]]></select>
+
+  <insert id="insert"><![CDATA[
+    INSERT INTO CODE (ID, GRP_COD, COD, CREATOR, UPDATER)
+    VALUES (#{id}, #{id}, #{id}, #{creator}, #{updater})
+    ]]>
+    <selectKey keyProperty="id" resultType="long" order="BEFORE">
+      SELECT NVL(MAX(ID), 0) + 1 FROM CODE
+    </selectKey>
+  </insert>
+
+  <update id="update"><![CDATA[
+    UPDATE CODE
+    SET CREATOR = #{creator},
+        UPDATER = #{updater}
+    WHERE ID = #{id}
+    ]]></update>
+
 
 </mapper>

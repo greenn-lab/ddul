@@ -1,5 +1,6 @@
 package com.github.greennlab.ddul.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.greennlab.ddul.authority.Authority;
 import com.github.greennlab.ddul.entity.Auditor;
 import com.github.greennlab.ddul.mapstruct.EntityDtoMapping;
@@ -41,6 +42,8 @@ public class User extends Auditor implements UserDetails {
   private Long id;
 
   private String username;
+
+  @JsonIgnore
   private String password;
 
   @Column(name = "PASSWORD_EXP")
@@ -80,7 +83,8 @@ public class User extends Auditor implements UserDetails {
 
   @Override
   public boolean isCredentialsNonExpired() {
-    return getPasswordExpired().isAfter(LocalDate.now());
+    return getPasswordExpired() == null
+        || getPasswordExpired().isAfter(LocalDate.now());
   }
 
   @Override
