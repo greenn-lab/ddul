@@ -8,7 +8,6 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.binding.MapperMethod;
 import org.apache.ibatis.binding.MapperMethod.ParamMap;
 import org.apache.ibatis.cache.CacheKey;
 import org.apache.ibatis.executor.Executor;
@@ -35,7 +34,6 @@ import org.springframework.data.domain.Pageable;
         method = "query",
         args = {MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class,
             CacheKey.class, BoundSql.class})
-
 })
 @Slf4j
 public class PageableBuildupInterceptor implements Interceptor {
@@ -50,7 +48,7 @@ public class PageableBuildupInterceptor implements Interceptor {
 
       if (invocation.getArgs()[1] instanceof Pageable) {
         pageableParameter = invocation.getArgs()[1];
-      } else if (invocation.getArgs()[1] instanceof MapperMethod.ParamMap) {
+      } else if (invocation.getArgs()[1] instanceof ParamMap) {
         pageableParameter = pageableParameterFromParamMap(invocation);
       }
 
@@ -58,6 +56,7 @@ public class PageableBuildupInterceptor implements Interceptor {
         final PageableVariable variable = new PageableVariable((Pageable) pageableParameter);
         variable.setMappedStatement(ms);
         variable.setParameter(invocation.getArgs()[1]);
+
         PAGEABLE_VARIABLE.set(variable);
 
         try {
