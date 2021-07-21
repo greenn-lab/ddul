@@ -19,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.executor.keygen.KeyGenerator;
 import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -158,7 +159,7 @@ public class DDulRefreshMapperConfiguration implements InitializingBean, Disposa
         configuration.addMapper(mapper);
 
         bundle.resetLastModified();
-        logger.info("detect changed bundle: {}", bundle.getXml());
+        logger.info("changed mapper: {}", bundle.getXml());
       }
     }
 
@@ -169,8 +170,9 @@ public class DDulRefreshMapperConfiguration implements InitializingBean, Disposa
               configuration.getMapperRegistry())
       ).remove(mapper);
 
+      final String mapperClassName = mapper.getName();
       final String mapperXMLResource = String
-          .format("%s.xml", mapper.getName().replace('.', '/'));
+          .format("%s.xml", mapperClassName.replace('.', '/'));
 
       ((Set<String>)
           FieldUtils.getProtectedFieldValue("loadedResources", configuration)
@@ -188,6 +190,11 @@ public class DDulRefreshMapperConfiguration implements InitializingBean, Disposa
 
             return false;
           });
+
+      ((Map<String, KeyGenerator>)
+          FieldUtils.getProtectedFieldValue("keyGenerators", configuration)
+      ).entrySet()
+          .removeIf(entry -> entry.getKey().startsWith(mapperClassName));
     }
 
   }
