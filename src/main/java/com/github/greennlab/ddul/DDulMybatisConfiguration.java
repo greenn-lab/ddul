@@ -2,6 +2,7 @@ package com.github.greennlab.ddul;
 
 import static org.springframework.context.ConfigurableApplicationContext.CONFIG_LOCATION_DELIMITERS;
 
+import com.github.greennlab.ddul.mybatis.AuditorParameterInterceptor;
 import com.github.greennlab.ddul.mybatis.Mappable;
 import com.github.greennlab.ddul.mybatis.MapperType;
 import com.github.greennlab.ddul.mybatis.PageableBuildupInterceptor;
@@ -20,6 +21,7 @@ import org.reflections.Reflections;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.boot.autoconfigure.AutoConfigurationPackages;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.domain.AuditorAware;
 import org.springframework.util.StringUtils;
 
 @org.springframework.context.annotation.Configuration
@@ -32,7 +34,7 @@ public class DDulMybatisConfiguration {
 
 
   @Bean
-  ConfigurationCustomizer mybatisConfigurationCustomizer() {
+  ConfigurationCustomizer mybatisConfigurationCustomizer(AuditorAware<String> auditorAware) {
     final Set<String> basePackages = getBasePackages();
     properties.setTypeAliasesPackage(String.join(",", basePackages));
     properties.setTypeAliasesSuperType(Mappable.class);
@@ -46,6 +48,7 @@ public class DDulMybatisConfiguration {
     return configuration -> {
       configuration.addInterceptor(new PageableBuildupInterceptor());
       configuration.addInterceptor(new PageableExecuteInterceptor());
+      configuration.addInterceptor(new AuditorParameterInterceptor(auditorAware));
       configuration.setJdbcTypeForNull(JdbcType.VARCHAR);
       configuration.setMapUnderscoreToCamelCase(true);
     };
