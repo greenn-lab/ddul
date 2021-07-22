@@ -36,8 +36,10 @@ import org.springframework.security.util.FieldUtils;
 public class DDulRefreshMapperConfiguration implements InitializingBean, DisposableBean {
 
   private static final ExecutorService refreshMapperService = Executors.newSingleThreadExecutor();
+
   private final DDulMybatisConfiguration ddulMybatisConfiguration;
   private final SqlSessionFactory sqlSessionFactory;
+
 
   @Override
   public void destroy() throws InterruptedException {
@@ -120,7 +122,7 @@ public class DDulRefreshMapperConfiguration implements InitializingBean, Disposa
             break;
         }
       } catch (IOException | URISyntaxException e) {
-        logger.error(e.getMessage(), e);
+        logger.warn(e.getMessage());
       }
 
       return 0L;
@@ -196,6 +198,5 @@ public class DDulRefreshMapperConfiguration implements InitializingBean, Disposa
       ).entrySet()
           .removeIf(entry -> entry.getKey().startsWith(mapperClassName));
     }
-
   }
 }
