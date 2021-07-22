@@ -16,8 +16,10 @@ import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.Setter;
 import org.mapstruct.Mapper;
@@ -35,6 +37,9 @@ public class User extends Auditor implements UserDetails {
   public static final UserOf mapped = Mappers.getMapper(UserOf.class);
 
   private static final long serialVersionUID = -7382145646927293876L;
+
+  private static final String REGEXP_PASSWORD =
+      "^(?=.*[~!@#$%^&*()_+`\\-=\\[\\]{};':\",./<>?])(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])\\S{6,}$";
 
 
   @Id
@@ -110,7 +115,7 @@ public class User extends Auditor implements UserDetails {
     @NotEmpty
     private String username;
 
-    @NotEmpty
+    @Pattern(regexp = REGEXP_PASSWORD)
     private String password;
 
     private LocalDate passwordExpired;
@@ -122,6 +127,11 @@ public class User extends Auditor implements UserDetails {
 
     private boolean lock;
 
+
+    @AssertTrue
+    public static boolean isStrongPassword(String password) {
+      return password != null && password.matches(REGEXP_PASSWORD);
+    }
   }
 
 }
