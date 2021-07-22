@@ -1,4 +1,4 @@
-package com.github.greennlab.ddul.controller;
+package com.github.greennlab.ddul.validation;
 
 import com.github.greennlab.ddul.Application;
 import com.github.greennlab.ddul.DDulMessageConfiguration.ExceptionMessageSource;
@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.env.Environment;
 import org.springframework.core.env.Profiles;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -40,6 +41,13 @@ public class DDulExceptionRestControllerAdvisor {
   List<ObjectError> methodArgumentNotValidException(
       MethodArgumentNotValidException exception) {
     return exception.getAllErrors();
+  }
+
+  @ExceptionHandler(InvalidFieldException.class)
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
+  FieldError InvalidFieldException(
+      InvalidFieldException exception) {
+    return exception.getError();
   }
 
   @ExceptionHandler(Throwable.class)
