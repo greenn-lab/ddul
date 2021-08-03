@@ -1,0 +1,14 @@
+POST {{host}}/_file
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="test"; filename="test.txt"
+Content-Type: text/plain
+
+Name
+--WebAppBoundary
+Content-Disposition: form-data; name="hello"; filename="hello.txt"
+Content-Type: text/plain
+
+Hello
+--WebAppBoundary--
