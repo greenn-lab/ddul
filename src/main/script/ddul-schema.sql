@@ -24,12 +24,8 @@ COMMENT ON COLUMN USER.PASSWORD_EXP IS '비밀번호 만료일시';
 COMMENT ON COLUMN USER.NAME IS '성명';
 COMMENT ON COLUMN USER.LOCK IS '잠김';
 
-INSERT INTO USER (ID, USERNAME, PASSWORD, EMAIL, NAME, PASSWORD_EXP)
-VALUES (-1, 'tester', '{noop}test123$', 'tester@test.com', 'foo',
-        DATEADD('MONTH', 3, CURRENT_DATE));
-INSERT INTO USER (ID, USERNAME, PASSWORD, EMAIL, NAME, PASSWORD_EXP)
-VALUES (-2, 'leader', '{noop}lead123$', 'leader@test.com', 'bar',
-        DATEADD('MONTH', 3, CURRENT_DATE));
+INSERT INTO USER (ID, USERNAME, PASSWORD, EMAIL, NAME, PASSWORD_EXP) VALUES (-1, 'tester', '{noop}test123$', 'tester@test.com', 'foo', DATEADD('MONTH', 3, CURRENT_DATE));
+INSERT INTO USER (ID, USERNAME, PASSWORD, EMAIL, NAME, PASSWORD_EXP) VALUES (-2, 'leader', '{noop}lead123$', 'leader@test.com', 'bar', DATEADD('MONTH', 3, CURRENT_DATE));
 
 --
 -- Authority Entity
@@ -50,20 +46,13 @@ CREATE TABLE IF NOT EXISTS AUTHORITY
 COMMENT ON TABLE AUTHORITY IS '권한';
 COMMENT ON COLUMN AUTHORITY.ROLE IS '권한 이름';
 
-INSERT INTO AUTHORITY (ID, UPPER_ID, ROLE)
-VALUES (0, NULL, 'ADMIN');
-INSERT INTO AUTHORITY (ID, UPPER_ID, ROLE)
-VALUES (-1, 0, 'BOSS');
-INSERT INTO AUTHORITY (ID, UPPER_ID, ROLE)
-VALUES (-2, -1, 'OFFICER');
-INSERT INTO AUTHORITY (ID, UPPER_ID, ROLE)
-VALUES (-3, -2, 'MINION');
-INSERT INTO AUTHORITY (ID, UPPER_ID, ROLE)
-VALUES (-4, -3, 'ROOKIE');
-INSERT INTO AUTHORITY (ID, UPPER_ID, ROLE)
-VALUES (-5, -3, 'INTERN');
-INSERT INTO AUTHORITY (ID, UPPER_ID, ROLE)
-VALUES (-6, -4, 'NOVICE');
+INSERT INTO AUTHORITY (ID, UPPER_ID, ROLE) VALUES (0, NULL, 'ADMIN');
+INSERT INTO AUTHORITY (ID, UPPER_ID, ROLE) VALUES (-1, 0, 'BOSS');
+INSERT INTO AUTHORITY (ID, UPPER_ID, ROLE) VALUES (-2, -1, 'OFFICER');
+INSERT INTO AUTHORITY (ID, UPPER_ID, ROLE) VALUES (-3, -2, 'MINION');
+INSERT INTO AUTHORITY (ID, UPPER_ID, ROLE) VALUES (-4, -3, 'ROOKIE');
+INSERT INTO AUTHORITY (ID, UPPER_ID, ROLE) VALUES (-5, -3, 'INTERN');
+INSERT INTO AUTHORITY (ID, UPPER_ID, ROLE) VALUES (-6, -4, 'NOVICE');
 
 
 DROP TABLE IF EXISTS USER_AUTHORITY CASCADE;
@@ -84,12 +73,9 @@ ALTER TABLE USER_AUTHORITY
 
 COMMENT ON TABLE USER_AUTHORITY IS '사용자-권한 매핑';
 
-INSERT INTO USER_AUTHORITY (ID, USER_ID, AUTHORITY_ID)
-VALUES (-1, -1, -2);
-INSERT INTO USER_AUTHORITY (ID, USER_ID, AUTHORITY_ID)
-VALUES (-2, -1, -6);
-INSERT INTO USER_AUTHORITY (ID, USER_ID, AUTHORITY_ID)
-VALUES (-3, -2, -4);
+INSERT INTO USER_AUTHORITY (ID, USER_ID, AUTHORITY_ID) VALUES (-1, -1, -2);
+INSERT INTO USER_AUTHORITY (ID, USER_ID, AUTHORITY_ID) VALUES (-2, -1, -6);
+INSERT INTO USER_AUTHORITY (ID, USER_ID, AUTHORITY_ID) VALUES (-3, -2, -4);
 
 
 --
@@ -122,98 +108,51 @@ COMMENT ON COLUMN MENU.DSC IS '설명';
 COMMENT ON COLUMN MENU.ORD IS '순서';
 COMMENT ON COLUMN MENU.ATTR IS '속성';
 COMMENT ON COLUMN MENU.OPENED IS '개방일시';
-INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID)
-VALUES (-999, 'Documentation', 'Documentation', '', 999,
-        'Usage guides for everything you need to know about it', null);
-INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID)
-VALUES (-992, 'Core Features', 'Core Features', '/documentation/features', 2, '', -999);
-INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID)
-VALUES (-991, 'Guides', 'Guides', '/documentation/guides', 1, '', -999);
-INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID)
-VALUES (-990, 'Changelog', 'Changelog', '/documentation/changelog', 0, '', -999);
-INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID)
-VALUES (-906, 'Inactive Item', 'Inactive Item', '', 3, '', -900);
-INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID)
-VALUES (-905, 'Inactive Item', 'Inactive Item', '', 3, '', -900);
-INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID)
-VALUES (-904, 'Round badge', 'Round badge', '', 2, '', -901);
-INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID)
-VALUES (-903, 'Rectangle badge', 'Rectangle badge', '', 1, '', -901);
-INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID)
-VALUES (-902, 'Circle badge', 'Circle badge', '', 0, '', -901);
-INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID)
-VALUES (-901, 'badges', 'badges', '', 0, '', -900);
-INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID)
-VALUES (-900, 'Navigation Features', 'Navigation Features', '', 900,
-        'Collapsable levels and badge styles at menu item', null);
-INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID)
-VALUES (-33, 'Colors', 'Colors', '/user-interface/colors', 4, '', -25);
-INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID)
-VALUES (-32, 'Cards', 'Cards', '/user-interface/cards', 3, '', -25);
-INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID)
-VALUES (-31, 'Icons', 'Icons', '/user-interface/icons', 2, '', -25);
-INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID)
-VALUES (-30, 'Wizards', 'Wizards', '/user-interface/form/wizards', 2, '', -27);
-INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID)
-VALUES (-29, 'Layouts', 'Layouts', '/user-interface/form/layouts', 1, '', -27);
-INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID)
-VALUES (-28, 'Fields', 'Fields', '/user-interface/form/fields', 0, '', -27);
-INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID)
-VALUES (-27, 'Form', 'Form', '', 1, '', -25);
-INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID)
-VALUES (-26, 'Animation', 'Animation', '/user-interface/animation', 0, '', -25);
-INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID)
-VALUES (-25, 'User Interface', 'User Interface', '', 4, 'Building elements of UI/UX', 0);
-INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID)
-VALUES (-24, 'Split screen', 'Sign up', '/pages/authentication/login/split-screen', 1, '', -22);
-INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID)
-VALUES (-23, 'Fullscreen', 'Sign up', '/pages/authentication/login/fullscreen', 0, '', -22);
-INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID)
-VALUES (-22, 'Screen Play', 'Sign up', '', 1, '', -20);
-INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID)
-VALUES (-21, 'Classic', 'Sign up', '/pages/authentication/login/classic', 0, '', -20);
-INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID)
-VALUES (-20, 'Login', 'Login', '', 1, '', -10);
-INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID)
-VALUES (-19, 'Modern', 'Modern', '/pages/authentication/sign-up/modern', 1, '', -17);
-INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID)
-VALUES (-18, 'Classic', 'Classic', '/pages/authentication/sign-up/classic', 0, '', -17);
-INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID)
-VALUES (-17, 'Sign up', 'Sign up', '', 0, '', -10);
-INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID)
-VALUES (-16, 'Internal server error', 'Internal server error', '', 1, '', -14);
-INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID)
-VALUES (-15, 'Page not found', 'Page not found', '', 0, '', -14);
-INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID)
-VALUES (-14, 'Errors', 'Errors', '', 4, '', -9);
-INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID)
-VALUES (-13, 'Support', 'Support', '/pages/support', 3, '', -9);
-INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID)
-VALUES (-12, 'Home', 'Home', '/pages/home', 2, '', -9);
-INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID)
-VALUES (-11, 'Help center', 'Help center', '/pages/help-center', 1, '', -9);
-INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID)
-VALUES (-10, 'Authentication', 'Authentication', '', 0, '', -9);
-INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID)
-VALUES (-9, 'Pages', 'Pages', '', 3, '', 0);
-INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID)
-VALUES (-8, 'Analytics', 'Analytics', '/dashboard/analytics', 0, '', -7);
-INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID)
-VALUES (-7, 'Dashboard', 'Dashboard', '', 2, 'Analystics for system performances!', 0);
-INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID)
-VALUES (-6, 'Menu', 'Menu', '/system/menu', 1, '', -4);
-INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID)
-VALUES (-5, 'User', 'User', '/system/user', 0, 'approve new user, denied, etc.', -4);
-INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID)
-VALUES (-4, 'System', 'System', '', 1, 'Operating environment of system', 0);
-INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID)
-VALUES (-3, 'Approve Process', 'Approve Process', '/work/approve-process', 1, '', -1);
-INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID)
-VALUES (-2, 'Receipt', 'Receipt', '/work/receipt', 0, '', -1);
-INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID)
-VALUES (-1, 'Main Works', 'Main Works', '', 0, 'Remember an earning yours meal!', 0);
-INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID)
-VALUES (0, '관리자메뉴', '', '', 0, '', null);
+INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID) VALUES (-999, 'Documentation', 'Documentation', '', 999, 'Usage guides for everything you need to know about it', null);
+INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID) VALUES (-992, 'Core Features', 'Core Features', '/documentation/features', 2, '', -999);
+INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID) VALUES (-991, 'Guides', 'Guides', '/documentation/guides', 1, '', -999);
+INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID) VALUES (-990, 'Changelog', 'Changelog', '/documentation/changelog', 0, '', -999);
+INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID) VALUES (-906, 'Inactive Item', 'Inactive Item', '', 3, '', -900);
+INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID) VALUES (-905, 'Inactive Item', 'Inactive Item', '', 3, '', -900);
+INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID) VALUES (-904, 'Round badge', 'Round badge', '', 2, '', -901);
+INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID) VALUES (-903, 'Rectangle badge', 'Rectangle badge', '', 1, '', -901);
+INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID) VALUES (-902, 'Circle badge', 'Circle badge', '', 0, '', -901);
+INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID) VALUES (-901, 'badges', 'badges', '', 0, '', -900);
+INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID) VALUES (-900, 'Navigation Features', 'Navigation Features', '', 900, 'Collapsable levels and badge styles at menu item', null);
+INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID) VALUES (-33, 'Colors', 'Colors', '/user-interface/colors', 4, '', -25);
+INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID) VALUES (-32, 'Cards', 'Cards', '/user-interface/cards', 3, '', -25);
+INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID) VALUES (-31, 'Icons', 'Icons', '/user-interface/icons', 2, '', -25);
+INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID) VALUES (-30, 'Wizards', 'Wizards', '/user-interface/form/wizards', 2, '', -27);
+INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID) VALUES (-29, 'Layouts', 'Layouts', '/user-interface/form/layouts', 1, '', -27);
+INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID) VALUES (-28, 'Fields', 'Fields', '/user-interface/form/fields', 0, '', -27);
+INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID) VALUES (-27, 'Form', 'Form', '', 1, '', -25);
+INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID) VALUES (-26, 'Animation', 'Animation', '/user-interface/animation', 0, '', -25);
+INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID) VALUES (-25, 'User Interface', 'User Interface', '', 4, 'Building elements of UI/UX', 0);
+INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID) VALUES (-24, 'Split screen', 'Sign up', '/pages/authentication/login/split-screen', 1, '', -22);
+INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID) VALUES (-23, 'Fullscreen', 'Sign up', '/pages/authentication/login/fullscreen', 0, '', -22);
+INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID) VALUES (-22, 'Screen Play', 'Sign up', '', 1, '', -20);
+INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID) VALUES (-21, 'Classic', 'Sign up', '/pages/authentication/login/classic', 0, '', -20);
+INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID) VALUES (-20, 'Login', 'Login', '', 1, '', -10);
+INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID) VALUES (-19, 'Modern', 'Modern', '/pages/authentication/sign-up/modern', 1, '', -17);
+INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID) VALUES (-18, 'Classic', 'Classic', '/pages/authentication/sign-up/classic', 0, '', -17);
+INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID) VALUES (-17, 'Sign up', 'Sign up', '', 0, '', -10);
+INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID) VALUES (-16, 'Internal server error', 'Internal server error', '', 1, '', -14);
+INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID) VALUES (-15, 'Page not found', 'Page not found', '', 0, '', -14);
+INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID) VALUES (-14, 'Errors', 'Errors', '', 4, '', -9);
+INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID) VALUES (-13, 'Support', 'Support', '/pages/support', 3, '', -9);
+INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID) VALUES (-12, 'Home', 'Home', '/pages/home', 2, '', -9);
+INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID) VALUES (-11, 'Help center', 'Help center', '/pages/help-center', 1, '', -9);
+INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID) VALUES (-10, 'Authentication', 'Authentication', '', 0, '', -9);
+INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID) VALUES (-9, 'Pages', 'Pages', '', 3, '', 0);
+INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID) VALUES (-8, 'Analytics', 'Analytics', '/dashboard/analytics', 0, '', -7);
+INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID) VALUES (-7, 'Dashboard', 'Dashboard', '', 2, 'Analystics for system performances!', 0);
+INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID) VALUES (-6, 'Menu', 'Menu', '/system/menu', 1, '', -4);
+INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID) VALUES (-5, 'User', 'User', '/system/user', 0, 'approve new user, denied, etc.', -4);
+INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID) VALUES (-4, 'System', 'System', '', 1, 'Operating environment of system', 0);
+INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID) VALUES (-3, 'Approve Process', 'Approve Process', '/work/approve-process', 1, '', -1);
+INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID) VALUES (-2, 'Receipt', 'Receipt', '/work/receipt', 0, '', -1);
+INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID) VALUES (-1, 'Main Works', 'Main Works', '', 0, 'Remember an earning yours meal!', 0);
+INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, UPPER_ID) VALUES (0, '관리자메뉴', '', '', 0, '', null);
 
 
 DROP TABLE IF EXISTS MENU_AUTHORITY CASCADE;
@@ -321,6 +260,7 @@ DROP TABLE IF EXISTS BOARD CASCADE;
 CREATE TABLE IF NOT EXISTS BOARD
 (
     ID BIGINT PRIMARY KEY,
+    GRP VARCHAR2(64) NOT NULL,
     UPPER_ID BIGINT,
     TITLE VARCHAR(512),
     USER_ID BIGINT,
@@ -337,6 +277,7 @@ CREATE TABLE IF NOT EXISTS BOARD
     UPDATER   VARCHAR(32) COMMENT '수정자'
 );
 COMMENT ON TABLE BOARD IS '게시판';
+COMMENT ON COLUMN BOARD.GRP IS '게시판 그룹';
 COMMENT ON COLUMN BOARD.AU_NAME IS '작성자 이름';
 COMMENT ON COLUMN BOARD.AU_EMAIL IS '작성자 이메일';
 COMMENT ON COLUMN BOARD.AU_PWD IS '작성자 비밀번호';
@@ -346,16 +287,19 @@ COMMENT ON COLUMN BOARD.ACS_COUNT IS '조횟수';
 DROP TABLE IF EXISTS BOARD_CONTENT CASCADE;
 CREATE TABLE IF NOT EXISTS BOARD_CONTENT
 (
-    ID      BIGINT PRIMARY KEY,
-    CONTENT CLOB,
+    ID       BIGINT PRIMARY KEY,
+    BODY     CLOB,
+    TEXT     CLOB,
     -- auditors
-    DELETED TIMESTAMP COMMENT '삭제일시',
-    CREATED TIMESTAMP COMMENT '생성일시',
-    CREATOR VARCHAR(32) COMMENT '생성자',
-    UPDATED TIMESTAMP COMMENT '수정일시',
-    UPDATER VARCHAR(32) COMMENT '수정자'
+    DELETED  TIMESTAMP COMMENT '삭제일시',
+    CREATED  TIMESTAMP COMMENT '생성일시',
+    CREATOR  VARCHAR(32) COMMENT '생성자',
+    UPDATED  TIMESTAMP COMMENT '수정일시',
+    UPDATER  VARCHAR(32) COMMENT '수정자'
 );
 COMMENT ON TABLE BOARD_CONTENT IS '게시판 내용';
+COMMENT ON COLUMN BOARD_CONTENT.BODY IS '본문';
+COMMENT ON COLUMN BOARD_CONTENT.TEXT IS '글내용(HTML 제거)';
 
 DROP TABLE IF EXISTS BOARD_REPLY CASCADE;
 CREATE TABLE IF NOT EXISTS BOARD_REPLY

@@ -27,4 +27,5 @@ public interface FileService {
 
   void addAccessCount(String id);
 
+  File delete(String id);
 }

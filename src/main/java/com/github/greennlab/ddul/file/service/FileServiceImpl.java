@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.UUID;
@@ -100,6 +101,13 @@ public class FileServiceImpl implements FileService {
   @Override
   public void addAccessCount(String id) {
     repository.addAccessCount(id);
+  }
+
+  @Override
+  public File delete(String id) {
+    final File file = getFile(id);
+    file.setDeleted(LocalDateTime.now());
+    return repository.save(file);
   }
 
   private String changeRelativePath(Path absolutePath) {

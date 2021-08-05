@@ -20,6 +20,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,7 +33,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 @RestController
 @RequestMapping("/_file")
 @RequiredArgsConstructor
-public class FileController {
+public class DDulFileController {
 
   public static final String HEADER_CONTENT_LENGTH = "Content-Length";
   public static final ClassPathResource NO_IMAGE
@@ -84,7 +85,7 @@ public class FileController {
       }
 
       service.addAccessCount(id);
-    } catch (FileNotFoundException e) {
+    } catch (Exception e) {
       response.setContentType(MediaType.IMAGE_PNG_VALUE);
 
       try (final InputStream in = NO_IMAGE.getInputStream()) {
@@ -95,11 +96,11 @@ public class FileController {
   }
 
   @PostMapping
-  public Map<String, List<File>> upload(HttpServletRequest request) throws IOException {
+  public Map<String, Object> upload(HttpServletRequest request) throws IOException {
     MultipartHttpServletRequest multipartRequest
         = (MultipartHttpServletRequest) request;
 
-    final Map<String, List<File>> result = new HashMap<>();
+    final Map<String, Object> result = new HashMap<>();
 
     final MultiValueMap<String, MultipartFile> multipartFiles =
         multipartRequest.getMultiFileMap();
@@ -112,7 +113,7 @@ public class FileController {
         storedList.add(service.save(multipartFile));
       }
 
-      result.put(entry.getKey(), storedList);
+      result.put(entry.getKey(), 1 == storedList.size() ? storedList.get(0) : storedList);
     }
 
     return result;
@@ -128,6 +129,11 @@ public class FileController {
     result.put("url", "/_file/media/" + file.getId());
 
     return result;
+  }
+
+  @DeleteMapping("/{id}")
+  public File deleteFile(@PathVariable String id) {
+    return service.delete(id);
   }
 
 }

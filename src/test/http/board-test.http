@@ -1,0 +1,15 @@
+POST {{host}}/_board/notice
+Content-Type: application/json
+
+{
+  "title": "TEST",
+  "content": {
+    "body": "%3Ch1%3ETITLE%3C/h1%3E%3Cp%3Esome%20text%3C/p%3E"
+  },
+  "removeFileIds": [
+    "key1",
+    "key2",
+    "key3"
+  ]
+}
+

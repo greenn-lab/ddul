@@ -3,7 +3,6 @@ package com.github.greennlab.ddul.user;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.greennlab.ddul.authority.Authority;
 import com.github.greennlab.ddul.entity.Auditor;
-import com.github.greennlab.ddul.mapstruct.EntityDtoMapping;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -16,14 +15,8 @@ import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.validation.constraints.AssertTrue;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.Setter;
-import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -34,12 +27,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Setter
 public class User extends Auditor implements UserDetails {
 
-  public static final UserOf mapped = Mappers.getMapper(UserOf.class);
+  public static final String REGEXP_PASSWORD =
+      "^(?=.*[~!@#$%^&*()_+`\\-=\\[\\]{};':\",./<>?])(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])\\S{6,}$";
 
   private static final long serialVersionUID = -7382145646927293876L;
-
-  private static final String REGEXP_PASSWORD =
-      "^(?=.*[~!@#$%^&*()_+`\\-=\\[\\]{};':\",./<>?])(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])\\S{6,}$";
 
 
   @Id
@@ -95,43 +86,6 @@ public class User extends Auditor implements UserDetails {
   @Override
   public boolean isEnabled() {
     return isAccountNonExpired() && isCredentialsNonExpired();
-  }
-
-
-  // -------------------------------------------------------
-  // Underling
-  // -------------------------------------------------------
-  @Mapper
-  public interface UserOf extends EntityDtoMapping<User, Dto> {
-
-  }
-
-  @Getter
-  @Setter
-  public static class Dto {
-
-    private Long id;
-
-    @NotEmpty
-    private String username;
-
-    @Pattern(regexp = REGEXP_PASSWORD)
-    private String password;
-
-    private LocalDate passwordExpired;
-
-    @Email
-    private String email;
-
-    private String name;
-
-    private boolean lock;
-
-
-    @AssertTrue
-    public static boolean isStrongPassword(String password) {
-      return password != null && password.matches(REGEXP_PASSWORD);
-    }
   }
 
 }

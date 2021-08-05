@@ -58,6 +58,9 @@ public class DDulWebAppConfiguration {
 
   static class StringToBooleanDeserializer extends StdScalarDeserializer<Boolean> {
 
+    private static final long serialVersionUID = -5634271371186212761L;
+
+
     public StringToBooleanDeserializer() {
       super(Boolean.TYPE);
     }
@@ -73,6 +76,9 @@ public class DDulWebAppConfiguration {
 
   @SuppressWarnings("java:S110")
   static class MilliToLocalDateTimeDeserializer extends LocalDateTimeDeserializer {
+
+    private static final long serialVersionUID = -7406281879843098525L;
+
 
     @Override
     public LocalDateTime deserialize(JsonParser parser, DeserializationContext context)

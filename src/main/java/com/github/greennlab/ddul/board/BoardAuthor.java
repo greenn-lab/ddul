@@ -18,7 +18,7 @@ public class BoardAuthor implements Serializable {
 
 
   @OneToOne
-  @JoinColumn(referencedColumnName = "USER_ID")
+  @JoinColumn(name = "USER_ID")
   private User user;
 
   private String name;
