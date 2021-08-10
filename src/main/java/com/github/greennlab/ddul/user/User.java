@@ -2,7 +2,7 @@ package com.github.greennlab.ddul.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.greennlab.ddul.authority.Authority;
-import com.github.greennlab.ddul.entity.Auditor;
+import com.github.greennlab.ddul.entity.BaseEntity;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -11,31 +11,24 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
-@EntityListeners(AuditingEntityListener.class)
+@Table(name = "USER")
 @Getter
 @Setter
-public class User extends Auditor implements UserDetails {
+public class User extends BaseEntity implements UserDetails {
 
   public static final String REGEXP_PASSWORD =
       "^(?=.*[~!@#$%^&*()_+`\\-=\\[\\]{};':\",./<>?])(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])\\S{6,}$";
 
   private static final long serialVersionUID = -7382145646927293876L;
 
-
-  @Id
-  @GeneratedValue
-  private Long id;
 
   private String username;
 

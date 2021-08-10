@@ -1,30 +1,23 @@
 package com.github.greennlab.ddul.board;
 
-import com.github.greennlab.ddul.entity.Auditor;
-import com.github.greennlab.ddul.user.User;
+import com.github.greennlab.ddul.entity.BaseEntity;
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
-@EntityListeners(AuditingEntityListener.class)
+@Table(name = "BOARD_REPLY")
 @Getter
 @Setter
-public class BoardReply extends Auditor {
+public class BoardReply extends BaseEntity {
 
-  @Id
-  @GeneratedValue
-  private Long id;
+  private static final long serialVersionUID = 4913295068326207184L;
+
 
   private Long upperId;
   private Long boardId;

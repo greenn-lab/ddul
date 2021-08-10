@@ -1,24 +1,23 @@
 package com.github.greennlab.ddul.menu;
 
-import com.github.greennlab.ddul.entity.Auditor;
 import com.github.greennlab.ddul.authority.Authority;
+import com.github.greennlab.ddul.entity.BaseEntity;
 import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import lombok.Generated;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Where;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
+@Table(name = "MENU_AUTHORITY")
 @Where(clause = "DELETED = 'N'")
-@EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter
-public class MenuAuthority extends Auditor {
+public class MenuAuthority extends BaseEntity {
 
   private static final long serialVersionUID = -7034907455336320332L;
 

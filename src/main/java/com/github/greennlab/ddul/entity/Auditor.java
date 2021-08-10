@@ -19,9 +19,11 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Setter
 public class Auditor implements Serializable {
 
-  private static final long serialVersionUID = 1126743908870895361L;
+  public static final String ID_GENERATOR_NAME = "ID_GENERATOR_SQ";
 
   public static final String NOT_DELETED = "DELETED IS NULL";
+
+  private static final long serialVersionUID = 1126743908870895361L;
 
 
   private LocalDateTime deleted;

@@ -1,7 +1,7 @@
 package com.github.greennlab.ddul.board;
 
 import com.github.greennlab.ddul.board.BoardDTO.BoardMapper;
-import com.github.greennlab.ddul.entity.Auditor;
+import com.github.greennlab.ddul.entity.BaseEntity;
 import com.github.greennlab.ddul.file.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,8 +9,6 @@ import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -25,16 +23,12 @@ import org.mapstruct.factory.Mappers;
 @Table(name = "BOARD")
 @Getter
 @Setter
-public class Board extends Auditor {
+public class Board extends BaseEntity {
 
   public static final BoardMapper mapped = Mappers.getMapper(BoardMapper.class);
 
   private static final long serialVersionUID = 5317379996515377215L;
 
-
-  @Id
-  @GeneratedValue
-  private Long id;
 
   @Column(name = "GRP")
   private String group;

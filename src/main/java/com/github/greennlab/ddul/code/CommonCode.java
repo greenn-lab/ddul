@@ -1,38 +1,27 @@
 package com.github.greennlab.ddul.code;
 
-import com.github.greennlab.ddul.entity.Auditor;
+import com.github.greennlab.ddul.entity.BaseEntity;
 import com.github.greennlab.ddul.mapstruct.EntityDtoMapping;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
 @Table(name = "CODE")
-@EntityListeners(AuditingEntityListener.class)
-@NoArgsConstructor
 @Getter
 @Setter
-public class CommonCode extends Auditor {
+public class CommonCode extends BaseEntity {
 
   public static final CommonCodeOf mapped = Mappers.getMapper(CommonCodeOf.class);
 
   private static final long serialVersionUID = -8379883687091265041L;
 
-
-  @Id
-  @GeneratedValue
-  private Long id;
 
   @Column(name = "GRP_COD")
   private String group;

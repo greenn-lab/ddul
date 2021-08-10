@@ -1,39 +1,32 @@
 package com.github.greennlab.ddul.menu;
 
-import com.github.greennlab.ddul.entity.Auditor;
+import com.github.greennlab.ddul.entity.BaseEntity;
 import com.github.greennlab.ddul.mapstruct.EntityDtoMapping;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
+import javax.persistence.Table;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
-@EntityListeners(AuditingEntityListener.class)
+@Table(name = "MENU")
 @Getter
 @Setter
-public class Menu extends Auditor {
+public class Menu extends BaseEntity {
 
   public static final MenuOf mapped = Mappers.getMapper(MenuOf.class);
 
   private static final long serialVersionUID = -8379883687091265040L;
 
-
-  @Id
-  @GeneratedValue
-  private Long id;
 
   private Long upperId;
 
