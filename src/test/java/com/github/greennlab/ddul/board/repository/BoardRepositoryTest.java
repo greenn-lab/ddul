@@ -1,39 +1,46 @@
 package com.github.greennlab.ddul.board.repository;
 
-import com.github.greennlab.ddul.SqlLoggingConfiguration;
+import static org.assertj.core.api.Assertions.assertThat;
+
 import com.github.greennlab.ddul.board.Board;
 import com.github.greennlab.ddul.board.BoardContent;
+import com.github.greennlab.ddul.test.DataJpaDBTest;
+import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
-import org.springframework.test.annotation.Rollback;
-import org.springframework.test.context.ContextConfiguration;
 
-@DataJpaTest
-@AutoConfigureTestDatabase(replace = Replace.NONE)
-@Import(SqlLoggingConfiguration.class)
-@Rollback(false)
-class BoardRepositoryTest {
+class BoardRepositoryTest extends DataJpaDBTest {
 
   @Autowired
   BoardRepository repository;
 
+  @Autowired
+  BoardContentRepository contentRepository;
+
+
   @Test
-  void shouldConnect() {
+  void save() {
     Board board = new Board();
     board.setGroup("notice");
     board.setTitle("hi");
 
     BoardContent content = new BoardContent();
-    content.setBody("hello!");
+    content.setBody("<h1>hello!<small class=\"subtitle--2\">nice to meet you~</small></h1>");
+    content.setBoard(board);
 
-//    board.setContent(content);
+    board.setContent(content);
 
-    repository.save(board);
+    contentRepository.save(content);
+    final Board save = repository.save(board);
+
+    assertThat(save.getId()).isNotNull();
   }
+
+  @Test
+  void findById() {
+    final Optional<Board> item = repository.findById(15L);
+    assertThat(item).isNotNull();
+  }
+
 
 }
