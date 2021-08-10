@@ -3,6 +3,7 @@ package com.github.greennlab.ddul.board;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.greennlab.ddul.user.User;
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
@@ -21,9 +22,13 @@ public class BoardAuthor implements Serializable {
   @JoinColumn(name = "USER_ID")
   private User user;
 
+  @Column(name = "AU_NAME")
   private String name;
+
+  @Column(name = "AU_EMAIL")
   private String email;
 
+  @Column(name = "AU_PWD")
   @JsonIgnore
   private String password;
 

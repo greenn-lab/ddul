@@ -5,30 +5,24 @@ import com.github.greennlab.ddul.entity.Auditor;
 import com.github.greennlab.ddul.file.File;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.AttributeOverride;
-import javax.persistence.AttributeOverrides;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
-import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Where;
 import org.mapstruct.factory.Mappers;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
-@EntityListeners(AuditingEntityListener.class)
+@Table(name = "BOARD")
 @Getter
 @Setter
 public class Board extends Auditor {
@@ -49,11 +43,6 @@ public class Board extends Auditor {
   private String title;
 
   @Embedded
-  @AttributeOverrides({
-      @AttributeOverride(name = "name", column = @Column(name = "AU_NAME")),
-      @AttributeOverride(name = "email", column = @Column(name = "AU_EMAIL")),
-      @AttributeOverride(name = "password", column = @Column(name = "AU_PWD")),
-  })
   private BoardAuthor author = new BoardAuthor();
 
   private boolean secret;
@@ -61,7 +50,8 @@ public class Board extends Auditor {
   @Column(name = "ACS_COUNT")
   private int accessCount;
 
-  @OneToOne(mappedBy = "board", optional = false)
+  @OneToOne(mappedBy = "board", fetch = FetchType.LAZY, optional = false)
+  @PrimaryKeyJoinColumn
   private BoardContent content;
 
   @OneToMany

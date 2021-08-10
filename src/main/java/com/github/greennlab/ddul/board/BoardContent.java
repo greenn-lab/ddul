@@ -29,11 +29,11 @@ public class BoardContent extends Auditor {
 
 
   @Id
-  @GeneratedValue
   private Long id;
 
   @OneToOne
-  @PrimaryKeyJoinColumn(name = "ID", referencedColumnName = "ID")
+  @MapsId
+  @JoinColumn(name = "ID")
   private Board board;
 
   @Lob
