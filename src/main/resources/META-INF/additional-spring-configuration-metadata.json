@@ -1,0 +1,9 @@
+{
+  "properties": [
+    {
+      "name": "file.storage.path",
+      "type": "java.nio.file.Path",
+      "description": "Physically file store path"
+    }
+  ]
+}

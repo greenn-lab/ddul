@@ -5,9 +5,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import com.github.greennlab.ddul.board.Board;
 import com.github.greennlab.ddul.board.BoardContent;
 import com.github.greennlab.ddul.test.DataJpaDBTest;
-import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.ObjectUtils;
 
 class BoardRepositoryTest extends DataJpaDBTest {
 
@@ -31,16 +31,14 @@ class BoardRepositoryTest extends DataJpaDBTest {
     board.setContent(content);
 
     contentRepository.save(content);
+
+    if (ObjectUtils.isEmpty(board.getBid())) {
+      board.setBid(board.getId());
+    }
+
     final Board save = repository.save(board);
 
     assertThat(save.getId()).isNotNull();
   }
-
-  @Test
-  void findById() {
-    final Optional<Board> item = repository.findById(15L);
-    assertThat(item).isNotNull();
-  }
-
 
 }

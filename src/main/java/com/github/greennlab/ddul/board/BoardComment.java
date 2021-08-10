@@ -14,20 +14,21 @@ import lombok.Setter;
 @Table(name = "BOARD_REPLY")
 @Getter
 @Setter
-public class BoardReply extends BaseEntity {
+public class BoardComment extends BaseEntity {
 
   private static final long serialVersionUID = 4913295068326207184L;
 
 
-  private Long upperId;
+  private Long bid;
+  private Integer depth;
+
+  @Column(name = "ORD")
+  private Integer order;
+
   private Long boardId;
   private String content;
 
   @Embedded
-  @AttributeOverrides({
-      @AttributeOverride(name = "name", column = @Column(name = "AU_NAME")),
-      @AttributeOverride(name = "password", column = @Column(name = "AU_PWD")),
-  })
   private BoardAuthor author;
 
   private boolean secret;

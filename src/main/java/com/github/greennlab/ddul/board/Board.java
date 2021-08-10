@@ -29,11 +29,15 @@ public class Board extends BaseEntity {
 
   private static final long serialVersionUID = 5317379996515377215L;
 
+  private Long bid;
+  private Integer depth;
+
+  @Column(name = "ORD")
+  private Integer order;
 
   @Column(name = "GRP")
   private String group;
 
-  private Long upperId;
   private String title;
 
   @Embedded

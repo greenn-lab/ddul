@@ -9,7 +9,7 @@ import org.mapstruct.factory.Mappers;
 
 @Getter
 @Setter
-public class BoardReplyDTO {
+public class BoardCommentDTO {
 
   public static final BoardReplyMapper mapped = Mappers.getMapper(BoardReplyMapper.class);
 
@@ -33,7 +33,7 @@ public class BoardReplyDTO {
   // Underling
   // -------------------------------------------------------
   @Mapper
-  interface BoardReplyMapper extends EntityDtoMapping<BoardReply, BoardReplyDTO> {
+  interface BoardReplyMapper extends EntityDtoMapping<BoardComment, BoardCommentDTO> {
 
   }
 }

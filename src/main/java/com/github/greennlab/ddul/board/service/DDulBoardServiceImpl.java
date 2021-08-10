@@ -1,9 +1,9 @@
 package com.github.greennlab.ddul.board.service;
 
 import com.github.greennlab.ddul.board.Board;
+import com.github.greennlab.ddul.board.BoardComment;
 import com.github.greennlab.ddul.board.BoardContent;
 import com.github.greennlab.ddul.board.BoardDTO;
-import com.github.greennlab.ddul.board.BoardReply;
 import com.github.greennlab.ddul.board.repository.BoardContentRepository;
 import com.github.greennlab.ddul.board.repository.BoardRepository;
 import java.util.List;
@@ -33,7 +33,7 @@ public class DDulBoardServiceImpl implements DDulBoardService {
   }
 
   @Override
-  public List<BoardReply> getReplies(Long id) {
+  public List<BoardComment> getReplies(Long id) {
     return null;
   }
 

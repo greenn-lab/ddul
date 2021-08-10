@@ -1,7 +1,7 @@
 package com.github.greennlab.ddul.board.service;
 
 import com.github.greennlab.ddul.board.BoardDTO;
-import com.github.greennlab.ddul.board.BoardReply;
+import com.github.greennlab.ddul.board.BoardComment;
 import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,7 +12,7 @@ public interface DDulBoardService {
 
   BoardDTO getArticle(Long id);
 
-  List<BoardReply> getReplies(Long id);
+  List<BoardComment> getReplies(Long id);
 
   BoardDTO save(BoardDTO board);
 

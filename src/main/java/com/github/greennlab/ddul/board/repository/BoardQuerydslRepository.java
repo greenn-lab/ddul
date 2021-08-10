@@ -3,6 +3,8 @@ package com.github.greennlab.ddul.board.repository;
 import com.github.greennlab.ddul.board.Board;
 import com.github.greennlab.ddul.board.QBoard;
 import com.querydsl.core.QueryResults;
+import com.querydsl.core.types.Expression;
+import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +28,7 @@ public class BoardQuerydslRepository {
     final QueryResults<Board> results = query
         .selectFrom(board)
         .where(matches(keyword))
-        .orderBy(board.id.desc())
+        .orderBy(board.bid.desc(), board.order.asc())
         .offset(pageable.getOffset())
         .limit(pageable.getPageSize())
         .fetchResults();

@@ -22,7 +22,7 @@ public class BaseEntity extends Auditor implements Serializable {
   public static final String ID_GENERATOR_NAME = "ID_GENERATOR_SQ";
 
   @Id
-  @SequenceGenerator(name = ID_GENERATOR_NAME, sequenceName = ID_GENERATOR_NAME)
+  @SequenceGenerator(name = ID_GENERATOR_NAME, sequenceName = ID_GENERATOR_NAME, allocationSize = 1)
   @GeneratedValue(strategy = SEQUENCE, generator = ID_GENERATOR_NAME)
   private Long id;
 
