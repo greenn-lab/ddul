@@ -43,21 +43,14 @@ public class DDulBoardServiceImpl implements DDulBoardService {
       removeFileById(dto.getRemoveFileIds().toArray(new String[0]));
     }
 
-//    Board board = BoardDTO.mapped.by(dto);
-//    BoardContent content = board.getContent();
+    Board board = BoardDTO.mapped.by(dto);
+    BoardContent content = board.getContent();
 
-    Board board = new Board();
-    board.setTitle("hi");
-
-    BoardContent content = new BoardContent();
-    content.setBody("hello!");
-
+    content.setBoard(board);
     board.setContent(content);
 
-
+    contentRepository.save(content);
     board = repository.save(board);
-
-    content = contentRepository.save(content);
 
     return BoardDTO.mapped.to(board);
   }
