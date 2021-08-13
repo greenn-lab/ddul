@@ -1,7 +1,6 @@
 package com.github.greennlab.ddul.file;
 
 import com.github.greennlab.ddul.entity.Auditor;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -23,14 +22,10 @@ public class File extends Auditor {
   private String name;
   private String path;
   private long size;
+  private String mime;
+  private String pack;
+  private int access;
 
-  @Column(name = "CONT_TYPE")
-  private String contentType;
-
-  @Column(name = "GRP")
-  private String group;
-
-  @Column(name = "ACS_COUNT")
-  private int accessCount;
+  private boolean removal;
 
 }

@@ -1,7 +1,6 @@
 package com.github.greennlab.ddul.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
@@ -19,14 +18,11 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter
+@SuppressWarnings("serial")
 public class Auditor implements Serializable {
 
   public static final String ID_GENERATOR_NAME = "ID_GENERATOR_SQ";
 
-  private static final long serialVersionUID = 1126743908870895361L;
-
-
-  private boolean removal;
 
   @CreatedBy
   @Column(updatable = false)

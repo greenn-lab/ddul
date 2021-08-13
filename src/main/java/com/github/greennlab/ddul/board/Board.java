@@ -30,6 +30,7 @@ public class Board extends Auditor {
   private boolean secret;
   private int accessCount;
   private BoardContent content;
+  private boolean removal;
 
   private List<File> attachFiles;
   private List<BoardComment> comments;
