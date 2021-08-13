@@ -1,7 +1,6 @@
 package com.github.greennlab.ddul.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.github.greennlab.ddul.authority.Authority;
 import com.github.greennlab.ddul.entity.BaseEntity;
 import java.time.LocalDate;
@@ -36,7 +35,7 @@ public class User extends BaseEntity implements UserDetails {
   private static final long serialVersionUID = -7382145646927293876L;
 
 
-  private String username = "{ghost}";
+  private String username;
 
   @JsonIgnore
   private String password;
@@ -56,7 +55,8 @@ public class User extends BaseEntity implements UserDetails {
 
   public static Optional<User> authenticated() {
     final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    return Optional.of((User) authentication.getPrincipal());
+    return Optional.ofNullable(null == authentication ? null :
+        (User) authentication.getPrincipal());
   }
 
 

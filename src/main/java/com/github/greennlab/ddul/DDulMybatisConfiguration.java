@@ -50,7 +50,7 @@ public class DDulMybatisConfiguration {
     return configuration -> {
       configuration.addInterceptor(new PageableBuildupInterceptor());
       configuration.addInterceptor(new PageableExecuteInterceptor());
-      configuration.addInterceptor(new AuditorParameterInterceptor(auditorAware));
+      configuration.addInterceptor(new AuditorParameterInterceptor());
       configuration.setJdbcTypeForNull(JdbcType.VARCHAR);
       configuration.setMapUnderscoreToCamelCase(true);
     };

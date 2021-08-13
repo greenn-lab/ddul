@@ -13,12 +13,16 @@ public class DDulJSR338Configuration {
 
   private static final User ghost = new User();
 
+  static {
+    ghost.setUsername("{ghost}");
+  }
+
 
   @Bean
-  AuditorAware<Object> securityLinkageAuditorAware() {
+  AuditorAware<String> securityLinkageAuditorAware() {
     return () -> {
       final Optional<User> authenticated = User.authenticated();
-      return Optional.of(authenticated.orElse(ghost));
+      return Optional.of(authenticated.orElse(ghost).getUsername());
     };
   }
 

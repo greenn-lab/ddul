@@ -10,13 +10,13 @@ import org.springframework.context.annotation.Profile;
 
 @Profile('!' + Application.PRODUCTION)
 @Configuration
-public class SqlLoggingConfiguration implements MessageFormattingStrategy {
+public class DDulSqlLoggingConfiguration implements MessageFormattingStrategy {
 
   @PostConstruct
   void setup() {
     P6ModuleManager.getInstance()
         .getOptions(P6SpyOptions.class)
-        .setLogMessageFormat(SqlLoggingConfiguration.class.getName());
+        .setLogMessageFormat(DDulSqlLoggingConfiguration.class.getName());
   }
 
   @Override
