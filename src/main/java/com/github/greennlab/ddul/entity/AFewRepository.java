@@ -5,10 +5,10 @@ import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.data.repository.Repository;
 
 @NoRepositoryBean
-public interface AFewRepository<ENTITY, ID> extends Repository<ENTITY, ID> {
+public interface AFewRepository<ENTITY> extends Repository<ENTITY, Long> {
 
-  Optional<ENTITY> findById(ID id);
+  Optional<ENTITY> findById(Long id);
 
-  <E extends ENTITY> E save(E user);
+  <E extends ENTITY> E save(E entity);
 
 }

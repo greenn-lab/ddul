@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-public interface DDulCodeRepository extends AFewRepository<CommonCode, Long> {
+public interface DDulCodeRepository extends AFewRepository<CommonCode> {
 
   List<CommonCode> findAllByGroupAndNameContainsOrderByOrder(String group, String codeName);
 

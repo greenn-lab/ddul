@@ -5,7 +5,7 @@ import com.github.greennlab.ddul.menu.Menu;
 import java.util.List;
 import org.hibernate.annotations.Where;
 
-public interface DDulMenuRepository extends AFewRepository<Menu, Long> {
+public interface DDulMenuRepository extends AFewRepository<Menu> {
 
   @Where(clause = "REMOVAL = 'N'")
   <S extends Menu> S findById(long id);

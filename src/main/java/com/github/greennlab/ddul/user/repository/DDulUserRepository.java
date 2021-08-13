@@ -5,7 +5,7 @@ import com.github.greennlab.ddul.user.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-public interface DDulUserRepository extends AFewRepository<User, Long> {
+public interface DDulUserRepository extends AFewRepository<User> {
 
   User findByUsername(String username);
 
