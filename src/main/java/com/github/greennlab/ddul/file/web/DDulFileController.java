@@ -17,7 +17,6 @@ import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -69,7 +68,7 @@ public class DDulFileController {
 
 
   @GetMapping("/info/{id}")
-  public File download(@PathVariable String id) throws IOException {
+  public File download(@PathVariable String id) {
     return service.getFile(id);
   }
 
@@ -77,7 +76,7 @@ public class DDulFileController {
   public void image(@PathVariable String id, HttpServletResponse response) throws IOException {
     try {
       final File file = service.getFile(id);
-      response.setContentType(file.getContentType());
+      response.setContentType(file.getMime());
       response.setHeader(HEADER_CONTENT_LENGTH, Long.toString(file.getSize()));
 
       try (final InputStream in = Files.newInputStream(service.getStoredPath(file.getPath()))) {

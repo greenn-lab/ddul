@@ -63,7 +63,7 @@ public class FileServiceImpl implements FileService {
 
   @Override
   public List<File> getFilesByGroup(Object group) {
-    return repository.findAllByGroup(group.toString());
+    return repository.findAllByPack(group.toString());
   }
 
   @Override
@@ -88,7 +88,7 @@ public class FileServiceImpl implements FileService {
     file.setId(id);
     file.setName(multipartFile.getOriginalFilename());
     file.setPath(path.toString());
-    file.setContentType(multipartFile.getContentType());
+    file.setMime(multipartFile.getContentType());
     file.setSize(multipartFile.getSize());
 
     final File save = repository.save(file);
