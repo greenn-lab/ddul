@@ -7,6 +7,7 @@ import com.github.greennlab.ddul.authority.repository.DDulAuthorityRepository;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -25,10 +26,14 @@ class DDulAuthorityRepositoryTest {
         .isNotNull()
         .isPresent();
 
-    final List<Authority> authorities = authority.get().getAllAsFlat().collect(Collectors.toList());
+    final List<Authority> authorities = getAllAsFlat(authority.get()).collect(Collectors.toList());
     assertThat(authorities.size()).isGreaterThanOrEqualTo(4);
-
   }
+
+  private Stream<Authority> getAllAsFlat(Authority authority) {
+    return Stream.concat(Stream.of(authority), authority.getChildren().stream().flatMap(this::getAllAsFlat));
+  }
+
 
 
 }

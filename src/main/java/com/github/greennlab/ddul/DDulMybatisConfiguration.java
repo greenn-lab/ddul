@@ -34,10 +34,12 @@ public class DDulMybatisConfiguration {
 
 
   @Bean
-  ConfigurationCustomizer mybatisConfigurationCustomizer(AuditorAware<String> auditorAware) {
+  ConfigurationCustomizer mybatisConfigurationCustomizer(AuditorAware<Object> auditorAware) {
     final Set<String> basePackages = getBasePackages();
     properties.setTypeAliasesPackage(String.join(",", basePackages));
     properties.setTypeAliasesSuperType(Mappable.class);
+
+    properties.setTypeHandlersPackage(Application.PACKAGE + ".mybatis.handlers");
 
     final Configuration newConfiguration = new Configuration();
     properties.setConfiguration(newConfiguration);

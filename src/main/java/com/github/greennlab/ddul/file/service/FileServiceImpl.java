@@ -10,6 +10,7 @@ import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import javax.annotation.PostConstruct;
@@ -30,6 +31,7 @@ public class FileServiceImpl implements FileService {
 
 
   private final FileRepository repository;
+
 
   @Value("${file.storage.path}")
   private Path fileStoragePath;
@@ -60,8 +62,8 @@ public class FileServiceImpl implements FileService {
   }
 
   @Override
-  public List<File> getFileByGroup(String group) {
-    return repository.findAllByGroup(group);
+  public List<File> getFilesByGroup(Object group) {
+    return repository.findAllByGroup(group.toString());
   }
 
   @Override
@@ -106,12 +108,22 @@ public class FileServiceImpl implements FileService {
   @Override
   public File delete(String id) {
     final File file = getFile(id);
-    file.setDeleted(LocalDateTime.now());
+
+    if (null == file) {
+      return null;
+    }
+
+    file.setRemoval(true);
     return repository.save(file);
   }
 
   private String changeRelativePath(Path absolutePath) {
     return absolutePath.toString()
         .replace(fileStoragePath.toString(), "");
+  }
+
+  @Override
+  public void updateGroupById(Object group, String... ids) {
+    repository.updateGroupById(group.toString(), ids);
   }
 }

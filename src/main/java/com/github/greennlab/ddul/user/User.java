@@ -1,22 +1,28 @@
 package com.github.greennlab.ddul.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.github.greennlab.ddul.authority.Authority;
 import com.github.greennlab.ddul.entity.BaseEntity;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.util.ObjectUtils;
 
 @Entity
 @Table(name = "USER")
@@ -30,7 +36,7 @@ public class User extends BaseEntity implements UserDetails {
   private static final long serialVersionUID = -7382145646927293876L;
 
 
-  private String username;
+  private String username = "{ghost}";
 
   @JsonIgnore
   private String password;
@@ -42,22 +48,40 @@ public class User extends BaseEntity implements UserDetails {
   private String name;
   private boolean lock;
 
-  @OneToMany(mappedBy = "user")
-  private List<UserAuthority> userAuthorities = new ArrayList<>();
+  @OneToMany(fetch = FetchType.EAGER)
+  @JoinColumn(name = "USER_ID")
+  @JsonIgnore
+  private Set<UserAuthority> userAuthorities = new HashSet<>();
 
-  public Stream<Authority> getFlatAuthorities() {
-    return getUserAuthorities().stream()
-        .map(UserAuthority::getAuthority)
-        .flatMap(Authority::getAllAsFlat);
+
+  public static Optional<User> authenticated() {
+    final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    return Optional.of((User) authentication.getPrincipal());
   }
 
+
+  private Set<Authority> spreadAllAuthorities(Collection<Authority> authorities) {
+    final Set<Authority> result = new HashSet<>();
+
+    for (Authority authority : authorities) {
+      result.add(authority);
+
+      if (!ObjectUtils.isEmpty(authority.getChildren())) {
+        result.addAll(spreadAllAuthorities(authority.getChildren()));
+      }
+    }
+
+    return result;
+  }
 
   // -------------------------------------------------------
   // Security
   // -------------------------------------------------------
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
-    return getFlatAuthorities().collect(Collectors.toList());
+    return spreadAllAuthorities(getUserAuthorities().stream()
+        .map(UserAuthority::getAuthority)
+        .collect(Collectors.toSet()));
   }
 
   @Override
@@ -80,5 +104,4 @@ public class User extends BaseEntity implements UserDetails {
   public boolean isEnabled() {
     return isAccountNonExpired() && isCredentialsNonExpired();
   }
-
 }

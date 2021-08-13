@@ -1,60 +1,47 @@
 package com.github.greennlab.ddul.board;
 
-import com.github.greennlab.ddul.board.BoardDTO.BoardMapper;
-import com.github.greennlab.ddul.entity.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
+import com.github.greennlab.ddul.entity.Auditor;
 import com.github.greennlab.ddul.file.File;
-import java.util.ArrayList;
+import com.github.greennlab.ddul.mybatis.MapperType;
 import java.util.List;
-import javax.persistence.Column;
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
-import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.Where;
-import org.mapstruct.factory.Mappers;
 
-@Entity
-@Table(name = "BOARD")
+@MapperType
 @Getter
 @Setter
-public class Board extends BaseEntity {
-
-  public static final BoardMapper mapped = Mappers.getMapper(BoardMapper.class);
+public class Board extends Auditor {
 
   private static final long serialVersionUID = 5317379996515377215L;
 
+  private Long id;
   private Long bid;
-  private Integer depth;
+  private Integer depth = 0;
+  private Integer order = 0;
 
-  @Column(name = "ORD")
-  private Integer order;
-
-  @Column(name = "GRP")
+  @NotEmpty
   private String group;
 
   private String title;
-
-  @Embedded
   private BoardAuthor author = new BoardAuthor();
-
   private boolean secret;
-
-  @Column(name = "ACS_COUNT")
   private int accessCount;
-
-  @OneToOne(mappedBy = "board", fetch = FetchType.LAZY, optional = false)
-  @PrimaryKeyJoinColumn
   private BoardContent content;
 
-  @OneToMany
-  @JoinColumn(name = "GRP")
-  @Where(clause = "DELETED IS NULL")
-  private List<File> attachFiles = new ArrayList<>();
+  private List<File> attachFiles;
+  private List<BoardComment> comments;
+  private List<BoardExtra> extras;
+
+  @JsonProperty(access = Access.WRITE_ONLY)
+  private Long pid;
+
+  @JsonProperty(access = Access.WRITE_ONLY)
+  private String[] addFileIds;
+
+  @JsonProperty(access = Access.WRITE_ONLY)
+  private String[] removeFileIds;
 
 }

@@ -1,32 +1,24 @@
 package com.github.greennlab.ddul;
 
+import com.github.greennlab.ddul.user.User;
 import java.util.Optional;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 
 @Configuration
 @EnableJpaAuditing
 public class DDulJSR338Configuration {
 
+  private static final User ghost = new User();
+
+
   @Bean
-  AuditorAware<String> securityLinkageAuditorAware() {
+  AuditorAware<Object> securityLinkageAuditorAware() {
     return () -> {
-      final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-      if (authentication == null) {
-        return Optional.of("{ghost}");
-      }
-
-      final Object principal = authentication.getPrincipal();
-      if (principal instanceof User) {
-        return Optional.of(((User) principal).getUsername());
-      }
-
-      return Optional.of(principal.toString());
+      final Optional<User> authenticated = User.authenticated();
+      return Optional.of(authenticated.orElse(ghost));
     };
   }
 

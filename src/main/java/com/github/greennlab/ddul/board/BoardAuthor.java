@@ -1,6 +1,7 @@
 package com.github.greennlab.ddul.board;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.github.greennlab.ddul.user.User;
 import java.io.Serializable;
 import javax.persistence.Column;
@@ -20,6 +21,7 @@ public class BoardAuthor implements Serializable {
 
   @OneToOne
   @JoinColumn(name = "USER_ID")
+  @JsonIgnoreProperties()
   private User user;
 
   @Column(name = "AU_NAME")

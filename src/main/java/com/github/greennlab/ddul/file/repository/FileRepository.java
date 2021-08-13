@@ -14,5 +14,9 @@ public interface FileRepository extends AFewRepository<File, String> {
   @Query("UPDATE File SET accessCount = accessCount + 1 WHERE id = :id")
   void addAccessCount(@Param("id") String id);
 
-  List<File> findAllByGroup(String group);
+  @Modifying
+  @Query("UPDATE File f SET f.group = :group WHERE f.id IN (:ids)")
+  void updateGroupById(@Param("group") String group, @Param("ids") String... ids);
+
+  List<File> findAllByGroup(Object group);
 }

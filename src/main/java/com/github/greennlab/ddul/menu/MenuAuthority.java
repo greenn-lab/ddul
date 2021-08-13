@@ -1,6 +1,5 @@
 package com.github.greennlab.ddul.menu;
 
-import com.github.greennlab.ddul.authority.Authority;
 import com.github.greennlab.ddul.entity.BaseEntity;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -14,7 +13,7 @@ import org.hibernate.annotations.Where;
 
 @Entity
 @Table(name = "MENU_AUTHORITY")
-@Where(clause = "DELETED = 'N'")
+@Where(clause = "REMOVAL = 'N'")
 @Getter
 @Setter
 public class MenuAuthority extends BaseEntity {
@@ -30,8 +29,8 @@ public class MenuAuthority extends BaseEntity {
   @JoinColumn(name = "MENU_ID")
   private Menu menu;
 
-  @ManyToOne
-  @JoinColumn(name = "AUTHORITY_ID")
-  private Authority authority;
+//  @ManyToOne
+//  @JoinColumn(name = "AUTHORITY_ID")
+//  private Authority authority;
 
 }

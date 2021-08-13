@@ -7,6 +7,8 @@ import org.springframework.data.domain.Pageable;
 
 public interface DDulUserRepository extends AFewRepository<User, Long> {
 
+  User findByUsername(String username);
+
   Page<User> findAll(Pageable pageable);
 
   <E extends User> E saveAndFlush(E entity);

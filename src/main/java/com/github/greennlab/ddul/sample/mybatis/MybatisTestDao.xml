@@ -7,7 +7,7 @@
     SELECT C.*
     FROM CODE C
     WHERE COD = NVL(#{code}, COD)
-       OR COD = NVL(#{!user}, COD)
+       OR COD = NVL(#{_.username}, COD)
     ORDER BY ORD
     ]]></select>
 

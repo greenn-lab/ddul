@@ -1,5 +1,7 @@
 package com.github.greennlab.ddul.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
@@ -21,25 +23,27 @@ public class Auditor implements Serializable {
 
   public static final String ID_GENERATOR_NAME = "ID_GENERATOR_SQ";
 
-  public static final String NOT_DELETED = "DELETED IS NULL";
-
   private static final long serialVersionUID = 1126743908870895361L;
 
 
-  private LocalDateTime deleted;
+  private boolean removal;
 
   @CreatedBy
   @Column(updatable = false)
+  @JsonIgnore
   private String creator;
 
   @LastModifiedBy
+  @JsonIgnore
   private String updater;
 
   @CreatedDate
   @Column(updatable = false)
+  @JsonIgnore
   private LocalDateTime created;
 
   @LastModifiedDate
+  @JsonIgnore
   private LocalDateTime updated;
 
 }

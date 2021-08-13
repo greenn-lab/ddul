@@ -61,7 +61,7 @@ public class CommonCode extends BaseEntity {
     private String name;
     private int order;
     private boolean use;
-    private LocalDateTime deleted;
+    private boolean removal;
 
   }
 

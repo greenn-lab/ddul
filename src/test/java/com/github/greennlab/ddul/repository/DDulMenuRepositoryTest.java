@@ -18,9 +18,9 @@ class DDulMenuRepositoryTest {
 
   @Test
   void shouldGetMenuAllBranches() {
-    final Optional<Menu> adminMenus = repository.findById(0L);
+    final Menu adminMenus = repository.findById(0L);
 
-    assertThat(adminMenus).isPresent();
+    assertThat(adminMenus).isNotNull();
   }
 
 }

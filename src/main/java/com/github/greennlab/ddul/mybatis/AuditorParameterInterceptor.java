@@ -23,16 +23,16 @@ import org.springframework.data.domain.AuditorAware;
 @Slf4j
 public class AuditorParameterInterceptor implements Interceptor {
 
-  private final AuditorAware<String> auditorAware;
+  private final AuditorAware<Object> auditorAware;
 
 
   public Object intercept(Invocation invocation) throws Throwable {
     final StatementHandler handler = (StatementHandler) invocation.getTarget();
     final BoundSql boundSql = handler.getBoundSql();
 
-    final String auditor = auditorAware.getCurrentAuditor().orElse("");
+    final Object auditor = auditorAware.getCurrentAuditor().orElse(null);
 
-    boundSql.setAdditionalParameter("!user", auditor);
+    boundSql.setAdditionalParameter("_", auditor);
 
     return invocation.proceed();
   }

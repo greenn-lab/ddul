@@ -3,7 +3,6 @@ package com.github.greennlab.ddul.file.web;
 import com.github.greennlab.ddul.Application;
 import com.github.greennlab.ddul.file.File;
 import com.github.greennlab.ddul.file.service.FileService;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLEncoder;
@@ -18,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -64,7 +64,7 @@ public class DDulFileController {
 
   @GetMapping(params = "group")
   public List<File> downloadByGroup(String group) {
-    return service.getFileByGroup(group);
+    return service.getFilesByGroup(group);
   }
 
 

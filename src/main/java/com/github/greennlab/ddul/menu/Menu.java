@@ -28,7 +28,7 @@ public class Menu extends BaseEntity {
   private static final long serialVersionUID = -8379883687091265040L;
 
 
-  private Long upperId;
+  private Long pid;
 
   @Column(nullable = false)
   private String name;
@@ -50,7 +50,7 @@ public class Menu extends BaseEntity {
 
   private LocalDateTime opened;
 
-  @OneToMany(mappedBy = "upperId", fetch = FetchType.EAGER)
+  @OneToMany(mappedBy = "pid", fetch = FetchType.EAGER)
   @OrderBy("order asc")
   private List<Menu> children = new ArrayList<>();
 
@@ -67,7 +67,7 @@ public class Menu extends BaseEntity {
   public static class Dto {
 
     private Long id;
-    private Long upperId;
+    private Long pid;
     private String name;
     private String nameAid;
     private String uri;
@@ -78,7 +78,7 @@ public class Menu extends BaseEntity {
     private String attr;
     private LocalDateTime opened;
     private List<Dto> children;
-    private LocalDateTime deleted;
+    private boolean removal;
 
   }
 

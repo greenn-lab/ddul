@@ -17,7 +17,7 @@ public interface FileService {
 
   File getFile(String id);
 
-  List<File> getFileByGroup(String group);
+  List<File> getFilesByGroup(Object group);
 
   Path getStoredPath(String path) throws FileNotFoundException;
 
@@ -25,7 +25,9 @@ public interface FileService {
 
   File save(MultipartFile multipartFile) throws IOException;
 
+  File delete(String id);
+
   void addAccessCount(String id);
 
-  File delete(String id);
+  void updateGroupById(Object group, String... ids);
 }

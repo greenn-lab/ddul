@@ -1,15 +1,35 @@
-POST {{host}}/_board/notice
+###
+POST {{host}}/_board
 Content-Type: application/json
 
 {
+  "pid": 4,
+  "group": "notice",
   "title": "TEST",
-  "content": {
-    "body": "<h1>TITLE</h1><p>some text</p>"
+  "author": {
+    "name": "hello",
+    "email": "hello@test.com"
   },
-  "removeFileIds": [
+  "content": {
+    "body": "<h1>TITLE</h1><p>hello</p>"
+  },
+  "extras": [
+    {
+      "name": "width",
+      "value": "1234px"
+    },
+    {
+      "name": "height",
+      "value": "4321px"
+    }
+  ],
+  "addFileIds": [
     "key1",
     "key2",
     "key3"
   ]
 }
 
+### 게시물 삭제
+DELETE {{host}}/_board/1
+Content-Type: application/json
