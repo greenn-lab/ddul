@@ -1,7 +1,5 @@
 package com.github.greennlab.ddul.article;
 
-import static com.github.greennlab.ddul.article.QArticle.article;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
@@ -32,20 +30,6 @@ public class Article extends BaseEntity {
 
   private static final long serialVersionUID = 7808409788936959320L;
 
-  public Article(
-      User user,
-      String author,
-      String email,
-      String password,
-      String title,
-      Integer read) {
-    this.user = user;
-    this.author = author;
-    this.email = email;
-    this.password = password;
-    this.title = title;
-    this.read = read;
-  }
 
   @Transient
   @JsonProperty(access = Access.WRITE_ONLY)
