@@ -1,5 +1,6 @@
 package com.github.greennlab.ddul.mybatis;
 
+import com.github.greennlab.ddul.user.AuthorizedUser;
 import com.github.greennlab.ddul.user.User;
 import java.sql.Connection;
 import java.util.Properties;
@@ -25,7 +26,7 @@ public class AuditorParameterInterceptor implements Interceptor {
     final StatementHandler handler = (StatementHandler) invocation.getTarget();
     final BoundSql boundSql = handler.getBoundSql();
 
-    boundSql.setAdditionalParameter("_", User.authenticated());
+    boundSql.setAdditionalParameter("_", AuthorizedUser.currently());
 
     return invocation.proceed();
   }

@@ -21,7 +21,6 @@ import org.reflections.Reflections;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.boot.autoconfigure.AutoConfigurationPackages;
 import org.springframework.context.annotation.Bean;
-import org.springframework.data.domain.AuditorAware;
 import org.springframework.util.StringUtils;
 
 @org.springframework.context.annotation.Configuration
@@ -30,11 +29,12 @@ import org.springframework.util.StringUtils;
 public class DDulMybatisConfiguration {
 
   private final BeanFactory beanFactory;
+
   private final MybatisProperties properties;
 
 
   @Bean
-  ConfigurationCustomizer mybatisConfigurationCustomizer(AuditorAware<Object> auditorAware) {
+  ConfigurationCustomizer mybatisConfigurationCustomizer() {
     final Set<String> basePackages = getBasePackages();
     properties.setTypeAliasesPackage(String.join(",", basePackages));
     properties.setTypeAliasesSuperType(Mappable.class);

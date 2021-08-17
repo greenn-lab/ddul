@@ -1,5 +1,6 @@
 package com.github.greennlab.ddul;
 
+import com.github.greennlab.ddul.user.AuthorizedUser;
 import com.github.greennlab.ddul.user.User;
 import java.util.Optional;
 import org.springframework.context.annotation.Bean;
@@ -11,18 +12,18 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 @EnableJpaAuditing
 public class DDulJSR338Configuration {
 
-  private static final User ghost = new User();
+  private static final User ghostUser = new User();
 
   static {
-    ghost.setUsername("{ghost}");
+    ghostUser.setUsername("{ghost}");
   }
 
 
   @Bean
   AuditorAware<String> securityLinkageAuditorAware() {
     return () -> {
-      final Optional<User> authenticated = User.authenticated();
-      return Optional.of(authenticated.orElse(ghost).getUsername());
+      final String username = AuthorizedUser.currently().orElse(ghostUser).getUsername();
+      return Optional.of(username);
     };
   }
 

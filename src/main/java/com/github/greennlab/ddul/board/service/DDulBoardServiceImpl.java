@@ -5,6 +5,7 @@ import com.github.greennlab.ddul.board.BoardAuthor;
 import com.github.greennlab.ddul.board.BoardComment;
 import com.github.greennlab.ddul.board.repository.BoardDao;
 import com.github.greennlab.ddul.file.service.FileService;
+import com.github.greennlab.ddul.user.AuthorizedUser;
 import com.github.greennlab.ddul.user.User;
 import java.util.Arrays;
 import java.util.List;
@@ -98,7 +99,7 @@ public class DDulBoardServiceImpl implements DDulBoardService {
   }
 
   private void fillAuthorFromLoggedUser(@NonNull Board board) {
-    final Optional<User> authenticated = User.authenticated();
+    final Optional<User> authenticated = AuthorizedUser.currently();
     if (!authenticated.isPresent()) {
       return;
     }

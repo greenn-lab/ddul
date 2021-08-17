@@ -2,13 +2,8 @@ package com.github.greennlab.ddul;
 
 import static org.springframework.security.web.context.HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY;
 
-import com.github.greennlab.ddul.user.User;
-import com.github.greennlab.ddul.user.UserAuthority;
 import com.github.greennlab.ddul.user.service.DDulUserService;
 import java.io.IOException;
-import java.time.LocalDate;
-import java.util.Arrays;
-import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
@@ -16,27 +11,23 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.annotation.Order;
+import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.filter.DelegatingFilterProxy;
 
-@Profile("DDul")
+@Profile('!' + Application.PRODUCTION)
 @Configuration
 @EnableWebSecurity
 @Order
@@ -82,19 +73,18 @@ public class DDulSecurityConfiguration extends WebSecurityConfigurerAdapter {
         final HttpServletRequest httpServletRequest = (HttpServletRequest) request;
 
         if (null == httpServletRequest.getUserPrincipal()) {
-          final UsernamePasswordAuthenticationToken token =
+          AbstractAuthenticationToken token =
               new UsernamePasswordAuthenticationToken("tester", "test123$");
 
-          final Authentication authenticate;
-
           try {
-            authenticate = authenticationManager().authenticate(token);
+            token =
+                (AbstractAuthenticationToken) authenticationManager().authenticate(token);
           } catch (Exception e) {
             throw new ServletException(e);
           }
 
           final SecurityContext context = SecurityContextHolder.getContext();
-          context.setAuthentication(authenticate);
+          context.setAuthentication(token);
 
           final HttpSession session = httpServletRequest.getSession(true);
           session.setAttribute(SPRING_SECURITY_CONTEXT_KEY, context);
