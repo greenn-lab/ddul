@@ -1,5 +1,6 @@
-package com.github.greennlab.ddul.user;
+package com.github.greennlab.ddul.authority;
 
+import com.github.greennlab.ddul.user.User;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Optional;

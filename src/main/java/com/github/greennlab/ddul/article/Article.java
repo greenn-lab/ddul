@@ -69,9 +69,11 @@ public class Article extends BaseEntity {
 
   private String extra;
 
+
   @Transient
   @JsonProperty(access = Access.WRITE_ONLY)
   private String[] addFileIds;
+
   @Transient
   @JsonProperty(access = Access.WRITE_ONLY)
   private String[] removeFileIds;

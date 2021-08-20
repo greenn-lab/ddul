@@ -1,6 +1,6 @@
 package com.github.greennlab.ddul;
 
-import com.github.greennlab.ddul.user.AuthorizedUser;
+import com.github.greennlab.ddul.authority.AuthorizedUser;
 import com.github.greennlab.ddul.user.User;
 import java.util.Optional;
 import org.springframework.context.annotation.Bean;

@@ -5,7 +5,7 @@ import com.github.greennlab.ddul.board.BoardAuthor;
 import com.github.greennlab.ddul.board.BoardComment;
 import com.github.greennlab.ddul.board.repository.BoardDao;
 import com.github.greennlab.ddul.file.service.FileService;
-import com.github.greennlab.ddul.user.AuthorizedUser;
+import com.github.greennlab.ddul.authority.AuthorizedUser;
 import com.github.greennlab.ddul.user.User;
 import java.util.Arrays;
 import java.util.List;

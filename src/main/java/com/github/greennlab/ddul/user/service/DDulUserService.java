@@ -1,7 +1,7 @@
 package com.github.greennlab.ddul.user.service;
 
 import com.github.greennlab.ddul.authority.Authority;
-import com.github.greennlab.ddul.user.AuthorizedUser;
+import com.github.greennlab.ddul.authority.AuthorizedUser;
 import com.github.greennlab.ddul.user.User;
 import com.github.greennlab.ddul.user.UserAuthority;
 import com.github.greennlab.ddul.user.repository.DDulUserAuthorityRepository;
