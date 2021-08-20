@@ -2,6 +2,8 @@ package com.github.greennlab.ddul.test;
 
 import com.github.greennlab.ddul.DDulJSR338Configuration;
 import com.github.greennlab.ddul.DDulQuerydslConfiguration;
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -21,6 +23,7 @@ import org.springframework.test.annotation.Rollback;
 )
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @Rollback(false)
+@TestMethodOrder(OrderAnnotation.class)
 
 @SuppressWarnings("java:S2187")
 public class DataJpaDBTest {
