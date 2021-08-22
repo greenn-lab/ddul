@@ -21,7 +21,7 @@ public class JsonMapType extends
 
   @Override
   public String getName() {
-    return "json-string";
+    return "json-map";
   }
 
   @Override

@@ -2,15 +2,17 @@ package com.github.greennlab.ddul.entity;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.SneakyThrows;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.sql.Clob;
+import java.sql.SQLException;
 import org.hibernate.engine.jdbc.CharacterStream;
 import org.hibernate.engine.jdbc.internal.CharacterStreamImpl;
 import org.hibernate.type.descriptor.WrapperOptions;
 import org.hibernate.type.descriptor.java.AbstractTypeDescriptor;
 import org.hibernate.type.descriptor.java.ImmutableMutabilityPlan;
-import org.springframework.stereotype.Component;
 
-@Component
+
 public class JsonMapTypeDescriptor extends AbstractTypeDescriptor<JsonMap> {
 
   private static final long serialVersionUID = -1442402723638727650L;
@@ -56,15 +58,26 @@ public class JsonMapTypeDescriptor extends AbstractTypeDescriptor<JsonMap> {
     throw unknownUnwrap(type);
   }
 
-  @SneakyThrows
   @Override
   public <X> JsonMap wrap(X value, WrapperOptions options) {
     if (value == null) {
       return null;
     }
 
-    if (value instanceof String) {
-      return objectMapper.readValue((String) value, JsonMap.class);
+    if (value instanceof Clob) {
+      try {
+        final BufferedReader reader = new BufferedReader(((Clob) value).getCharacterStream());
+        final StringBuilder result = new StringBuilder();
+
+        String line;
+        while (null != (line = reader.readLine())) {
+          result.append(line);
+        }
+
+        return objectMapper.readValue(result.toString(), JsonMap.class);
+      } catch (SQLException | IOException e) {
+        e.printStackTrace();
+      }
     }
 
     throw unknownWrap(value.getClass());
