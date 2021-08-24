@@ -10,22 +10,6 @@ spring:
     hibernate:
       ddl-auto: none
 
-  data:
-    web:
-      pageable:
-        default-page-size: 5
-
-  datasource:
-    driver-class-name: "org.h2.Driver"
-    url: "jdbc:h2:./ddul;AUTO_SERVER=TRUE;Mode=Oracle"
-    username: "sa"
-    password: ""
-
-  h2:
-    console:
-      enabled: true
-      path: "/h2-console"
-
 
 mybatis:
   configuration-properties:
@@ -40,9 +24,3 @@ file.storage:
 logging:
   pattern:
     console: "%highlight(%-5level) %d{HH:mm:ss.SSS}[%green(%thread)]%magenta(%logger{36}) %msg %n"
-  level:
-    org.hibernate.type: TRACE
-    org.hibernate.type.BasicTypeRegistry: WARN
-
-server.port: 8090
-
