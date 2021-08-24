@@ -122,12 +122,18 @@
         <includes>
           <include>**/*</include>
         </includes>
+        <excludes>
+          <exclude>**/*.java</exclude>
+        </excludes>
       </resource>
       <resource>
         <directory>src/main/resources</directory>
         <includes>
           <include>**/*</include>
         </includes>
+        <excludes>
+          <exclude>*-schema.sql</exclude>
+        </excludes>
       </resource>
     </resources>
 
