@@ -15,6 +15,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.annotation.Order;
+import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -27,7 +28,7 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.filter.DelegatingFilterProxy;
 
-@Profile('!' + Application.PRODUCTION)
+@Profile("DDul")
 @Configuration
 @EnableWebSecurity
 @Order
@@ -53,6 +54,7 @@ public class DDulSecurityConfiguration extends WebSecurityConfigurerAdapter {
   }
 
   @Override
+  @SuppressWarnings("java:S5344")
   protected void configure(AuthenticationManagerBuilder auth) throws Exception {
     auth.userDetailsService(userService);
   }
@@ -67,8 +69,10 @@ public class DDulSecurityConfiguration extends WebSecurityConfigurerAdapter {
   public DelegatingFilterProxy bypass() {
     return new DelegatingFilterProxy() {
       @Override
-      public void doFilter(ServletRequest request, ServletResponse response,
-          FilterChain chain) throws IOException, ServletException {
+      public void doFilter(
+          @NonNull ServletRequest request,
+          @NonNull ServletResponse response,
+          @NonNull FilterChain chain) throws IOException, ServletException {
 
         final HttpServletRequest httpServletRequest = (HttpServletRequest) request;
 
