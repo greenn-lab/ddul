@@ -37,7 +37,7 @@ class ArticleRepositoryTest extends DataJpaTest {
 
   @Test
   void shouldGetPage() {
-    final Page<Article> page = repository.pageBy(null, null, PageRequest.of(0, 20));
+    final Page<Article> page = repository.pageBy("notice", null, null, PageRequest.of(0, 20));
 
     assertThat(page).isNotNull();
     assertThat(page.getTotalElements()).isEqualTo(1);
@@ -47,16 +47,16 @@ class ArticleRepositoryTest extends DataJpaTest {
   void shouldGetPageIfMatched() {
     final PageRequest pageable = PageRequest.of(0, 20);
 
-    final Page<Article> byAuthor = repository.pageBy("1", "tester", pageable);
+    final Page<Article> byAuthor = repository.pageBy("notice", "1", "tester", pageable);
     assertThat(byAuthor.getTotalElements()).isEqualTo(1);
 
-    final Page<Article> byTitle = repository.pageBy("2", "world", pageable);
+    final Page<Article> byTitle = repository.pageBy("notice", "2", "world", pageable);
     assertThat(byTitle.getTotalElements()).isEqualTo(1);
 
-    final Page<Article> byContent = repository.pageBy("3", "body", pageable);
+    final Page<Article> byContent = repository.pageBy("notice", "3", "body", pageable);
     assertThat(byContent.getTotalElements()).isEqualTo(1);
 
-    final Page<Article> byAll = repository.pageBy(null, "any", pageable);
+    final Page<Article> byAll = repository.pageBy("notice", null, "any", pageable);
     assertThat(byAll.getTotalElements()).isEqualTo(1);
   }
 
@@ -65,7 +65,6 @@ class ArticleRepositoryTest extends DataJpaTest {
     final Optional<Article> one = repository.findById(1L);
 
     final Article article = one.orElseThrow(NullPointerException::new);
-    final User user = article.getUser();
     assertThat(one).isNotNull();
   }
 

@@ -40,11 +40,15 @@ public class ArticleQuerydslRepositoryImpl implements ArticleQuerydslRepository 
 
 
   @Override
-  public Page<Article> pageBy(String searchType, String keyword, Pageable pageable) {
+  public Page<Article> pageBy(String category, String searchType, String keyword,
+      Pageable pageable) {
     final QueryResults<Article> results = queryFactory
         .select(columnsOfPage)
         .from(article)
-        .where(conditionOfPage(searchType, keyword))
+        .where(
+            article.category.eq(category)
+                .and(conditionOfPage(searchType, keyword))
+        )
         .orderBy(
             article.bid.desc(),
             article.order.asc()
