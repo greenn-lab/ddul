@@ -32,7 +32,8 @@ public class ArticleQuerydslRepositoryImpl implements ArticleQuerydslRepository 
       article.email,
       article.password,
       article.title,
-      article.read
+      article.read,
+      article.created
   );
 
 
@@ -40,13 +41,14 @@ public class ArticleQuerydslRepositoryImpl implements ArticleQuerydslRepository 
 
 
   @Override
-  public Page<Article> pageBy(String category, String searchType, String keyword,
+  public Page<Article> findAllBy(String category, String searchType, String keyword,
       Pageable pageable) {
     final QueryResults<Article> results = queryFactory
         .select(columnsOfPage)
         .from(article)
         .where(
-            article.category.eq(category)
+            article.removal.eq(false)
+                .and(article.category.eq(category))
                 .and(conditionOfPage(searchType, keyword))
         )
         .orderBy(
@@ -66,11 +68,11 @@ public class ArticleQuerydslRepositoryImpl implements ArticleQuerydslRepository 
     }
 
     if ("1".equals(searchType)) {
-      return article.author.contains(keyword);
-    } else if ("2".equals(searchType)) {
       return article.title.contains(keyword);
-    } else if ("3".equals(searchType)) {
+    } else if ("2".equals(searchType)) {
       return article.fulltext.contains(keyword);
+    } else if ("3".equals(searchType)) {
+      return article.author.contains(keyword);
     } else {
       return article.author.contains(keyword)
           .or(article.title.contains(keyword))

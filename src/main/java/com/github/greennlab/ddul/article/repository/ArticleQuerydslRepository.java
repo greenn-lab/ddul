@@ -6,6 +6,6 @@ import org.springframework.data.domain.Pageable;
 
 public interface ArticleQuerydslRepository {
 
-  Page<Article> pageBy(String category, String searchType, String keyword, Pageable pageable);
+  Page<Article> findAllBy(String category, String searchType, String keyword, Pageable pageable);
 
 }
