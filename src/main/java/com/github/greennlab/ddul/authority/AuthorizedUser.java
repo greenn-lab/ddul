@@ -27,13 +27,6 @@ public class AuthorizedUser implements UserDetails {
 
   private final Set<? extends GrantedAuthority> authorities;
 
-  public AuthorizedUser(String username, String... authorities) {
-    this.user = new User();
-    this.user.setUsername(username);
-
-    this.authorities = Arrays.stream(authorities).map(
-        SimpleGrantedAuthority::new).collect(Collectors.toSet());
-  }
 
   public static Optional<User> currently() {
     final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
