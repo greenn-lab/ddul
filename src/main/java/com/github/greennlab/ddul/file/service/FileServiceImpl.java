@@ -8,9 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import javax.annotation.PostConstruct;
@@ -18,12 +16,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
-@Transactional
 @RequiredArgsConstructor
 public class FileServiceImpl implements FileService {
 
@@ -79,6 +77,7 @@ public class FileServiceImpl implements FileService {
     return directory.resolve(id);
   }
 
+  @Transactional
   @Override
   public File save(MultipartFile multipartFile) throws IOException {
     final String id = UUID.randomUUID().toString();
@@ -100,11 +99,13 @@ public class FileServiceImpl implements FileService {
   }
 
   @Async("asyncThreadExecutor")
+  @Transactional
   @Override
   public void addAccessCount(String id) {
     repository.addAccessCount(id);
   }
 
+  @Transactional
   @Override
   public File delete(String id) {
     final File file = getFile(id);
@@ -122,6 +123,7 @@ public class FileServiceImpl implements FileService {
         .replace(fileStoragePath.toString(), "");
   }
 
+  @Transactional(propagation = Propagation.MANDATORY)
   @Override
   public void updateGroupById(Object group, String... ids) {
     repository.updateGroupById(group.toString(), ids);
