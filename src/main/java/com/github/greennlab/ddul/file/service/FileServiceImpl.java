@@ -16,7 +16,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -123,9 +122,4 @@ public class FileServiceImpl implements FileService {
         .replace(fileStoragePath.toString(), "");
   }
 
-  @Transactional(propagation = Propagation.MANDATORY)
-  @Override
-  public void updateGroupById(Object group, String... ids) {
-    repository.updateGroupById(group.toString(), ids);
-  }
 }

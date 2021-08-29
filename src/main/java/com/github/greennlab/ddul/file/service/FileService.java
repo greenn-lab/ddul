@@ -29,5 +29,4 @@ public interface FileService {
 
   void addAccessCount(String id);
 
-  void updateGroupById(Object group, String... ids);
 }
