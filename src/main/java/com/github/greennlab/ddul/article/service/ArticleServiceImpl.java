@@ -1,11 +1,12 @@
 package com.github.greennlab.ddul.article.service;
 
+import static com.github.greennlab.ddul.article.dto.ArticleOutputDTO.mapped;
+
 import com.github.greennlab.ddul.article.Article;
+import com.github.greennlab.ddul.article.dto.ArticleOutputDTO;
 import com.github.greennlab.ddul.article.repository.ArticleRepository;
 import com.github.greennlab.ddul.authority.AuthorizedUser;
-import com.github.greennlab.ddul.file.service.FileService;
 import com.github.greennlab.ddul.user.User;
-import java.util.Arrays;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,23 +20,21 @@ public class ArticleServiceImpl implements ArticleService {
 
   private final ArticleRepository repository;
 
-  private final FileService fileService;
-
 
   @Override
-  public Page<Article> pageBy(String category, String searchType, String keyword,
+  public Page<ArticleOutputDTO> pageBy(String category, String searchType, String keyword,
       Pageable pageable) {
     return repository.findAllBy(category, searchType, keyword, pageable);
   }
 
   @Override
-  public Article select(Long id) {
-    return repository.findById(id).orElse(null);
+  public ArticleOutputDTO select(Long id) {
+    return mapped.to(repository.findById(id).orElse(null));
   }
 
   @Transactional
   @Override
-  public Article insert(final Article article) {
+  public ArticleOutputDTO insert(final Article article) {
     fillUserInfo(article);
 
     final Article saved;
@@ -48,6 +47,7 @@ public class ArticleServiceImpl implements ArticleService {
 
       final Long newId = saved.getId();
       saved.setBid(newId);
+
       repository.updateBid(newId);
     } else {
       repository.findById(article.getPid()).ifPresent(parent -> {
@@ -64,14 +64,13 @@ public class ArticleServiceImpl implements ArticleService {
       saved = repository.save(article);
     }
 
-    proceedAttachFiles(article, saved.getId());
-
-    return saved;
+    return mapped.to(saved);
   }
 
+  @Transactional
   @Override
-  public Article update(Article article) {
-    return repository.save(article);
+  public ArticleOutputDTO update(Article article) {
+    return mapped.to(repository.save(article));
   }
 
   @Override
@@ -93,17 +92,6 @@ public class ArticleServiceImpl implements ArticleService {
 
     if (ObjectUtils.isEmpty(article.getEmail())) {
       article.setEmail(user.getEmail());
-    }
-  }
-
-
-  private void proceedAttachFiles(Article article, Long id) {
-    if (!ObjectUtils.isEmpty(article.getAddFileIds())) {
-      fileService.updateGroupById(id, article.getAddFileIds());
-    }
-
-    if (!ObjectUtils.isEmpty(article.getRemoveFileIds())) {
-      Arrays.stream(article.getRemoveFileIds()).forEach(fileService::delete);
     }
   }
 

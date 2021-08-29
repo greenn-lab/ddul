@@ -8,6 +8,12 @@ import org.springframework.data.jpa.repository.Query;
 public interface ArticleRepository extends AFewRepository<Article>, ArticleQuerydslRepository {
 
   @Modifying
+  @Query("UPDATE Article a"
+      + " SET a.title = :#{#article.title}, a.content = :#{#article.content}"
+      + " WHERE a.id = :#{#article.id}")
+  void update(Article article);
+
+  @Modifying
   @Query("UPDATE Article a SET a.removal = true WHERE a.id = :id")
   void deleteById(Long id);
 

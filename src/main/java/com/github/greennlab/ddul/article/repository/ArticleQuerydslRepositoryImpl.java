@@ -4,12 +4,15 @@ import static com.github.greennlab.ddul.article.QArticle.article;
 import static com.github.greennlab.ddul.user.QUser.user;
 
 import com.github.greennlab.ddul.article.Article;
+import com.github.greennlab.ddul.article.dto.ArticleOutputDTO;
 import com.github.greennlab.ddul.user.User;
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.QBean;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -41,9 +44,9 @@ public class ArticleQuerydslRepositoryImpl implements ArticleQuerydslRepository 
 
 
   @Override
-  public Page<Article> findAllBy(String category, String searchType, String keyword,
+  public Page<ArticleOutputDTO> findAllBy(String category, String searchType, String keyword,
       Pageable pageable) {
-    final QueryResults<Article> results = queryFactory
+    final QueryResults<Article> query = queryFactory
         .select(columnsOfPage)
         .from(article)
         .where(
@@ -59,7 +62,10 @@ public class ArticleQuerydslRepositoryImpl implements ArticleQuerydslRepository 
         .limit(pageable.getPageSize())
         .fetchResults();
 
-    return new PageImpl<>(results.getResults(), pageable, results.getTotal());
+    final List<ArticleOutputDTO> list = query.getResults().stream()
+        .map(ArticleOutputDTO.mapped::to).collect(Collectors.toList());
+
+    return new PageImpl<>(list, pageable, query.getTotal());
   }
 
   private BooleanExpression conditionOfPage(String searchType, String keyword) {

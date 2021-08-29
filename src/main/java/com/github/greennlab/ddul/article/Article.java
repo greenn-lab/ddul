@@ -4,9 +4,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import com.github.greennlab.ddul.entity.BaseEntity;
+import com.github.greennlab.ddul.entity.JsonMap;
 import com.github.greennlab.ddul.file.File;
 import com.github.greennlab.ddul.user.User;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -20,6 +22,8 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.Where;
 
 @Entity
 @Table(name = "ARTICLE")
@@ -35,16 +39,19 @@ public class Article extends BaseEntity {
   @JsonProperty(access = Access.WRITE_ONLY)
   private Long pid;
 
+  @Column(updatable = false)
   private Long bid;
 
-  @Column(name = "ORD")
+  @Column(name = "ORD", updatable = false)
   private Integer order = 0;
 
+  @Column(updatable = false)
   private Integer depth = 0;
+
   private String category;
 
   @ManyToOne
-  @JoinColumn(name = "USER_ID")
+  @JoinColumn(name = "USER_ID", updatable = false)
   private User user;
 
   private String author;
@@ -54,29 +61,24 @@ public class Article extends BaseEntity {
   private String password;
 
   private boolean secret;
+
+  @Column(updatable = false)
   private int read;
 
   private String title;
   private String content;
 
-  @Setter(AccessLevel.NONE)
   @JsonProperty(access = Access.WRITE_ONLY)
+  @Setter(AccessLevel.NONE)
   private String fulltext;
 
-  @OneToMany
-  @JoinColumn(name = "PACK", referencedColumnName = "ID")
+  @OneToMany(cascade = {CascadeType.MERGE})
+  @JoinColumn(name = "PACK", referencedColumnName = "ID", insertable = false)
+  @Where(clause = "REMOVAL = 'N'")
   private List<File> attachFiles;
 
-  private String extra;
-
-
-  @Transient
-  @JsonProperty(access = Access.WRITE_ONLY)
-  private String[] addFileIds;
-
-  @Transient
-  @JsonProperty(access = Access.WRITE_ONLY)
-  private String[] removeFileIds;
+  @Type(type = "com.github.greennlab.ddul.entity.JsonMapType")
+  private JsonMap extra;
 
 
   @PrePersist
