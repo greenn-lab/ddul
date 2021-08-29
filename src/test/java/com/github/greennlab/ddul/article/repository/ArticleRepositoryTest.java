@@ -3,6 +3,7 @@ package com.github.greennlab.ddul.article.repository;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.github.greennlab.ddul.article.Article;
+import com.github.greennlab.ddul.article.dto.ArticleOutputDTO;
 import com.github.greennlab.ddul.test.DataJpaTest;
 import com.github.greennlab.ddul.user.User;
 import java.util.Optional;
@@ -37,7 +38,8 @@ class ArticleRepositoryTest extends DataJpaTest {
 
   @Test
   void shouldGetPage() {
-    final Page<Article> page = repository.findAllBy("notice", null, null, PageRequest.of(0, 20));
+    final Page<ArticleOutputDTO> page = repository.findAllBy("notice", null, null,
+        PageRequest.of(0, 20));
 
     assertThat(page).isNotNull();
     assertThat(page.getTotalElements()).isEqualTo(1);
@@ -47,16 +49,19 @@ class ArticleRepositoryTest extends DataJpaTest {
   void shouldGetPageIfMatched() {
     final PageRequest pageable = PageRequest.of(0, 20);
 
-    final Page<Article> byAuthor = repository.findAllBy("notice", "1", "tester", pageable);
+    final Page<ArticleOutputDTO> byAuthor = repository.findAllBy("notice", "1", "tester",
+        pageable);
     assertThat(byAuthor.getTotalElements()).isEqualTo(1);
 
-    final Page<Article> byTitle = repository.findAllBy("notice", "2", "world", pageable);
+    final Page<ArticleOutputDTO> byTitle = repository.findAllBy("notice", "2", "world",
+        pageable);
     assertThat(byTitle.getTotalElements()).isEqualTo(1);
 
-    final Page<Article> byContent = repository.findAllBy("notice", "3", "body", pageable);
+    final Page<ArticleOutputDTO> byContent = repository.findAllBy("notice", "3", "body",
+        pageable);
     assertThat(byContent.getTotalElements()).isEqualTo(1);
 
-    final Page<Article> byAll = repository.findAllBy("notice", null, "any", pageable);
+    final Page<ArticleOutputDTO> byAll = repository.findAllBy("notice", null, "any", pageable);
     assertThat(byAll.getTotalElements()).isEqualTo(1);
   }
 
