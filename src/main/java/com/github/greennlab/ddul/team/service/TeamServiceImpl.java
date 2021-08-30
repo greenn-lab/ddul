@@ -4,6 +4,7 @@ import com.github.greennlab.ddul.team.Team;
 import com.github.greennlab.ddul.team.TeamHierarchy;
 import com.github.greennlab.ddul.team.repository.TeamHierarchyRepository;
 import com.github.greennlab.ddul.team.repository.TeamRepository;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,10 @@ public class TeamServiceImpl implements TeamService {
 
   @Override
   public Team findAllHierarchicalTeam(Long id) {
+    if (null == id) {
+      return findAllIfIdIsNull();
+    }
+
     final TeamHierarchy root = hierarchyRepository.findById(id);
 
     if (null == root) {
@@ -25,6 +30,19 @@ public class TeamServiceImpl implements TeamService {
     }
 
     return transform(root);
+  }
+
+  private Team findAllIfIdIsNull() {
+    final Team root = new Team();
+    root.setId(-0L);
+    root.setName("전체");
+
+    final List<TeamHierarchy> tops = hierarchyRepository.findAllByPidIsNullOrderByOrder();
+    for (TeamHierarchy team : tops) {
+      root.getChildren().add(transform(team));
+    }
+
+    return root;
   }
 
   private Team transform(TeamHierarchy team) {

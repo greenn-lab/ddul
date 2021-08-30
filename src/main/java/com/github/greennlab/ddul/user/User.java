@@ -1,5 +1,7 @@
 package com.github.greennlab.ddul.user;
 
+import static com.github.greennlab.ddul.Application.DB_PREFIX;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.greennlab.ddul.entity.BaseEntity;
 import java.time.LocalDate;
@@ -11,7 +13,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "USER")
+@Table(name = DB_PREFIX + "USER")
 @NoArgsConstructor
 @Getter
 @Setter

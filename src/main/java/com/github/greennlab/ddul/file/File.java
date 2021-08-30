@@ -1,5 +1,7 @@
 package com.github.greennlab.ddul.file;
 
+import static com.github.greennlab.ddul.Application.DB_PREFIX;
+
 import com.github.greennlab.ddul.entity.Auditor;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,7 +11,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "FILE")
+@Table(name = DB_PREFIX + "FILE")
 @Getter
 @Setter
 public class File extends Auditor {

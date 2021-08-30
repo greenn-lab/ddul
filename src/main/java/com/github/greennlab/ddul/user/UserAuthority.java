@@ -1,5 +1,7 @@
 package com.github.greennlab.ddul.user;
 
+import static com.github.greennlab.ddul.Application.DB_PREFIX;
+
 import com.github.greennlab.ddul.authority.Authority;
 import com.github.greennlab.ddul.entity.BaseEntity;
 import java.io.Serializable;
@@ -12,7 +14,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "USER_AUTHORITY")
+@Table(name = DB_PREFIX + "USER_AUTHORITY")
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = false)

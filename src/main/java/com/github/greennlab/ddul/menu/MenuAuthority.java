@@ -1,5 +1,7 @@
 package com.github.greennlab.ddul.menu;
 
+import static com.github.greennlab.ddul.Application.DB_PREFIX;
+
 import com.github.greennlab.ddul.entity.BaseEntity;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -12,7 +14,7 @@ import lombok.Setter;
 import org.hibernate.annotations.Where;
 
 @Entity
-@Table(name = "MENU_AUTHORITY")
+@Table(name = DB_PREFIX + "MENU_AUTHORITY")
 @Where(clause = "REMOVAL = 'N'")
 @Getter
 @Setter
@@ -28,9 +30,5 @@ public class MenuAuthority extends BaseEntity {
   @ManyToOne
   @JoinColumn(name = "MENU_ID")
   private Menu menu;
-
-//  @ManyToOne
-//  @JoinColumn(name = "AUTHORITY_ID")
-//  private Authority authority;
 
 }

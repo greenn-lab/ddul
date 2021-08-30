@@ -1,5 +1,8 @@
 package com.github.greennlab.ddul.article;
 
+import static com.github.greennlab.ddul.Application.DB_PREFIX;
+
+import com.github.greennlab.ddul.Application;
 import com.github.greennlab.ddul.entity.Auditor;
 import com.github.greennlab.ddul.entity.JsonMap;
 import javax.persistence.Column;
@@ -11,7 +14,7 @@ import lombok.Setter;
 import org.hibernate.annotations.Type;
 
 @Entity
-@Table(name = "ARTICLE_CATEGORY")
+@Table(name = DB_PREFIX + "ARTICLE_CATEGORY")
 @Getter
 @Setter
 public class ArticleCategory extends Auditor {

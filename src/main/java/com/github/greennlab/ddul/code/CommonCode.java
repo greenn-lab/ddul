@@ -1,8 +1,9 @@
 package com.github.greennlab.ddul.code;
 
+import static com.github.greennlab.ddul.Application.DB_PREFIX;
+
 import com.github.greennlab.ddul.entity.BaseEntity;
 import com.github.greennlab.ddul.mapstruct.EntityDtoMapping;
-import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -13,7 +14,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
 @Entity
-@Table(name = "CODE")
+@Table(name = DB_PREFIX + "CODE")
 @Getter
 @Setter
 public class CommonCode extends BaseEntity {
