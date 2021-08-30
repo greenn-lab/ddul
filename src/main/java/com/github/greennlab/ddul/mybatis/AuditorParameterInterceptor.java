@@ -25,7 +25,7 @@ public class AuditorParameterInterceptor implements Interceptor {
     final StatementHandler handler = (StatementHandler) invocation.getTarget();
     final BoundSql boundSql = handler.getBoundSql();
 
-    boundSql.setAdditionalParameter("_", AuthorizedUser.currently());
+    boundSql.setAdditionalParameter("_", AuthorizedUser.currently().orElse(null));
 
     return invocation.proceed();
   }
