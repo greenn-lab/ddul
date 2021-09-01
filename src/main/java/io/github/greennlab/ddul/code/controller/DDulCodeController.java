@@ -1,4 +1,4 @@
-package io.github.greennlab.ddul.code.web;
+package io.github.greennlab.ddul.code.controller;
 
 import static io.github.greennlab.ddul.code.CommonCode.mapped;
 import static java.util.stream.Collectors.toList;

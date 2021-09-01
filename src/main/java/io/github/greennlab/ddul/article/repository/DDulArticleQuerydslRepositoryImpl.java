@@ -19,7 +19,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.util.ObjectUtils;
 
 @RequiredArgsConstructor
-public class ArticleQuerydslRepositoryImpl implements ArticleQuerydslRepository {
+public class DDulArticleQuerydslRepositoryImpl implements DDulArticleQuerydslRepository {
 
   public static final QBean<Article> columnsOfPage = Projections.bean(Article.class,
       QArticle.article.id,

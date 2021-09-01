@@ -1,7 +1,7 @@
 package io.github.greennlab.ddul.file.service;
 
 import io.github.greennlab.ddul.file.File;
-import io.github.greennlab.ddul.file.repository.FileRepository;
+import io.github.greennlab.ddul.file.repository.DDulFileRepository;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -22,12 +22,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @RequiredArgsConstructor
-public class FileServiceImpl implements FileService {
+public class DDulFileServiceImpl implements FileService {
 
   private static final DateTimeFormatter DAILY_DIR = DateTimeFormatter.ofPattern("yyyyMMdd");
 
 
-  private final FileRepository repository;
+  private final DDulFileRepository repository;
 
 
   @Value("${file.storage.path}")

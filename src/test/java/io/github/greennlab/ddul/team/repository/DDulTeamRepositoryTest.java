@@ -8,10 +8,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
-class TeamRepositoryTest extends DataJpaTest {
+class DDulTeamRepositoryTest extends DataJpaTest {
 
   @Autowired
-  TeamRepository repository;
+  DDulTeamRepository repository;
 
   @Test
   void shouldGetReadChildren() {

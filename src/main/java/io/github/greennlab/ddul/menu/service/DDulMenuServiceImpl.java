@@ -2,7 +2,7 @@ package io.github.greennlab.ddul.menu.service;
 
 import io.github.greennlab.ddul.menu.Menu;
 import io.github.greennlab.ddul.menu.Menu.Dto;
-import io.github.greennlab.ddul.menu.repository.MenuRepository;
+import io.github.greennlab.ddul.menu.repository.DDulMenuRepository;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
@@ -11,9 +11,9 @@ import org.springframework.stereotype.Service;
 
 @Service("DDulMenuService")
 @RequiredArgsConstructor
-public class MenuServiceImpl implements MenuService {
+public class DDulMenuServiceImpl implements MenuService {
 
-  private final MenuRepository repository;
+  private final DDulMenuRepository repository;
 
 
   @Override

@@ -1,4 +1,4 @@
-package io.github.greennlab.ddul.file.web;
+package io.github.greennlab.ddul.file.controller;
 
 import io.github.greennlab.ddul.Application;
 import io.github.greennlab.ddul.file.File;

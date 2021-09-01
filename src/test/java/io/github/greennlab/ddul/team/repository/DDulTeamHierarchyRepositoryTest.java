@@ -7,10 +7,10 @@ import io.github.greennlab.ddul.test.DataJpaTest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-class TeamHierarchyRepositoryTest extends DataJpaTest {
+class DDulTeamHierarchyRepositoryTest extends DataJpaTest {
 
   @Autowired
-  TeamHierarchyRepository repository;
+  DDulTeamHierarchyRepository repository;
 
   @Test
   void shouldGetHierarchyTeams() {

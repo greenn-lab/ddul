@@ -4,7 +4,7 @@ import io.github.greennlab.ddul.article.dto.ArticleOutputDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-public interface ArticleQuerydslRepository {
+public interface DDulArticleQuerydslRepository {
 
   Page<ArticleOutputDTO> findAllBy(String category, String searchType, String keyword, Pageable pageable);
 

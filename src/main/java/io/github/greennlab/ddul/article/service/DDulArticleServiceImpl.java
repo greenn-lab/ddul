@@ -2,7 +2,7 @@ package io.github.greennlab.ddul.article.service;
 
 import io.github.greennlab.ddul.article.Article;
 import io.github.greennlab.ddul.article.dto.ArticleOutputDTO;
-import io.github.greennlab.ddul.article.repository.ArticleRepository;
+import io.github.greennlab.ddul.article.repository.DDulArticleRepository;
 import io.github.greennlab.ddul.authority.AuthorizedUser;
 import io.github.greennlab.ddul.user.User;
 import lombok.RequiredArgsConstructor;
@@ -14,9 +14,9 @@ import org.springframework.util.ObjectUtils;
 
 @Service
 @RequiredArgsConstructor
-public class ArticleServiceImpl implements ArticleService {
+public class DDulArticleServiceImpl implements ArticleService {
 
-  private final ArticleRepository repository;
+  private final DDulArticleRepository repository;
 
 
   @Override

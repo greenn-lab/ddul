@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("_team")
 @RequiredArgsConstructor
-public class TeamController {
+public class DDulTeamController {
 
   private final TeamService service;
 

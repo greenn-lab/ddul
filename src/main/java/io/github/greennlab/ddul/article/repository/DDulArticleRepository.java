@@ -5,7 +5,8 @@ import io.github.greennlab.ddul.entity.AFewRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
-public interface ArticleRepository extends AFewRepository<Article>, ArticleQuerydslRepository {
+public interface DDulArticleRepository extends AFewRepository<Article>,
+    DDulArticleQuerydslRepository {
 
   @Modifying
   @Query("UPDATE Article a"

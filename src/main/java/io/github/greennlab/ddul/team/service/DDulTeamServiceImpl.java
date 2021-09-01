@@ -2,19 +2,19 @@ package io.github.greennlab.ddul.team.service;
 
 import io.github.greennlab.ddul.team.Team;
 import io.github.greennlab.ddul.team.TeamHierarchy;
-import io.github.greennlab.ddul.team.repository.TeamHierarchyRepository;
-import io.github.greennlab.ddul.team.repository.TeamRepository;
+import io.github.greennlab.ddul.team.repository.DDulTeamHierarchyRepository;
+import io.github.greennlab.ddul.team.repository.DDulTeamRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service("DDulTeamService")
 @RequiredArgsConstructor
-public class TeamServiceImpl implements TeamService {
+public class DDulTeamServiceImpl implements TeamService {
 
-  private final TeamRepository repository;
+  private final DDulTeamRepository repository;
 
-  private final TeamHierarchyRepository hierarchyRepository;
+  private final DDulTeamHierarchyRepository hierarchyRepository;
 
 
   @Override

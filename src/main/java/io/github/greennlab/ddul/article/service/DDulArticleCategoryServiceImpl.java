@@ -1,7 +1,7 @@
 package io.github.greennlab.ddul.article.service;
 
 import io.github.greennlab.ddul.article.ArticleCategory;
-import io.github.greennlab.ddul.article.repository.ArticleCategoryRepository;
+import io.github.greennlab.ddul.article.repository.DDulArticleCategoryRepository;
 import io.github.greennlab.ddul.DDulCacheConfiguration;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
@@ -12,9 +12,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class ArticleCategoryServiceImpl implements ArticleCategoryService {
+public class DDulArticleCategoryServiceImpl implements ArticleCategoryService {
 
-  private final ArticleCategoryRepository repository;
+  private final DDulArticleCategoryRepository repository;
 
 
   @Override

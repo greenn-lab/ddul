@@ -1,8 +1,10 @@
-package io.github.greennlab.ddul.user;
+package io.github.greennlab.ddul.user.dto;
+
+import static io.github.greennlab.ddul.user.User.REGEXP_PASSWORD;
 
 import io.github.greennlab.ddul.mapstruct.EntityDtoMapping;
+import io.github.greennlab.ddul.user.User;
 import java.time.LocalDate;
-import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
@@ -24,7 +26,7 @@ public class UserDTO {
   @NotEmpty
   private String username;
 
-  @Pattern(regexp = User.REGEXP_PASSWORD)
+  @Pattern(regexp = REGEXP_PASSWORD)
   private String password;
 
   private LocalDate passwordExpired;
@@ -35,12 +37,6 @@ public class UserDTO {
   private String name;
 
   private boolean lock;
-
-
-  @AssertTrue
-  public static boolean isValidatedPassword(String password) {
-    return password != null && password.matches(User.REGEXP_PASSWORD);
-  }
 
 
   // -------------------------------------------------------

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("article-category")
 @RequiredArgsConstructor
-public class ArticleCategoryController {
+public class DDulArticleCategoryController {
 
   private final ArticleCategoryService service;
 

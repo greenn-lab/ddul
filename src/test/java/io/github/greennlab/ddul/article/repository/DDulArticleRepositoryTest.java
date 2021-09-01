@@ -13,10 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
-class ArticleRepositoryTest extends DataJpaTest {
+class DDulArticleRepositoryTest extends DataJpaTest {
 
   @Autowired
-  ArticleRepository repository;
+  DDulArticleRepository repository;
 
   @BeforeEach
   void beforeAll() {

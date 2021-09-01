@@ -8,10 +8,10 @@ import io.github.greennlab.ddul.test.DataJpaTest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-class ArticleCategoryRepositoryTest extends DataJpaTest {
+class DDulArticleCategoryRepositoryTest extends DataJpaTest {
 
   @Autowired
-  ArticleCategoryRepository repository;
+  DDulArticleCategoryRepository repository;
 
   void save() {
     final ArticleCategory ac = new ArticleCategory();

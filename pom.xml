@@ -12,7 +12,7 @@
 
   <groupId>io.github.greenn-lab</groupId>
   <artifactId>ddul</artifactId>
-  <version>0.0.1</version>
+  <version>0.1.0-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>ddul</name>
   <url>https://github.com/greenn-lab/ddul</url>
@@ -240,7 +240,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-gpg-plugin</artifactId>
-        <version>1.6</version>
+        <version>3.0.1</version>
         <executions>
           <execution>
             <id>sign-artifacts</id>

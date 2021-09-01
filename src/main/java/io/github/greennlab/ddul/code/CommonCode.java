@@ -30,7 +30,7 @@ public class CommonCode extends BaseEntity {
   @Column(name = "COD")
   private String code;
 
-  @Column(name = "COD_NM")
+  @Column(name = "COD_NAME")
   private String name;
 
   @Column(name = "ORD")

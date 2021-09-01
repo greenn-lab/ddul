@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository("DDulMenuRepository")
-public interface MenuRepository extends AFewRepository<Menu> {
+public interface DDulMenuRepository extends AFewRepository<Menu> {
 
   @Where(clause = "REMOVAL = 'N'")
   Menu findById(long id);

@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
-public interface FileRepository extends CrudRepository<File, String> {
+public interface DDulFileRepository extends CrudRepository<File, String> {
 
   @Modifying
   @Query("UPDATE File SET access = access + 1 WHERE id = :id")

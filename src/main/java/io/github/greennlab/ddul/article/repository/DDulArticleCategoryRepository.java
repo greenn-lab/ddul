@@ -5,7 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.Repository;
 
-public interface ArticleCategoryRepository
+public interface DDulArticleCategoryRepository
     extends Repository<ArticleCategory, String> {
 
   Page<ArticleCategory> findAllByRemoval(boolean removal, Pageable pageable);

@@ -1,4 +1,4 @@
-package io.github.greennlab.ddul.menu.web;
+package io.github.greennlab.ddul.menu.controller;
 
 import io.github.greennlab.ddul.menu.Menu;
 import io.github.greennlab.ddul.menu.service.MenuService;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController("DDulMenuController")
 @RequestMapping("_menu")
 @RequiredArgsConstructor
-public class MenuController {
+public class DDulMenuController {
 
   private final MenuService service;
 
