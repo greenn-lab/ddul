@@ -5,6 +5,12 @@ spring:
   main:
     banner-mode: off
 
+  sql:
+    init:
+      continue-on-error: true
+      schema-locations:
+        - "classpath*:ddul-schema.sql"
+
   jpa:
     open-in-view: false
     hibernate:
@@ -21,6 +27,11 @@ file.storage:
   path: "file-storage/"
 
 
+# p6spy (SQL Logging)
+decorator.datasource.enabled: true
+
+
 logging:
   pattern:
     console: "%highlight(%-5level) %d{HH:mm:ss.SSS}[%green(%thread)]%magenta(%logger{36}) %msg %n"
+
