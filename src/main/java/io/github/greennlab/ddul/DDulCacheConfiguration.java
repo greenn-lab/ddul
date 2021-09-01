@@ -1,6 +1,6 @@
 package io.github.greennlab.ddul;
 
-import java.util.Collections;
+import java.util.Arrays;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
@@ -15,15 +15,17 @@ import org.springframework.scheduling.annotation.Scheduled;
 @EnableCaching
 public class DDulCacheConfiguration {
 
-  public static final String ARTICLE_CATEGORY = "article-category";
+  public static final String CACHED_ARTICLE_CATEGORY = "ddul-article-category";
+  public static final String CACHED_CODE = "ddul-code";
 
 
   @Bean
   public CacheManager cacheManager() {
     final CompositeCacheManager managers = new CompositeCacheManager();
     managers.setCacheManagers(
-        Collections.singletonList(
-            new ConcurrentMapCacheManager(ARTICLE_CATEGORY)
+        Arrays.asList(
+            new ConcurrentMapCacheManager(CACHED_ARTICLE_CATEGORY),
+            new ConcurrentMapCacheManager(CACHED_CODE)
         )
     );
 

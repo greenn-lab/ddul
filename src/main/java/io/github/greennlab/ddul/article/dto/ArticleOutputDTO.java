@@ -15,8 +15,8 @@ import org.mapstruct.factory.Mappers;
 @Setter
 public class ArticleOutputDTO {
 
-  public static final ArticlePaginatedMapper mapped =
-      Mappers.getMapper(ArticlePaginatedMapper.class);
+  public static final ArticleOutputMapper mapped =
+      Mappers.getMapper(ArticleOutputMapper.class);
 
   private Long id;
   private String category;
@@ -33,7 +33,7 @@ public class ArticleOutputDTO {
   private List<File> attachFiles;
 
   @Mapper
-  public interface ArticlePaginatedMapper extends EntityDtoMapping<Article, ArticleOutputDTO> {
+  public interface ArticleOutputMapper extends EntityDtoMapping<Article, ArticleOutputDTO> {
 
   }
 
