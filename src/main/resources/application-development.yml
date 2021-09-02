@@ -15,7 +15,7 @@ spring:
 
   datasource:
     driver-class-name: "org.h2.Driver"
-    url: "jdbc:h2:./ddul;DB_CLOSE_ON_EXIT=FALSE;AUTO_SERVER=TRUE;Mode=Oracle"
+    url: "jdbc:h2:./ddul;AUTO_SERVER=TRUE"
     username: "sa"
     password: ""
 
