@@ -2,7 +2,7 @@ package io.github.greennlab.ddul;
 
 import static org.springframework.security.web.context.HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY;
 
-import io.github.greennlab.ddul.user.service.DDulUserService;
+import io.github.greennlab.ddul.user.service.UserService;
 import java.io.IOException;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -11,6 +11,9 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnWarDeployment;
+import org.springframework.boot.autoconfigure.security.ConditionalOnDefaultWebSecurity;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -26,16 +29,15 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.web.filter.DelegatingFilterProxy;
 
-@Profile("DDul")
 @Configuration
 @EnableWebSecurity
-@Order
 @RequiredArgsConstructor
 public class DDulSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-  private final DDulUserService userService;
+  private final UserService userService;
 
 
   @Override
