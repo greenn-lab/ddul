@@ -1,8 +1,7 @@
-package io.github.greennlab.ddul.user;
+package io.github.greennlab.ddul.authority;
 
-import io.github.greennlab.ddul.authority.Authority;
-import io.github.greennlab.ddul.entity.BaseEntity;
 import io.github.greennlab.ddul.Application;
+import io.github.greennlab.ddul.entity.BaseEntity;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -13,11 +12,11 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = Application.DB_PREFIX + "USER_AUTHORITY")
+@Table(name = Application.DB_PREFIX + "MAP_AUTHORITY_USER")
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = false)
-public class UserAuthority extends BaseEntity implements Serializable {
+public class MapAuthorityUser extends BaseEntity implements Serializable {
 
   private static final long serialVersionUID = -6254442608026678057L;
 

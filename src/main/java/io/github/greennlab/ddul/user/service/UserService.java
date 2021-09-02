@@ -2,31 +2,25 @@ package io.github.greennlab.ddul.user.service;
 
 import io.github.greennlab.ddul.authority.Authority;
 import io.github.greennlab.ddul.authority.AuthorizedUser;
+import io.github.greennlab.ddul.authority.MapAuthorityUser;
+import io.github.greennlab.ddul.authority.repository.DDulMapAuthorityUserRepository;
 import io.github.greennlab.ddul.user.User;
-import io.github.greennlab.ddul.user.UserAuthority;
-import io.github.greennlab.ddul.user.repository.DDulUserAuthorityRepository;
 import io.github.greennlab.ddul.user.repository.DDulUserRepository;
-import java.util.Collection;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.ObjectUtils;
 
-@Service
-@Transactional
+@Service("DDulUserService")
 @RequiredArgsConstructor
-public class DDulUserService implements UserDetailsService {
+public class UserService implements UserDetailsService {
 
   private final DDulUserRepository repository;
 
-  private final DDulUserAuthorityRepository authorityRepository;
+  private final DDulMapAuthorityUserRepository authorityRepository;
 
 
   @Override
@@ -40,24 +34,10 @@ public class DDulUserService implements UserDetailsService {
     final Set<Authority> authorities = authorityRepository
         .findAllByUserId(user.getId())
         .stream()
-        .map(UserAuthority::getAuthority)
+        .map(MapAuthorityUser::getAuthority)
         .collect(Collectors.toSet());
 
-    return new AuthorizedUser(user, spreadAllAuthorities(authorities));
+    return new AuthorizedUser(user, Authority.spreadAll(authorities));
   }
 
-
-  private Set<GrantedAuthority> spreadAllAuthorities(Collection<Authority> authorities) {
-    final Set<GrantedAuthority> result = new HashSet<>();
-
-    for (Authority authority : authorities) {
-      result.add(authority);
-
-      if (!ObjectUtils.isEmpty(authority.getChildren())) {
-        result.addAll(spreadAllAuthorities(authority.getChildren()));
-      }
-    }
-
-    return result;
-  }
 }

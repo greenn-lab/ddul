@@ -3,7 +3,10 @@ package io.github.greennlab.ddul.authority;
 import com.fasterxml.jackson.annotation.JsonValue;
 import io.github.greennlab.ddul.entity.BaseEntity;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -14,12 +17,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.util.ObjectUtils;
 
 @Entity
-@Table(
-    name = "AUTHORITY",
-    uniqueConstraints = @UniqueConstraint(name = "AUTHORITY_UQ1", columnNames = "ROLE")
-)
+@Table(name = "AUTHORITY")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -37,6 +38,21 @@ public class Authority extends BaseEntity implements GrantedAuthority {
 
   public Authority(String role) {
     this.role = role;
+  }
+
+
+  public static Set<Authority> spreadAll(Collection<Authority> authorities) {
+    final Set<Authority> result = new HashSet<>();
+
+    for (Authority authority : authorities) {
+      result.add(authority);
+
+      if (!ObjectUtils.isEmpty(authority.getChildren())) {
+        result.addAll(spreadAll(authority.getChildren()));
+      }
+    }
+
+    return result;
   }
 
 
