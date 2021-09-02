@@ -16,13 +16,13 @@ public class CommonCode extends BaseEntity {
   private static final long serialVersionUID = -8379883687091265041L;
 
 
-  @Column(name = "GRP_COD")
+  @Column(name = "GRP")
   private String group;
 
-  @Column(name = "COD")
+  @Column(name = "CODE")
   private String code;
 
-  @Column(name = "COD_NAME")
+  @Column(name = "NAME")
   private String name;
 
   @Column(name = "ORD")

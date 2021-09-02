@@ -57,7 +57,7 @@ public class AuthorizedUser implements UserDetails {
 
   @Override
   public boolean isAccountNonLocked() {
-    return !user.isUse();
+    return user.isUse();
   }
 
   @Override

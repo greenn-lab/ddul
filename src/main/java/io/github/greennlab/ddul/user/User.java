@@ -28,9 +28,7 @@ public class User extends BaseEntity {
   @JsonIgnore
   private String password;
 
-  @Column(name = "PASSWORD_EXP")
   private LocalDate passwordExpired;
-
   private String email;
   private String name;
   private boolean use;
