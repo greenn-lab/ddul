@@ -11,13 +11,10 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnWarDeployment;
-import org.springframework.boot.autoconfigure.security.ConditionalOnDefaultWebSecurity;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import org.springframework.core.annotation.Order;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -29,10 +26,10 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.web.filter.DelegatingFilterProxy;
 
 @Configuration
+@ConditionalOnProperty(prefix = "ddul", name = "apply-security", havingValue = "true")
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class DDulSecurityConfiguration extends WebSecurityConfigurerAdapter {
@@ -67,6 +64,7 @@ public class DDulSecurityConfiguration extends WebSecurityConfigurerAdapter {
     return PasswordEncoderFactories.createDelegatingPasswordEncoder();
   }
 
+  @Profile('!' + Application.PRODUCTION)
   @Bean
   public DelegatingFilterProxy bypass() {
     return new DelegatingFilterProxy() {

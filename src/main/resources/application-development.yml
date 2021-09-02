@@ -1,3 +1,7 @@
+ddul:
+  apply-security: true
+
+
 spring:
 
   data:
@@ -22,7 +26,6 @@ spring:
 
   messages:
     cache-duration: 3
-
 
 logging:
   level:
