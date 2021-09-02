@@ -8,4 +8,6 @@ public interface DDulMapAuthorityUserRepository extends Repository<MapAuthorityU
 
   Set<MapAuthorityUser> findAllByUserId(Long userId);
 
+  Set<MapAuthorityUser> saveAll(Iterable<MapAuthorityUser> entities);
+
 }

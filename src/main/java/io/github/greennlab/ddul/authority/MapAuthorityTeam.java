@@ -9,10 +9,10 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "MAP_AUTHORITY_MENU")
+@Table(name = "MAP_AUTHORITY_TEAM")
 @Getter
 @Setter
-public class MapAuthorityMenu extends BaseEntity {
+public class MapAuthorityTeam extends BaseEntity {
 
   private static final long serialVersionUID = -7034907455336320332L;
 
@@ -21,6 +21,6 @@ public class MapAuthorityMenu extends BaseEntity {
   @JoinColumn(name = "AUTHORITY_ID")
   private Authority authority;
 
-  private Long menuId;
+  private Long teamId;
 
 }
