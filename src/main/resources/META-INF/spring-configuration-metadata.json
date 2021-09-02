@@ -1,0 +1,25 @@
+{
+  "groups": [
+    {
+      "name": "ddul",
+      "type": "io.github.greennlab.ddul.DDulProperties",
+      "sourceType": "io.github.greennlab.ddul.DDulProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ddul.apply-security",
+      "type": "java.lang.Boolean",
+      "description": "Will be applied defined options for spring-security. DO NOT USE IN PRODUCTION",
+      "sourceType": "io.github.greennlab.ddul.DDulProperties",
+      "defaultValue": false
+    },
+    {
+      "name": "ddul.file-storage",
+      "type": "java.nio.file.Path",
+      "description": "Using physically stored that file service",
+      "sourceType": "io.github.greennlab.ddul.DDulProperties"
+    }
+  ],
+  "hints": []
+}

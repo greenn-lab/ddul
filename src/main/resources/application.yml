@@ -23,9 +23,7 @@ mybatis:
     pagination-counted-sql: "SELECT count(1) FROM ( ${sql} )"
 
 
-file.storage:
-  path: "file-storage/"
-
+ddul.file-storage: file-storage/
 
 # p6spy (SQL Logging)
 decorator.datasource.enabled: true

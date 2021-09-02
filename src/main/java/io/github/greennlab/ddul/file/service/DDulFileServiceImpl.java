@@ -1,5 +1,6 @@
 package io.github.greennlab.ddul.file.service;
 
+import io.github.greennlab.ddul.DDulProperties;
 import io.github.greennlab.ddul.file.File;
 import io.github.greennlab.ddul.file.repository.DDulFileRepository;
 import java.io.FileNotFoundException;
@@ -13,7 +14,6 @@ import java.util.List;
 import java.util.UUID;
 import javax.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,23 +29,23 @@ public class DDulFileServiceImpl implements FileService {
 
   private final DDulFileRepository repository;
 
+  private final DDulProperties properties;
 
-  @Value("${file.storage.path}")
-  private Path fileStoragePath;
+  private Path fileStorage;
 
 
   @PostConstruct
   public void setup() throws IOException {
-    fileStoragePath = fileStoragePath.toAbsolutePath();
+    fileStorage = properties.getFileStorage().toAbsolutePath();
 
-    if (Files.notExists(fileStoragePath)) {
-      Files.createDirectories(fileStoragePath);
+    if (Files.notExists(fileStorage)) {
+      Files.createDirectories(fileStorage);
     }
   }
 
   @Override
   public Path getStoredPath(String path) throws FileNotFoundException {
-    final Path stored = Paths.get(fileStoragePath.toString(), path);
+    final Path stored = Paths.get(fileStorage.toString(), path);
     if (Files.notExists(stored)) {
       throw new FileNotFoundException();
     }
@@ -67,7 +67,7 @@ public class DDulFileServiceImpl implements FileService {
   public Path newStoragePath(String id) throws IOException {
     final String date = DAILY_DIR.format(LocalDate.now());
 
-    Path directory = fileStoragePath.resolve(date);
+    Path directory = fileStorage.resolve(date);
 
     if (Files.notExists(directory)) {
       directory = Files.createDirectories(directory);
@@ -119,7 +119,7 @@ public class DDulFileServiceImpl implements FileService {
 
   private String changeRelativePath(Path absolutePath) {
     return absolutePath.toString()
-        .replace(fileStoragePath.toString(), "");
+        .replace(fileStorage.toString(), "");
   }
 
 }
