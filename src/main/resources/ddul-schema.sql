@@ -164,9 +164,9 @@ ALTER TABLE MAP_AUTHORITY_USER
 COMMENT ON TABLE MAP_AUTHORITY_USER IS '사용자-권한 매핑';
 
 INSERT INTO MAP_AUTHORITY_USER (ID, USER_ID, AUTHORITY_ID) SELECT * FROM (
-SELECT -1, -1, -2 FROM DUAL UNION ALL
-SELECT -2, -1, -6 FROM DUAL UNION ALL
-SELECT -3, -2, -4 FROM DUAL
+SELECT -1 AS A, -1 AS B, -2 AS C FROM DUAL UNION ALL
+SELECT -2 AS A, -1 AS B, -6 AS C FROM DUAL UNION ALL
+SELECT -3 AS A, -2 AS B, -4 AS C FROM DUAL
 ) WHERE NOT EXISTS (SELECT * FROM MAP_AUTHORITY_USER);
 
 DROP TABLE IF EXISTS MAP_AUTHORITY_TEAM CASCADE;
@@ -224,7 +224,7 @@ COMMENT ON COLUMN MENU.ATTR IS '속성';
 COMMENT ON COLUMN MENU.OPENED IS '개방일시';
 
 INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, PID) SELECT * FROM (
-SELECT -999, 'Documentation', 'Documentation', '', 999, 'Usage guides for everything you need to know about it', null FROM DUAL UNION ALL
+SELECT -999, 'Documentation', 'Documentations', '', 999, 'Usage guides for everything you need to know about it', null FROM DUAL UNION ALL
 SELECT -992, 'Core Features', 'Core Features', '/documentation/features', 2, '', -999 FROM DUAL UNION ALL
 SELECT -991, 'Guides', 'Guides', '/documentation/guides', 1, '', -999 FROM DUAL UNION ALL
 SELECT -990, 'Changelog', 'Changelog', '/documentation/changelog', 0, '', -999 FROM DUAL UNION ALL

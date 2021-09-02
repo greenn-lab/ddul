@@ -16,8 +16,8 @@
   <packaging>jar</packaging>
   <name>ddul</name>
   <url>https://github.com/greenn-lab/ddul</url>
-  <description><![CDATA[ DDul means "ground" in korean prounance.
-  It helps to you when concreate a java projects.
+  <description><![CDATA[ DDul means "ground" in korean pronounce.
+  It helps to you when compose a java projects.
   And support with database access, cache abstraction, system code generation,
   hierarchical data handling, article management and etc.]]></description>
 
@@ -148,9 +148,6 @@
         <includes>
           <include>**/*</include>
         </includes>
-        <!--<excludes>
-          <exclude>*-schema.sql</exclude>
-        </excludes>-->
       </resource>
     </resources>
 
@@ -242,23 +239,23 @@
         <artifactId>sign-maven-plugin</artifactId>
         <version>0.3.1</version>
         <executions>
-            <execution>
-                <goals>
-                    <goal>sign</goal>
-                </goals>
-            </execution>
+          <execution>
+            <goals>
+              <goal>sign</goal>
+            </goals>
+          </execution>
         </executions>
       </plugin>
       <plugin>
-      	<groupId>org.sonatype.plugins</groupId>
-      	<artifactId>nexus-staging-maven-plugin</artifactId>
-      	<version>1.6.8</version>
-      	<extensions>true</extensions>
-      	<configuration>
-      		<serverId>ossrh</serverId>
-      		<nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
-      		<autoReleaseAfterClose>true</autoReleaseAfterClose>
-      	</configuration>
+        <groupId>org.sonatype.plugins</groupId>
+        <artifactId>nexus-staging-maven-plugin</artifactId>
+        <version>1.6.8</version>
+        <extensions>true</extensions>
+        <configuration>
+          <serverId>ossrh</serverId>
+          <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
+          <autoReleaseAfterClose>true</autoReleaseAfterClose>
+        </configuration>
       </plugin>
     </plugins>
   </build>
