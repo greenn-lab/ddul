@@ -1,7 +1,5 @@
 package io.github.greennlab.ddul.team;
 
-import static io.github.greennlab.ddul.Application.DB_PREFIX;
-
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
@@ -15,7 +13,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = DB_PREFIX + "TEAM")
+@Table(name = "TEAM")
 @Getter
 @Setter
 public class TeamHierarchy {

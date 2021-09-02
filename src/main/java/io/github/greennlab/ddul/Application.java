@@ -10,8 +10,6 @@ public class Application {
 
   public static final String PRODUCTION = "production";
 
-  public static final String DB_PREFIX = "";
-
 
   public static void main(String[] args) {
     SpringApplication.run(Application.class, args);

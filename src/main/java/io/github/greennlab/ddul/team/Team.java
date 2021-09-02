@@ -1,7 +1,5 @@
 package io.github.greennlab.ddul.team;
 
-import static io.github.greennlab.ddul.Application.DB_PREFIX;
-
 import io.github.greennlab.ddul.entity.BaseEntity;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +11,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = DB_PREFIX + "TEAM")
+@Table(name = "TEAM")
 @NoArgsConstructor
 @Getter
 @Setter

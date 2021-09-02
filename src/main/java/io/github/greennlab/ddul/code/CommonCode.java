@@ -1,7 +1,5 @@
 package io.github.greennlab.ddul.code;
 
-import static io.github.greennlab.ddul.Application.DB_PREFIX;
-
 import io.github.greennlab.ddul.entity.BaseEntity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,7 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = DB_PREFIX + "CODE")
+@Table(name = "CODE")
 @Getter
 @Setter
 public class CommonCode extends BaseEntity {

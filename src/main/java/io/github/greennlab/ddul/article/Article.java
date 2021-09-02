@@ -1,7 +1,5 @@
 package io.github.greennlab.ddul.article;
 
-import static io.github.greennlab.ddul.Application.DB_PREFIX;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
@@ -28,7 +26,7 @@ import org.hibernate.annotations.Type;
 import org.hibernate.annotations.Where;
 
 @Entity
-@Table(name = DB_PREFIX + "ARTICLE")
+@Table(name = "ARTICLE")
 @Getter
 @Setter
 @NoArgsConstructor

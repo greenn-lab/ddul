@@ -1,7 +1,5 @@
 package io.github.greennlab.ddul.menu;
 
-import static io.github.greennlab.ddul.Application.DB_PREFIX;
-
 import io.github.greennlab.ddul.entity.BaseEntity;
 import io.github.greennlab.ddul.mapstruct.EntityDtoMapping;
 import java.time.LocalDateTime;
@@ -20,7 +18,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
 @Entity
-@Table(name = DB_PREFIX + "MENU")
+@Table(name = "MENU")
 @Getter
 @Setter
 public class Menu extends BaseEntity {

@@ -1,7 +1,5 @@
 package io.github.greennlab.ddul.authority;
 
-import static io.github.greennlab.ddul.Application.DB_PREFIX;
-
 import io.github.greennlab.ddul.entity.BaseEntity;
 import io.github.greennlab.ddul.menu.Menu;
 import javax.persistence.Entity;
@@ -14,7 +12,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = DB_PREFIX + "MAP_AUTHORITY_MENU")
+@Table(name = "MAP_AUTHORITY_MENU")
 @Getter
 @Setter
 public class MapAuthorityMenu extends BaseEntity {
