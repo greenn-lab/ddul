@@ -77,7 +77,7 @@ public class Article extends BaseEntity {
   @Where(clause = "REMOVAL = 'N'")
   private List<File> attachFiles;
 
-  @Type(type = "io.github.greennlab.ddul.entity.JsonMapType")
+  @Type(type = JsonMap.TYPE)
   private JsonMap extra;
 
 

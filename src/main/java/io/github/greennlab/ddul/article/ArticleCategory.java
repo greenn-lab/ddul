@@ -27,7 +27,7 @@ public class ArticleCategory extends Auditor {
   @Column(name = "DSC")
   private String description;
 
-  @Type(type = "io.github.greennlab.ddul.entity.JsonMapType")
+  @Type(type = JsonMap.TYPE)
   private JsonMap props;
 
   private boolean removal;
