@@ -198,7 +198,7 @@ COMMENT ON COLUMN MENU.ATTR IS '속성';
 COMMENT ON COLUMN MENU.OPENED IS '개방일시';
 
 INSERT INTO MENU (ID, NAME, NAME_AID, URI, ORD, DSC, PID) SELECT * FROM (
-SELECT -999, 'Documentation', 'Documentations', '', 999, 'Usage guides for everything you need to know about it', null FROM DUAL UNION ALL
+SELECT -999, 'Documentation', 'Documentations', '', 999, 'Usage guides for everything you need to know about it', null AS X FROM DUAL UNION ALL
 SELECT -992, 'Core Features', 'Core Features', '/documentation/features', 2, '', -999 FROM DUAL UNION ALL
 SELECT -991, 'Guides', 'Guides', '/documentation/guides', 1, '', -999 FROM DUAL UNION ALL
 SELECT -990, 'Changelog', 'Changelog', '/documentation/changelog', 0, '', -999 FROM DUAL UNION ALL
@@ -208,7 +208,7 @@ SELECT -904, 'Round badge', 'Round badge', '', 2, '', -901 FROM DUAL UNION ALL
 SELECT -903, 'Rectangle badge', 'Rectangle badge', '', 1, '', -901 FROM DUAL UNION ALL
 SELECT -902, 'Circle badge', 'Circle badge', '', 0, '', -901 FROM DUAL UNION ALL
 SELECT -901, 'badges', 'badges', '', 0, '', -900 FROM DUAL UNION ALL
-SELECT -900, 'Navigation Features', 'Navigation Features', '', 900,'Collapsable levels and badge styles at menu item', null FROM DUAL UNION ALL
+SELECT -900, 'Navigation Features', 'Navigation Features', '', 900,'Collapsable levels and badge styles at menu item', null AS X FROM DUAL UNION ALL
 SELECT -33, 'Colors', 'Colors', '/user-interface/colors', 4, '', -25 FROM DUAL UNION ALL
 SELECT -32, 'Cards', 'Cards', '/user-interface/cards', 3, '', -25 FROM DUAL UNION ALL
 SELECT -31, 'Icons', 'Icons', '/user-interface/icons', 2, '', -25 FROM DUAL UNION ALL
@@ -242,7 +242,7 @@ SELECT -4, 'System', 'System', '', 1, 'Operating environment of system', 0 FROM 
 SELECT -3, 'Approve Process', 'Approve Process', '/work/approve-process', 1, '', -1 FROM DUAL UNION ALL
 SELECT -2, 'Receipt', 'Receipt', '/work/receipt', 0, '', -1 FROM DUAL UNION ALL
 SELECT -1, 'Main Works', 'Main Works', '', 0, 'Remember an earning yours meal!', 0 FROM DUAL UNION ALL
-SELECT  0, 'Back-office Menu', '', '', 0, '', null FROM DUAL
+SELECT  0, 'Back-office Menu', '', '', 0, '', null AS X FROM DUAL
 ) WHERE NOT EXISTS (SELECT * FROM MENU);
 
 
