@@ -37,7 +37,9 @@ public class DDulRefreshMapperConfiguration implements InitializingBean, Disposa
 
   private static final ExecutorService refreshMapperService = Executors.newSingleThreadExecutor();
 
+
   private final DDulMybatisConfiguration ddulMybatisConfiguration;
+
   private final SqlSessionFactory sqlSessionFactory;
 
 
@@ -103,6 +105,14 @@ public class DDulRefreshMapperConfiguration implements InitializingBean, Disposa
     }
 
     public boolean isModified() {
+      try {
+        if (Files.notExists(Paths.get(xml.toURI()))) {
+          return false;
+        }
+      } catch (URISyntaxException | RuntimeException e) {
+        // no work
+      }
+
       return this.lastModified != getXmlLastModified();
     }
 
