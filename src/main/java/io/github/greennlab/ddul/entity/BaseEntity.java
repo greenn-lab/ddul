@@ -17,6 +17,8 @@ public class BaseEntity extends Auditor {
 
   public static final String ID_GENERATOR_NAME = "ID_GENERATOR_SQ";
 
+  public static final String NOT_REMOVAL = "REMOVAL = 'N'";
+
 
   @Id
   @SequenceGenerator(name = ID_GENERATOR_NAME, sequenceName = ID_GENERATOR_NAME, allocationSize = 1)

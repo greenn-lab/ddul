@@ -1,15 +1,17 @@
 package io.github.greennlab.ddul.article.repository;
 
-import io.github.greennlab.ddul.article.Article;
-import io.github.greennlab.ddul.article.dto.ArticleOutputDTO;
-import io.github.greennlab.ddul.user.User;
+import static io.github.greennlab.ddul.article.QArticle.article;
+import static io.github.greennlab.ddul.user.QUser.user;
+
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.QBean;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import io.github.greennlab.ddul.article.QArticle;
+import io.github.greennlab.ddul.article.Article;
+import io.github.greennlab.ddul.article.dto.ArticleOutputDTO;
 import io.github.greennlab.ddul.user.QUser;
+import io.github.greennlab.ddul.user.User;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -22,20 +24,20 @@ import org.springframework.util.ObjectUtils;
 public class DDulArticleQuerydslRepositoryImpl implements DDulArticleQuerydslRepository {
 
   public static final QBean<Article> columnsOfPage = Projections.bean(Article.class,
-      QArticle.article.id,
-      QArticle.article.depth,
+      article.id,
+      article.depth,
       Projections.bean(
               User.class,
-              QUser.user.id,
-              QUser.user.username
+              user.id,
+              user.username
           )
           .as("user"),
-      QArticle.article.author,
-      QArticle.article.email,
-      QArticle.article.password,
-      QArticle.article.title,
-      QArticle.article.read,
-      QArticle.article.created
+      article.author,
+      article.email,
+      article.password,
+      article.title,
+      article.read,
+      article.created
   );
 
 
@@ -47,15 +49,15 @@ public class DDulArticleQuerydslRepositoryImpl implements DDulArticleQuerydslRep
       Pageable pageable) {
     final QueryResults<Article> query = queryFactory
         .select(columnsOfPage)
-        .from(QArticle.article)
+        .from(article)
         .where(
-            QArticle.article.removal.eq(false)
-                .and(QArticle.article.category.eq(category))
+            article.removal.eq(false)
+                .and(article.category.eq(category))
                 .and(conditionOfPage(searchType, keyword))
         )
         .orderBy(
-            QArticle.article.bid.desc(),
-            QArticle.article.order.asc()
+            article.bid.desc(),
+            article.order.asc()
         )
         .offset(pageable.getOffset())
         .limit(pageable.getPageSize())
@@ -73,15 +75,15 @@ public class DDulArticleQuerydslRepositoryImpl implements DDulArticleQuerydslRep
     }
 
     if ("1".equals(searchType)) {
-      return QArticle.article.title.contains(keyword);
+      return article.title.contains(keyword);
     } else if ("2".equals(searchType)) {
-      return QArticle.article.fulltext.contains(keyword);
+      return article.fulltext.contains(keyword);
     } else if ("3".equals(searchType)) {
-      return QArticle.article.author.contains(keyword);
+      return article.author.contains(keyword);
     } else {
-      return QArticle.article.author.contains(keyword)
-          .or(QArticle.article.title.contains(keyword))
-          .or(QArticle.article.fulltext.contains(keyword));
+      return article.author.contains(keyword)
+          .or(article.title.contains(keyword))
+          .or(article.fulltext.contains(keyword));
     }
   }
 

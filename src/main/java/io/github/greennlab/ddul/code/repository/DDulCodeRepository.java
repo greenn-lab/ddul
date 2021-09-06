@@ -1,5 +1,7 @@
 package io.github.greennlab.ddul.code.repository;
 
+import static io.github.greennlab.ddul.entity.BaseEntity.NOT_REMOVAL;
+
 import io.github.greennlab.ddul.code.CommonCode;
 import io.github.greennlab.ddul.entity.AFewRepository;
 import java.util.List;
@@ -14,7 +16,7 @@ public interface DDulCodeRepository extends AFewRepository<CommonCode> {
 
   List<CommonCode> findAllByGroupOrderByOrder(String group);
 
-  @Where(clause = "REMOVAL != 'N'")
+  @Where(clause = NOT_REMOVAL)
   CommonCode findByGroupAndCode(String group, String code);
 
   @Modifying

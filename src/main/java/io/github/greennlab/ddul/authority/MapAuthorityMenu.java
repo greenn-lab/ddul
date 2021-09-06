@@ -1,12 +1,14 @@
 package io.github.greennlab.ddul.authority;
 
 import io.github.greennlab.ddul.entity.BaseEntity;
+import io.github.greennlab.ddul.menu.Menu;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Where;
 
 @Entity
 @Table(name = "MAP_AUTHORITY_MENU")
@@ -18,9 +20,13 @@ public class MapAuthorityMenu extends BaseEntity {
 
 
   @ManyToOne
-  @JoinColumn(name = "AUTHORITY_ID")
+  @JoinColumn(name = "AUTHORITY_ID", insertable = false, updatable = false)
+  @Where(clause = NOT_REMOVAL)
   private Authority authority;
 
-  private Long menuId;
+  @ManyToOne
+  @JoinColumn(name = "MENU_ID", insertable = false, updatable = false)
+  @Where(clause = NOT_REMOVAL)
+  private Menu menu;
 
 }

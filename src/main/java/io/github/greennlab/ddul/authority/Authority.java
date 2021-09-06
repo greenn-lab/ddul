@@ -2,10 +2,8 @@ package io.github.greennlab.ddul.authority;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 import io.github.greennlab.ddul.entity.BaseEntity;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -32,7 +30,7 @@ public class Authority extends BaseEntity implements GrantedAuthority {
 
   @OneToMany(fetch = FetchType.EAGER)
   @JoinColumn(name = "PID", insertable = false, updatable = false)
-  private List<Authority> children = new ArrayList<>();
+  private Set<Authority> children = new HashSet<>();
 
 
   public Authority(String role) {
@@ -54,10 +52,6 @@ public class Authority extends BaseEntity implements GrantedAuthority {
     return result;
   }
 
-
-  //--------------------------------------------------
-  // Role
-  //--------------------------------------------------
   @Override
   public String getAuthority() {
     return role;
@@ -69,4 +63,5 @@ public class Authority extends BaseEntity implements GrantedAuthority {
   public String toString() {
     return role;
   }
+
 }

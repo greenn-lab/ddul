@@ -3,8 +3,9 @@ package io.github.greennlab.ddul.menu;
 import io.github.greennlab.ddul.entity.BaseEntity;
 import io.github.greennlab.ddul.mapstruct.EntityDtoMapping;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -52,7 +53,7 @@ public class Menu extends BaseEntity {
 
   @OneToMany(mappedBy = "pid", fetch = FetchType.EAGER)
   @OrderBy("order asc")
-  private List<Menu> children = new ArrayList<>();
+  private Set<Menu> children = new HashSet<>();
 
 
   // -------------------------------------------------------

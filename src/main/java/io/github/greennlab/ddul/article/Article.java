@@ -74,7 +74,7 @@ public class Article extends BaseEntity {
 
   @OneToMany(cascade = {CascadeType.MERGE})
   @JoinColumn(name = "PACK", referencedColumnName = "ID", insertable = false)
-  @Where(clause = "REMOVAL = 'N'")
+  @Where(clause = NOT_REMOVAL)
   private List<File> attachFiles;
 
   @Type(type = JsonMap.TYPE)
