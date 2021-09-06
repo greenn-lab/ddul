@@ -22,6 +22,7 @@ public class Team extends BaseEntity {
 
   private Long pid;
   private String name;
+  private int order;
 
   @Transient
   private List<Team> children = new ArrayList<>();
@@ -31,6 +32,7 @@ public class Team extends BaseEntity {
     setId(teamHierarchy.getId());
     this.pid = teamHierarchy.getPid();
     this.name = teamHierarchy.getName();
+    this.order = teamHierarchy.getOrder();
   }
 
 }

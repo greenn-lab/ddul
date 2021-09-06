@@ -1,6 +1,7 @@
 package io.github.greennlab.ddul.menu;
 
 import io.github.greennlab.ddul.entity.BaseEntity;
+import io.github.greennlab.ddul.entity.JsonMap;
 import io.github.greennlab.ddul.mapstruct.EntityDtoMapping;
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -15,6 +16,7 @@ import javax.persistence.Table;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Type;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
@@ -43,11 +45,8 @@ public class Menu extends BaseEntity {
   @Column(name = "ORD")
   private int order;
 
-  private String badge;
-  private String icon;
-
-  @Column(name = "ATTR")
-  private String attribute;
+  @Type(type = JsonMap.TYPE)
+  private JsonMap props;
 
   private LocalDateTime opened;
 

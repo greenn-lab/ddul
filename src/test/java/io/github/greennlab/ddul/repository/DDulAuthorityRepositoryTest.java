@@ -4,16 +4,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import io.github.greennlab.ddul.authority.Authority;
 import io.github.greennlab.ddul.authority.repository.DDulAuthorityRepository;
+import io.github.greennlab.ddul.test.DataJpaTest;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-@DataJpaTest
-class DDulAuthorityRepositoryTest {
+class DDulAuthorityRepositoryTest extends DataJpaTest {
 
   @Autowired
   private DDulAuthorityRepository repository;
@@ -31,9 +30,9 @@ class DDulAuthorityRepositoryTest {
   }
 
   private Stream<Authority> getAllAsFlat(Authority authority) {
-    return Stream.concat(Stream.of(authority), authority.getChildren().stream().flatMap(this::getAllAsFlat));
+    return Stream.concat(Stream.of(authority),
+        authority.getChildren().stream().flatMap(this::getAllAsFlat));
   }
-
 
 
 }

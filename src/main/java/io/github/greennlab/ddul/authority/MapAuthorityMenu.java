@@ -1,5 +1,7 @@
 package io.github.greennlab.ddul.authority;
 
+import static io.github.greennlab.ddul.entity.BaseEntity.NOT_REMOVAL;
+
 import io.github.greennlab.ddul.entity.BaseEntity;
 import io.github.greennlab.ddul.menu.Menu;
 import javax.persistence.Entity;
@@ -12,6 +14,7 @@ import org.hibernate.annotations.Where;
 
 @Entity
 @Table(name = "MAP_AUTHORITY_MENU")
+@Where(clause = NOT_REMOVAL)
 @Getter
 @Setter
 public class MapAuthorityMenu extends BaseEntity {

@@ -4,12 +4,12 @@ import io.github.greennlab.ddul.menu.Menu;
 import io.github.greennlab.ddul.menu.Menu.Dto;
 import io.github.greennlab.ddul.menu.repository.DDulMenuRepository;
 import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-@Service("DDulMenuService")
+@Service
 @RequiredArgsConstructor
 public class DDulMenuServiceImpl implements MenuService {
 
@@ -18,9 +18,8 @@ public class DDulMenuServiceImpl implements MenuService {
 
   @Override
   public Menu.Dto getAllMenus(Long id) {
-    final Menu root = repository.findById(id).orElseThrow(NoSuchElementException::new);
-
-    return Menu.mapped.to(root);
+    final Optional<Menu> root = repository.findById(id);
+    return Menu.mapped.to(root.orElse(null));
   }
 
   @Override
