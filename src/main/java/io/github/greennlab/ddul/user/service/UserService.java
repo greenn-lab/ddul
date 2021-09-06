@@ -2,8 +2,8 @@ package io.github.greennlab.ddul.user.service;
 
 import io.github.greennlab.ddul.authority.Authority;
 import io.github.greennlab.ddul.authority.AuthorizedUser;
-import io.github.greennlab.ddul.authority.MapAuthorityUser;
-import io.github.greennlab.ddul.authority.repository.DDulMapAuthorityUserRepository;
+import io.github.greennlab.ddul.authority.MappedAuthorityUser;
+import io.github.greennlab.ddul.authority.repository.DDulMappedAuthorityUserRepository;
 import io.github.greennlab.ddul.user.User;
 import io.github.greennlab.ddul.user.repository.DDulUserRepository;
 import java.util.Set;
@@ -20,7 +20,7 @@ public class UserService implements UserDetailsService {
 
   private final DDulUserRepository repository;
 
-  private final DDulMapAuthorityUserRepository authorityRepository;
+  private final DDulMappedAuthorityUserRepository authorityRepository;
 
 
   @Override
@@ -34,7 +34,7 @@ public class UserService implements UserDetailsService {
     final Set<Authority> authorities = authorityRepository
         .findAllByUserId(user.getId())
         .stream()
-        .map(MapAuthorityUser::getAuthority)
+        .map(MappedAuthorityUser::getAuthority)
         .collect(Collectors.toSet());
 
     return new AuthorizedUser(user, Authority.spreadAll(authorities));

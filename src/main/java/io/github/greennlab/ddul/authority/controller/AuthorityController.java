@@ -1,11 +1,15 @@
 package io.github.greennlab.ddul.authority.controller;
 
-import io.github.greennlab.ddul.authority.Authority;
+import io.github.greennlab.ddul.authority.dto.AuthorityInputDTO;
 import io.github.greennlab.ddul.authority.dto.AuthorityOutputDTO;
-import io.github.greennlab.ddul.authority.repository.DDulAuthorityRepository;
-import java.util.Optional;
+import io.github.greennlab.ddul.authority.service.AuthorityService;
+import java.util.Map;
+import java.util.Set;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,12 +18,22 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class AuthorityController {
 
-  private final DDulAuthorityRepository repository;
+  private final AuthorityService service;
+
 
   @GetMapping
   public AuthorityOutputDTO getAuthority(Long id) {
-    final Optional<Authority> root = repository.findById(id);
-    return AuthorityOutputDTO.mapped.to(root.orElse(null));
+    return service.getAuthority(id);
+  }
+
+  @GetMapping("menu-roles")
+  public Map<Long, Set<String>> getMenuRoles() {
+    return service.getMenuRoles();
+  }
+
+  @PostMapping
+  public AuthorityOutputDTO save(@Valid @RequestBody AuthorityInputDTO input) {
+    return service.save(input);
   }
 
 }

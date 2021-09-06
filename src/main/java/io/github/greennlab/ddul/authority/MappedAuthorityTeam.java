@@ -12,7 +12,7 @@ import lombok.Setter;
 @Table(name = "MAP_AUTHORITY_TEAM")
 @Getter
 @Setter
-public class MapAuthorityTeam extends BaseEntity {
+public class MappedAuthorityTeam extends BaseEntity {
 
   private static final long serialVersionUID = -7034907455336320332L;
 

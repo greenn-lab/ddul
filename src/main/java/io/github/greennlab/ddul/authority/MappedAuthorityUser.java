@@ -15,7 +15,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = false)
-public class MapAuthorityUser extends BaseEntity implements Serializable {
+public class MappedAuthorityUser extends BaseEntity implements Serializable {
 
   private static final long serialVersionUID = -6254442608026678057L;
 

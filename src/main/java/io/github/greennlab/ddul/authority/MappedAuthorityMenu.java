@@ -17,7 +17,7 @@ import org.hibernate.annotations.Where;
 @Where(clause = NOT_REMOVAL)
 @Getter
 @Setter
-public class MapAuthorityMenu extends BaseEntity {
+public class MappedAuthorityMenu extends BaseEntity {
 
   private static final long serialVersionUID = -7034907455336320332L;
 

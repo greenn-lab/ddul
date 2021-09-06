@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
-  <entry key="error">오류가 났어요.</entry>
+  <entry key="error">처리 중 오류가 발생 되었어요.</entry>
   <entry key="error.input">잘못된 입력값이네요.</entry>
 
 
   <!--
   Exceptions
   -->
-  <entry key="java.lang.Throwable">오류가 났어요.</entry>
+  <entry key="java.lang.Throwable">처리 중 오류가 발생 되었어요.</entry>
   <entry key="org.springframework.security.access.AccessDeniedException">접근 권한이 없군요.</entry>
-  <entry key="org.springframework.dao.DataAccessException">DB 처리하면서 오류가 났어요.</entry>
-  <entry key="org.springframework.dao.DuplicateKeyException">이미 동일한 데이터(중복 키)가 있어서 오류가 났어요.</entry>
+  <entry key="org.springframework.dao.DataAccessException">DB 처리하면서 처리 중 오류가 발생 되었어요.</entry>
+  <entry key="org.springframework.dao.DuplicateKeyException">이미 동일한 데이터(중복 키)가 있어서 처리 중 오류가 발생 되었어요.</entry>
+  <entry key="java.util.NoSuchElementException">원하시는 항목을 찾지 못했어요.</entry>
 
   <!--
   jsr303
@@ -21,9 +22,5 @@
   <entry key="javax.validation.constraints.NotBlank.message">값을 채워주세요.</entry>
   <entry key="javax.validation.constraints.Email.message">${validatedValue}은(는) 이메일이 아니군요.</entry>
   <entry key="javax.validation.constraints.Size.message">길이가 맞지 않아요.</entry>
-  <entry key="javax.validation.constraints.PastOrPresent.message">오늘 또는 이전으로 입력해주세요.</entry>
-  <entry key="javax.validation.constraints.Past.message">오늘 이전으로 입력해주세요.</entry>
-  <entry key="javax.validation.constraints.FutureOrPresent.message">오늘 또는 이후로 입력해주세요.</entry>
-  <entry key="javax.validation.constraints.Future.message">오늘 이후로 입력해주세요.</entry>
   <entry key="org.hibernate.validator.constraints.Length.message">길이가 맞지 않아요. (최소: {min} ${max >= 999 ? '' : ', 최대: ' += max})</entry>
 </properties>

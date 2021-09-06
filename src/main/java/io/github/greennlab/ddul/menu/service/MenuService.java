@@ -1,15 +1,16 @@
 package io.github.greennlab.ddul.menu.service;
 
-import io.github.greennlab.ddul.menu.Menu.Dto;
+import io.github.greennlab.ddul.menu.dto.MenuInputDTO;
+import io.github.greennlab.ddul.menu.dto.MenuOutputDTO;
 import java.util.List;
 
 public interface MenuService {
 
-  Dto getAllMenus(Long menuId);
+  MenuOutputDTO getAllMenus(Long menuId);
 
-  Dto save(Dto dto);
+  MenuOutputDTO save(MenuInputDTO dto);
 
-  void saveAll(List<Dto> dtos);
+  void saveAll(List<MenuInputDTO> dtos);
 
   Long getNextSequence();
 }

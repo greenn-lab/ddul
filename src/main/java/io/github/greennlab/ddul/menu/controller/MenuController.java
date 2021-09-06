@@ -1,6 +1,7 @@
 package io.github.greennlab.ddul.menu.controller;
 
-import io.github.greennlab.ddul.menu.Menu;
+import io.github.greennlab.ddul.menu.dto.MenuInputDTO;
+import io.github.greennlab.ddul.menu.dto.MenuOutputDTO;
 import io.github.greennlab.ddul.menu.service.MenuService;
 import java.util.List;
 import javax.validation.Valid;
@@ -11,16 +12,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@RestController("DDulMenuController")
 @RequestMapping("_menu")
 @RequiredArgsConstructor
-public class DDulMenuController {
+public class MenuController {
 
   private final MenuService service;
 
 
   @GetMapping
-  public Menu.Dto getAllMenus(Long id) {
+  public MenuOutputDTO getAllMenus(Long id) {
     return service.getAllMenus(id);
   }
 
@@ -30,12 +31,12 @@ public class DDulMenuController {
   }
 
   @PostMapping("/add")
-  public Menu.Dto save(@Valid @RequestBody Menu.Dto dto) {
-    return service.save(dto);
+  public MenuOutputDTO save(@Valid @RequestBody MenuInputDTO menu) {
+    return service.save(menu);
   }
 
   @PostMapping("/save")
-  public void saveAll(@Valid @RequestBody List<Menu.Dto> dtos) {
-    service.saveAll(dtos);
+  public void saveAll(@Valid @RequestBody List<MenuInputDTO> menus) {
+    service.saveAll(menus);
   }
 }
