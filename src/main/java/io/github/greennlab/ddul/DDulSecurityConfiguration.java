@@ -2,7 +2,7 @@ package io.github.greennlab.ddul;
 
 import static org.springframework.security.web.context.HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY;
 
-import io.github.greennlab.ddul.user.service.UserService;
+import io.github.greennlab.ddul.infrastructure.user.service.UserService;
 import java.io.IOException;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;

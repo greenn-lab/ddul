@@ -1,7 +1,10 @@
 package io.github.greennlab.ddul.entity;
 
+import static com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS_TIMESTAMPS;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.sql.Clob;
@@ -25,6 +28,9 @@ public class JsonMapTypeDescriptor extends AbstractTypeDescriptor<JsonMap> {
   @SuppressWarnings("unchecked")
   public JsonMapTypeDescriptor() {
     super(JsonMap.class, ImmutableMutabilityPlan.INSTANCE);
+
+    objectMapper.registerModule(new JavaTimeModule());
+    objectMapper.disable(WRITE_DATES_AS_TIMESTAMPS);
   }
 
   @Override

@@ -1,6 +1,6 @@
 package io.github.greennlab.ddul.mybatis;
 
-import io.github.greennlab.ddul.authority.AuthorizedUser;
+import io.github.greennlab.ddul.infrastructure.authority.AuthorizedUser;
 import java.sql.Connection;
 import java.util.Properties;
 import lombok.extern.slf4j.Slf4j;

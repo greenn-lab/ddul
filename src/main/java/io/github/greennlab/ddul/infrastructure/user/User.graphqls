@@ -1,0 +1,16 @@
+#extend type Query {
+#    # 페이지별로 user 항목을 가져와요.
+#    # fetch user items by pagination
+#    users(page: Int!, size: Int): [User]
+#}
+
+# user 항목의 구조
+# structure of user item
+type User {
+    id: ID!
+    username: String!
+    password: String
+    email: String
+    name: String
+    use: Boolean
+}

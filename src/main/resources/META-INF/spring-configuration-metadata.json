@@ -18,7 +18,15 @@
       "name": "ddul.file-storage",
       "type": "java.nio.file.Path",
       "description": "Using physically stored that file service",
-      "sourceType": "io.github.greennlab.ddul.DDulProperties"
+      "sourceType": "io.github.greennlab.ddul.DDulProperties",
+      "defaultValue": "System environment variable \"java.io.tmpdir\""
+    },
+    {
+      "name": "ddul.table-prefix",
+      "type": "java.lang.String",
+      "description": "Set a prefix on database table name",
+      "sourceType": "io.github.greennlab.ddul.DDulProperties",
+      "defaultValue": "(empty)"
     }
   ],
   "hints": []

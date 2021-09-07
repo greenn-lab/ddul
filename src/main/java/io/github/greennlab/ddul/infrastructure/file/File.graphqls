@@ -1,0 +1,17 @@
+extend type Query {
+    # 페이지별로 article 항목을 가져와요.
+    # fetch article items by pagination
+    file(id: String!): File
+}
+
+# user 항목의 구조
+# structure of user item
+type File {
+    id: ID!
+    name: String
+    path: String
+    size: Int
+    type: String
+    read: Int
+    removal: Boolean
+}

@@ -3,8 +3,8 @@ package io.github.greennlab.ddul.repository;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import io.github.greennlab.ddul.test.DataJpaTest;
-import io.github.greennlab.ddul.user.User;
-import io.github.greennlab.ddul.user.repository.DDulUserRepository;
+import io.github.greennlab.ddul.infrastructure.user.User;
+import io.github.greennlab.ddul.infrastructure.user.repository.DDulUserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

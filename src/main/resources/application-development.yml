@@ -3,21 +3,25 @@ ddul:
 
 
 spring:
-
   data:
     web:
       pageable:
         default-page-size: 5
-
-  sql:
-    init:
-      mode: always
 
   datasource:
     driver-class-name: "org.h2.Driver"
     url: "jdbc:h2:./ddul;AUTO_SERVER=TRUE"
     username: "sa"
     password: ""
+
+  sql:
+    init:
+      mode: always
+      continue-on-error: true
+      schema-locations:
+        - "classpath*:ddul-schema.sql"
+      data-locations:
+        - "classpath*:ddul-data.sql"
 
   h2:
     console:
@@ -27,10 +31,16 @@ spring:
   messages:
     cache-duration: 3
 
+
 logging:
   level:
     org.hibernate.type: TRACE
     org.hibernate.type.BasicTypeRegistry: WARN
+
+
+springdoc:
+  api-docs:
+    path: "/docs"
 
 
 server.port: 8090

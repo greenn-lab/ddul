@@ -1,0 +1,98 @@
+###
+GET {{host}}/_article/list/notice
+
+###
+GET {{host}}/_article/-1
+
+###
+POST {{host}}/_article
+Content-Type: application/json
+
+{
+  "pid": 4,
+  "group": "notice",
+  "title": "TEST",
+  "author": {
+    "name": "hello",
+    "email": "hello@test.com"
+  },
+  "content": {
+    "body": "<h1>TITLE</h1><p>hello</p>"
+  },
+  "extras": [
+    {
+      "name": "width",
+      "value": "1234px"
+    },
+    {
+      "name": "height",
+      "value": "4321px"
+    }
+  ],
+  "addFileIds": [
+    "key1",
+    "key2",
+    "key3"
+  ]
+}
+
+### edit articles
+PUT {{host}}/_article
+Content-Type: application/json
+
+{
+  "id": -1,
+  "removal": false,
+  "bunch": -1,
+  "sequel": 0,
+  "depth": 0,
+  "category": "notice",
+  "user": {
+    "id": -1,
+    "removal": false,
+    "username": "tester",
+    "passwordExpired": "2022-01-08",
+    "email": "tester@test.com",
+    "name": "foo",
+    "use": true,
+    "team": {
+      "id": -911,
+      "removal": false,
+      "pid": -910,
+      "name": "실장실",
+      "order": 0,
+      "children": []
+    }
+  },
+  "author": "anonymity",
+  "email": "anonymous@xxx.xyz",
+  "secret": false,
+  "read": 0,
+  "title": "data 1",
+  "content": null,
+  "attachFiles": [
+    {
+      "id": "-1",
+      "name": "A.png",
+      "path": "/root/image1",
+      "size": 0,
+      "type": null,
+      "read": 0,
+      "removal": false
+    },
+    {
+      "id": "-2",
+      "name": "B.png",
+      "path": "/root/image2",
+      "size": 0,
+      "type": null,
+      "read": 0,
+      "removal": false
+    }
+  ],
+  "extra": null
+}
+
+
+### 게시물 삭제
+DELETE {{host}}/_article/1

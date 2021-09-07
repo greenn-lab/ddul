@@ -2,8 +2,8 @@ package io.github.greennlab.ddul.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import io.github.greennlab.ddul.menu.Menu;
-import io.github.greennlab.ddul.menu.repository.DDulMenuRepository;
+import io.github.greennlab.ddul.infrastructure.menu.Menu;
+import io.github.greennlab.ddul.infrastructure.menu.repository.DDulMenuRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;

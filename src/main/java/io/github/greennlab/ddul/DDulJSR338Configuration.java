@@ -1,7 +1,7 @@
 package io.github.greennlab.ddul;
 
-import io.github.greennlab.ddul.authority.AuthorizedUser;
-import io.github.greennlab.ddul.user.User;
+import io.github.greennlab.ddul.infrastructure.authority.AuthorizedUser;
+import io.github.greennlab.ddul.infrastructure.user.User;
 import java.util.Optional;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

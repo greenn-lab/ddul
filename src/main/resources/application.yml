@@ -5,12 +5,6 @@ spring:
   main:
     banner-mode: off
 
-  sql:
-    init:
-      continue-on-error: true
-      schema-locations:
-        - "classpath*:ddul-schema.sql"
-
   jpa:
     open-in-view: false
     hibernate:
@@ -18,12 +12,27 @@ spring:
 
 
 mybatis:
+  type-handlers-package: "io.github.greennlab.ddul.mybatis.handlers"
   configuration-properties:
     pagination-wrapped-sql: "${sql} LIMIT ${size} OFFSET (${size} * ${page})"
     pagination-counted-sql: "SELECT count(1) FROM ( ${sql} )"
 
 
-ddul.file-storage: file-storage/
+graphql:
+  servlet:
+    exception-handlers-enabled: true
+  tools:
+    schema-location-pattern: "**/*.graphqls"
+  graphiql:
+    enabled: true
+    cdn:
+      enabled: true
+
+
+
+
+ddul:
+  file-storage: file-storage/
 
 # p6spy (SQL Logging)
 decorator.datasource.enabled: true

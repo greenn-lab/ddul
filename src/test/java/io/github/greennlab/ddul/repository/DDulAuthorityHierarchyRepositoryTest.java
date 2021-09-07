@@ -2,11 +2,10 @@ package io.github.greennlab.ddul.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import io.github.greennlab.ddul.authority.AuthorityHierarchy;
-import io.github.greennlab.ddul.authority.repository.DDulAuthorityRepository;
+import io.github.greennlab.ddul.infrastructure.authority.AuthorityHierarchy;
+import io.github.greennlab.ddul.infrastructure.authority.repository.DDulAuthorityHierarchyRepository;
 import io.github.greennlab.ddul.test.DataJpaTest;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
@@ -15,17 +14,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 class DDulAuthorityHierarchyRepositoryTest extends DataJpaTest {
 
   @Autowired
-  private DDulAuthorityRepository repository;
+  private DDulAuthorityHierarchyRepository repository;
 
   @Test
   void shouldGetHierarchyAuthorities() {
-    final Optional<AuthorityHierarchy> authority = repository.findById(-2L);
+    final AuthorityHierarchy authority = repository.findById(-2L);
 
-    assertThat(authority)
-        .isNotNull()
-        .isPresent();
+    assertThat(authority).isNotNull();
 
-    final List<AuthorityHierarchy> authorities = getAllAsFlat(authority.get()).collect(Collectors.toList());
+    final List<AuthorityHierarchy> authorities = getAllAsFlat(authority).collect(
+        Collectors.toList());
     assertThat(authorities.size()).isGreaterThanOrEqualTo(4);
   }
 

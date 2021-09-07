@@ -1,0 +1,20 @@
+scalar Date
+
+scalar DateTime
+
+# > allow only numbers
+# - **{page index}**: ex.`123`
+# - **{page index}/{page size}**: ex.`"123/15"`
+scalar Pageable
+
+#scalar BigDecimal
+
+#scalar BigInteger
+
+type Query {
+
+}
+
+#type Mutation {
+#
+#}

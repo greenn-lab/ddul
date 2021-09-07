@@ -17,3 +17,12 @@ Content-Type: application/json
     }
   }
 ]
+
+### get authority by each user
+GET {{host}}/_authority/user/-1
+
+###
+GET {{host}}/_authority/authorized
+
+###
+GET {{host}}/_authority/authorized/tester
