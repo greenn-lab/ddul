@@ -16,7 +16,7 @@ import org.hibernate.annotations.Where;
 @Where(clause = NOT_REMOVAL)
 @Getter
 @Setter
-public class MappedAuthorityUser extends BaseEntity {
+public class MappedUserAuthority extends BaseEntity {
 
   private static final long serialVersionUID = -6254442608026678057L;
 

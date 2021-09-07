@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@RestController("DDulCodeController")
 @RequestMapping("_code")
 @RequiredArgsConstructor
 @Slf4j
-public class DDulCodeController {
+public class CodeController {
 
   private final CodeService service;
 
@@ -44,6 +44,11 @@ public class DDulCodeController {
   @Transactional
   public List<CommonCodeDTO> saveAll(@Valid @RequestBody List<CommonCodeDTO> list) {
     return list.stream().map(this::save).collect(toList());
+  }
+
+  @GetMapping("id")
+  public Long getNextId() {
+    return service.getNextId();
   }
 
 }

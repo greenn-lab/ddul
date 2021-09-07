@@ -38,15 +38,4 @@ public class Authority extends BaseEntity implements GrantedAuthority {
     return role;
   }
 
-
-  public AuthorityHierarchy toHierarchy() {
-    final AuthorityHierarchy authorityHierarchy = new AuthorityHierarchy(getRole());
-    authorityHierarchy.setId(getId());
-    authorityHierarchy.setPid(getPid());
-    authorityHierarchy.setDescription(getDescription());
-    authorityHierarchy.setRemoval(isRemoval());
-    return authorityHierarchy;
-  }
-
-
 }

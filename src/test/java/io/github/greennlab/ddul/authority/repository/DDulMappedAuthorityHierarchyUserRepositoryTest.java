@@ -3,7 +3,7 @@ package io.github.greennlab.ddul.authority.repository;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import io.github.greennlab.ddul.authority.Authority;
-import io.github.greennlab.ddul.authority.MappedAuthorityUser;
+import io.github.greennlab.ddul.authority.MappedUserAuthority;
 import io.github.greennlab.ddul.test.DataJpaTest;
 import java.util.Collections;
 import java.util.HashSet;
@@ -16,12 +16,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 class DDulMappedAuthorityHierarchyUserRepositoryTest extends DataJpaTest {
 
   @Autowired
-  DDulMappedAuthorityUserRepository repository;
+  DDulMappedUserAuthorityRepository repository;
 
   @Test
   void shouldGetAuthorityByUserId() {
-    final Set<MappedAuthorityUser> mapped = repository.findAllByUserId(-1L);
-    final Set<Authority> authorities = mapped.stream().map(MappedAuthorityUser::getAuthority)
+    final Set<MappedUserAuthority> mapped = repository.findAllByUserId(-1L);
+    final Set<Authority> authorities = mapped.stream().map(MappedUserAuthority::getAuthority)
         .collect(Collectors.toSet());
 
     assertThat(authorities).hasSizeGreaterThanOrEqualTo(5);
@@ -29,18 +29,18 @@ class DDulMappedAuthorityHierarchyUserRepositoryTest extends DataJpaTest {
 
   @Test
   void shouldStored() {
-    final MappedAuthorityUser entity = new MappedAuthorityUser();
+    final MappedUserAuthority entity = new MappedUserAuthority();
     entity.setUserId(-1L);
     final Authority admin = new Authority("ADMIN");
     admin.setId(0L);
 
     entity.setAuthority(admin);
 
-    final HashSet<MappedAuthorityUser> entities = Sets.newHashSet(
+    final HashSet<MappedUserAuthority> entities = Sets.newHashSet(
         Collections.singletonList(entity));
-    final Set<MappedAuthorityUser> mappedAuthorityUsers = repository.saveAll(entities);
+    final Set<MappedUserAuthority> mappedUserAuthorities = repository.saveAll(entities);
 
-    assertThat(mappedAuthorityUsers).hasSize(1);
+    assertThat(mappedUserAuthorities).hasSize(1);
   }
 
 }

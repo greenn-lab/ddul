@@ -17,4 +17,6 @@ public interface CodeService {
 
   List<CommonCodeDTO> saveAll(List<CommonCodeDTO> dto);
 
+  Long getNextId();
+
 }

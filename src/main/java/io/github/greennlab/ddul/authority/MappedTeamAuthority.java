@@ -23,11 +23,11 @@ public class MappedTeamAuthority extends BaseEntity {
 
 
   @ManyToOne
-  @JoinColumn(name = "TEAM_ID", insertable = false, updatable = false)
+  @JoinColumn(name = "TEAM_ID")
   private Team team;
 
   @ManyToOne
-  @JoinColumn(name = "AUTHORITY_ID", insertable = false, updatable = false)
+  @JoinColumn(name = "AUTHORITY_ID")
   private Authority authority;
 
 }

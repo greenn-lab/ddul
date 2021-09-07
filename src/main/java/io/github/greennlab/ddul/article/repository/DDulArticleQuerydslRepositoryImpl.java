@@ -9,11 +9,7 @@ import com.querydsl.core.types.QBean;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import io.github.greennlab.ddul.article.Article;
-import io.github.greennlab.ddul.article.dto.ArticleOutputDTO;
-import io.github.greennlab.ddul.user.QUser;
 import io.github.greennlab.ddul.user.User;
-import java.util.List;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -45,7 +41,7 @@ public class DDulArticleQuerydslRepositoryImpl implements DDulArticleQuerydslRep
 
 
   @Override
-  public Page<ArticleOutputDTO> findAllBy(String category, String searchType, String keyword,
+  public Page<Article> findAllBy(String category, String searchType, String keyword,
       Pageable pageable) {
     final QueryResults<Article> query = queryFactory
         .select(columnsOfPage)
@@ -63,10 +59,7 @@ public class DDulArticleQuerydslRepositoryImpl implements DDulArticleQuerydslRep
         .limit(pageable.getPageSize())
         .fetchResults();
 
-    final List<ArticleOutputDTO> list = query.getResults().stream()
-        .map(ArticleOutputDTO.mapped::to).collect(Collectors.toList());
-
-    return new PageImpl<>(list, pageable, query.getTotal());
+    return new PageImpl<>(query.getResults(), pageable, query.getTotal());
   }
 
   private BooleanExpression conditionOfPage(String searchType, String keyword) {

@@ -15,9 +15,9 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Service
+@Service("DDulCodeService")
 @RequiredArgsConstructor
-public class DDulCodeServiceImpl implements CodeService {
+public class CodeServiceImpl implements CodeService {
 
   private final DDulCodeRepository repository;
 
@@ -77,6 +77,11 @@ public class DDulCodeServiceImpl implements CodeService {
   @Override
   public List<CommonCodeDTO> saveAll(List<CommonCodeDTO> dto) {
     return dto.stream().map(this::save).collect(Collectors.toList());
+  }
+
+  @Override
+  public Long getNextId() {
+    return repository.getNextSequence();
   }
 
 }

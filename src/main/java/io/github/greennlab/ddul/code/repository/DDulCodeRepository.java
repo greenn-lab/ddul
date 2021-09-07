@@ -1,5 +1,6 @@
 package io.github.greennlab.ddul.code.repository;
 
+import static io.github.greennlab.ddul.entity.BaseEntity.ID_GENERATOR_NAME;
 import static io.github.greennlab.ddul.entity.BaseEntity.NOT_REMOVAL;
 
 import io.github.greennlab.ddul.code.CommonCode;
@@ -24,4 +25,8 @@ public interface DDulCodeRepository extends AFewRepository<CommonCode> {
   int updateAllGroups(
       @Param("before") String before,
       @Param("after") String after);
+
+  @Query(value = "SELECT " + ID_GENERATOR_NAME + ".nextval FROM dual", nativeQuery = true)
+  Long getNextSequence();
+
 }

@@ -2,7 +2,7 @@ package io.github.greennlab.ddul.user.service;
 
 import io.github.greennlab.ddul.authority.AuthorityHierarchy;
 import io.github.greennlab.ddul.authority.AuthorizedUser;
-import io.github.greennlab.ddul.authority.repository.DDulMappedAuthorityUserRepository;
+import io.github.greennlab.ddul.authority.repository.DDulMappedUserAuthorityRepository;
 import io.github.greennlab.ddul.user.User;
 import io.github.greennlab.ddul.user.repository.DDulUserRepository;
 import java.util.HashSet;
@@ -19,7 +19,7 @@ public class UserService implements UserDetailsService {
 
   private final DDulUserRepository repository;
 
-  private final DDulMappedAuthorityUserRepository mappedAuthorityUserRepository;
+  private final DDulMappedUserAuthorityRepository mappedAuthorityUserRepository;
 
 
   @Override

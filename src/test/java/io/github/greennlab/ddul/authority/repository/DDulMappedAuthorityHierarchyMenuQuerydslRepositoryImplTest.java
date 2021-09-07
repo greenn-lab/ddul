@@ -2,7 +2,7 @@ package io.github.greennlab.ddul.authority.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import io.github.greennlab.ddul.authority.MappedAuthorityMenu;
+import io.github.greennlab.ddul.authority.MappedMenuAuthority;
 import io.github.greennlab.ddul.test.DataJpaTest;
 import java.util.Set;
 import org.junit.jupiter.api.Test;
@@ -12,11 +12,11 @@ class DDulMappedAuthorityHierarchyMenuQuerydslRepositoryImplTest
     extends DataJpaTest {
 
   @Autowired
-  DDulMappedAuthorityMenuRepository repository;
+  DDulMappedMenuRepositoryAuthority repository;
 
   @Test
   void shouldGet() {
-    final Set<MappedAuthorityMenu> all = repository.findAll();
+    final Set<MappedMenuAuthority> all = repository.findAll();
 
     assertThat(all).isNotEmpty();
   }

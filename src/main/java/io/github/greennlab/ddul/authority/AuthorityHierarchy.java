@@ -4,14 +4,17 @@ import static io.github.greennlab.ddul.entity.BaseEntity.NOT_REMOVAL;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 import io.github.greennlab.ddul.entity.BaseEntity;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -39,11 +42,20 @@ public class AuthorityHierarchy extends BaseEntity implements GrantedAuthority {
 
   @OneToMany(fetch = FetchType.EAGER)
   @JoinColumn(name = "PID", insertable = false, updatable = false)
-  private Set<AuthorityHierarchy> children = new HashSet<>();
+  @OrderBy("id asc")
+  private List<AuthorityHierarchy> children = new ArrayList<>();
 
 
   public AuthorityHierarchy(String role) {
     this.role = role;
+  }
+
+  public AuthorityHierarchy(Authority authority) {
+    setId(authority.getId());
+    setPid(authority.getPid());
+    setRole(authority.getRole());
+    setDescription(authority.getDescription());
+    setRemoval(authority.isRemoval());
   }
 
 

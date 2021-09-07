@@ -27,7 +27,7 @@ public class File extends Auditor {
   private String pack;
 
   @Column(updatable = false)
-  private int access;
+  private int read;
 
   private boolean removal;
 

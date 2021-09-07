@@ -1,13 +1,17 @@
 package io.github.greennlab.ddul.article.service;
 
+import static io.github.greennlab.ddul.article.dto.ArticleOutputDTO.mapped;
+
 import io.github.greennlab.ddul.article.Article;
 import io.github.greennlab.ddul.article.dto.ArticleOutputDTO;
 import io.github.greennlab.ddul.article.repository.DDulArticleRepository;
 import io.github.greennlab.ddul.authority.AuthorizedUser;
 import io.github.greennlab.ddul.user.User;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
@@ -22,12 +26,20 @@ public class DDulArticleServiceImpl implements ArticleService {
   @Override
   public Page<ArticleOutputDTO> pageBy(String category, String searchType, String keyword,
       Pageable pageable) {
-    return repository.findAllBy(category, searchType, keyword, pageable);
+
+    final Page<Article> paged = repository.findAllBy(category, searchType, keyword, pageable);
+
+    return PageableExecutionUtils.getPage(
+        paged.getContent().stream().map(mapped::to).collect(Collectors.toList()),
+        pageable,
+        paged::getTotalElements);
   }
 
+  @Transactional
   @Override
   public ArticleOutputDTO select(Long id) {
-    return ArticleOutputDTO.mapped.to(repository.findById(id).orElse(null));
+    final Article article = repository.findById(id).orElse(null);
+    return mapped.to(article);
   }
 
   @Transactional
@@ -62,13 +74,13 @@ public class DDulArticleServiceImpl implements ArticleService {
       saved = repository.save(article);
     }
 
-    return ArticleOutputDTO.mapped.to(saved);
+    return mapped.to(saved);
   }
 
   @Transactional
   @Override
   public ArticleOutputDTO update(Article article) {
-    return ArticleOutputDTO.mapped.to(repository.save(article));
+    return mapped.to(repository.save(article));
   }
 
   @Override

@@ -7,16 +7,18 @@ import io.github.greennlab.ddul.authority.MappedTeamAuthority;
 import io.github.greennlab.ddul.authority.dto.AuthorityInputDTO;
 import io.github.greennlab.ddul.authority.dto.AuthorityOutputDTO;
 import io.github.greennlab.ddul.authority.repository.DDulAuthorityRepository;
-import io.github.greennlab.ddul.authority.repository.DDulMappedAuthorityMenuRepository;
+import io.github.greennlab.ddul.authority.repository.DDulMappedMenuRepositoryAuthority;
 import io.github.greennlab.ddul.authority.repository.DDulMappedTeamAuthorityRepository;
+import io.github.greennlab.ddul.team.Team;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service("DDulAuthorityService")
 @RequiredArgsConstructor
@@ -24,9 +26,9 @@ public class AuthorityServiceImpl implements AuthorityService {
 
   private final DDulAuthorityRepository repository;
 
-  private final DDulMappedAuthorityMenuRepository mappedAuthorityMenuRepository;
+  private final DDulMappedMenuRepositoryAuthority menuRepository;
 
-  private final DDulMappedTeamAuthorityRepository mappedAuthorityTeamRepository;
+  private final DDulMappedTeamAuthorityRepository teamRepository;
 
 
   @Override
@@ -38,16 +40,16 @@ public class AuthorityServiceImpl implements AuthorityService {
   }
 
   @Override
-  public Map<Long, Set<AuthorityOutputDTO>> getAuthoritiesByMenu() {
+  public Map<Long, Set<AuthorityOutputDTO>> getMenuAuthorities() {
     final Map<Long, Set<AuthorityOutputDTO>> result = new HashMap<>();
 
-    mappedAuthorityMenuRepository.findAll().forEach(i -> {
+    menuRepository.findAll().forEach(i -> {
       final Long id = i.getMenu().getId();
       final Set<AuthorityOutputDTO> roles = result.containsKey(id)
           ? result.get(id)
           : new HashSet<>();
 
-      roles.add(mapped.to(i.getAuthority().toHierarchy()));
+      roles.add(mapped.to(new AuthorityHierarchy(i.getAuthority())));
 
       result.put(id, roles);
     });
@@ -58,13 +60,13 @@ public class AuthorityServiceImpl implements AuthorityService {
   public Map<Long, Set<AuthorityOutputDTO>> getAuthoritiesByTeam() {
     final Map<Long, Set<AuthorityOutputDTO>> result = new HashMap<>();
 
-    mappedAuthorityTeamRepository.findAll().forEach(i -> {
+    teamRepository.findAll().forEach(i -> {
       final Long id = i.getTeam().getId();
       final Set<AuthorityOutputDTO> roles = result.containsKey(id)
           ? result.get(id)
           : new HashSet<>();
 
-      roles.add(mapped.to(i.getAuthority().toHierarchy()));
+      roles.add(mapped.to(new AuthorityHierarchy(i.getAuthority())));
 
       result.put(id, roles);
     });
@@ -78,9 +80,27 @@ public class AuthorityServiceImpl implements AuthorityService {
     return mapped.to(saved);
   }
 
+  @Transactional
   @Override
-  public void saveAuthoritiesByTeam(List<MappedTeamAuthority> authorities) {
-    mappedAuthorityMenuRepository.saveAll(authorities);
+  public Set<MappedTeamAuthority> saveAuthoritiesByTeam(Set<MappedTeamAuthority> authorities) {
+    // 이전 권한은 지워요.
+    // 매핑테이블의 기본적인 방식이에요.
+    authorities.stream()
+        .map(MappedTeamAuthority::getTeam)
+        .map(Team::getId)
+        .distinct()
+        .forEach(
+            id -> teamRepository.findAllByTeamId(id).forEach(teamAuthority -> {
+              teamAuthority.setRemoval(true);
+              teamRepository.save(teamAuthority);
+            })
+        );
+
+    return teamRepository.saveAll(
+        authorities.stream()
+            .filter(i -> null != i.getAuthority())
+            .collect(Collectors.toSet())
+    );
   }
 
 }

@@ -1,5 +1,6 @@
 package io.github.greennlab.ddul.menu.service;
 
+import io.github.greennlab.ddul.code.service.CodeService;
 import io.github.greennlab.ddul.menu.Menu;
 import io.github.greennlab.ddul.menu.dto.MenuInputDTO;
 import io.github.greennlab.ddul.menu.dto.MenuOutputDTO;
@@ -15,6 +16,8 @@ import org.springframework.stereotype.Service;
 public class MenuServiceImpl implements MenuService {
 
   private final DDulMenuRepository repository;
+
+  private final CodeService codeService;
 
 
   @Override
@@ -40,7 +43,7 @@ public class MenuServiceImpl implements MenuService {
 
   @Override
   public Long getNextSequence() {
-    return repository.getNextSequence();
+    return codeService.getNextId();
   }
 
 }

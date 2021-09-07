@@ -2,3 +2,18 @@ GET {{host}}/_authority?id=0
 
 ###
 GET {{host}}/_authority/team
+
+###
+POST {{host}}/_authority/team
+Content-Type: application/json
+
+[
+  {
+    "team": {
+      "id": "-912"
+    },
+    "authority": {
+      "id": "-10"
+    }
+  }
+]

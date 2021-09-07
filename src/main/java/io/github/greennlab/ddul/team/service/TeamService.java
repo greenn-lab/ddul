@@ -1,14 +1,18 @@
 package io.github.greennlab.ddul.team.service;
 
-import io.github.greennlab.ddul.team.Team;
+import io.github.greennlab.ddul.team.dto.TeamInputDTO;
+import io.github.greennlab.ddul.team.dto.TeamOutputDTO;
+import java.util.List;
 
 public interface TeamService {
 
-  Team findAllHierarchicalTeam(Long id);
+  TeamOutputDTO findAllHierarchicalTeam(Long id);
 
-  Team findById(Long id);
+  TeamOutputDTO findById(Long id);
 
-  Team save(Team team);
+  TeamOutputDTO save(TeamInputDTO team);
+
+  List<TeamOutputDTO> saveAll(List<TeamInputDTO> teams);
 
   void remove(Long id);
 

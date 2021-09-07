@@ -2,8 +2,8 @@ package io.github.greennlab.ddul.authority.dto;
 
 import io.github.greennlab.ddul.authority.AuthorityHierarchy;
 import io.github.greennlab.ddul.mapstruct.EntityDtoMapping;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
 import org.mapstruct.Mapper;
@@ -21,7 +21,7 @@ public class AuthorityOutputDTO {
   private String role;
   private String description;
   private boolean removal;
-  private Set<AuthorityOutputDTO> children = new HashSet<>();
+  private List<AuthorityOutputDTO> children = new ArrayList<>();
 
 
   @Mapper

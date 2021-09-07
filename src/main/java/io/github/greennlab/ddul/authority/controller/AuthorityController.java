@@ -4,7 +4,6 @@ import io.github.greennlab.ddul.authority.MappedTeamAuthority;
 import io.github.greennlab.ddul.authority.dto.AuthorityInputDTO;
 import io.github.greennlab.ddul.authority.dto.AuthorityOutputDTO;
 import io.github.greennlab.ddul.authority.service.AuthorityService;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import javax.validation.Valid;
@@ -34,19 +33,18 @@ public class AuthorityController {
   }
 
   @GetMapping("menu")
-  public Map<Long, Set<AuthorityOutputDTO>> getMenuRoles() {
-    return service.getAuthoritiesByMenu();
+  public Map<Long, Set<AuthorityOutputDTO>> getMenuAuthorities() {
+    return service.getMenuAuthorities();
   }
 
   @GetMapping("team")
-  public Map<Long, Set<AuthorityOutputDTO>> getTeamRoles() {
+  public Map<Long, Set<AuthorityOutputDTO>> getAuthoritiesByTeam() {
     return service.getAuthoritiesByTeam();
   }
 
   @PostMapping("team")
-  public void getTeamRoles(@RequestBody List<MappedTeamAuthority> authorities) {
-    service.saveAuthoritiesByTeam(authorities);
+  public Set<MappedTeamAuthority> save(@RequestBody Set<MappedTeamAuthority> authorities) {
+    return service.saveAuthoritiesByTeam(authorities);
   }
-
 
 }

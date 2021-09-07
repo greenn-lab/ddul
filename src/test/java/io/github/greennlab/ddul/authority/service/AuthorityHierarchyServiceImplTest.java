@@ -4,9 +4,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 
 import io.github.greennlab.ddul.authority.Authority;
-import io.github.greennlab.ddul.authority.MappedAuthorityMenu;
+import io.github.greennlab.ddul.authority.MappedMenuAuthority;
 import io.github.greennlab.ddul.authority.dto.AuthorityOutputDTO;
-import io.github.greennlab.ddul.authority.repository.DDulMappedAuthorityMenuRepository;
+import io.github.greennlab.ddul.authority.repository.DDulMappedMenuRepositoryAuthority;
 import io.github.greennlab.ddul.menu.Menu;
 import java.util.HashSet;
 import java.util.Map;
@@ -23,29 +23,29 @@ class AuthorityHierarchyServiceImplTest {
   AuthorityService service;
 
   @MockBean
-  DDulMappedAuthorityMenuRepository authorityMenuRepository;
+  DDulMappedMenuRepositoryAuthority authorityMenuRepository;
 
   @Test
   void shouldGetMenuRoles() {
-    final Set<MappedAuthorityMenu> mapped = new HashSet<>();
+    final Set<MappedMenuAuthority> mapped = new HashSet<>();
 
     final Menu menu1 = new Menu();
     menu1.setId(-1L);
-    final MappedAuthorityMenu mam1 = new MappedAuthorityMenu();
+    final MappedMenuAuthority mam1 = new MappedMenuAuthority();
     mam1.setMenu(menu1);
     mam1.setAuthority(new Authority("HI"));
     mapped.add(mam1);
 
     final Menu menu2 = new Menu();
     menu2.setId(-1L);
-    MappedAuthorityMenu mam2 = new MappedAuthorityMenu();
+    MappedMenuAuthority mam2 = new MappedMenuAuthority();
     mam2.setMenu(menu2);
     mam2.setAuthority(new Authority("HELLO"));
     mapped.add(mam2);
 
     given(authorityMenuRepository.findAll()).willReturn(mapped);
 
-    final Map<Long, Set<AuthorityOutputDTO>> menuRoles = service.getAuthoritiesByMenu();
+    final Map<Long, Set<AuthorityOutputDTO>> menuRoles = service.getMenuAuthorities();
 
     assertThat(menuRoles).hasSize(1);
 //    assertThat(menuRoles).hasEntrySatisfying(-1L, i -> {

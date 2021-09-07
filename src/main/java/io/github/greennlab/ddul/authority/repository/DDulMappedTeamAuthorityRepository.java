@@ -10,6 +10,8 @@ public interface DDulMappedTeamAuthorityRepository extends Repository<MappedTeam
 
   Set<MappedTeamAuthority> findAllByTeamId(Long id);
 
+  MappedTeamAuthority save(MappedTeamAuthority entity);
+
   Set<MappedTeamAuthority> saveAll(Iterable<MappedTeamAuthority> entities);
 
 }
