@@ -13,7 +13,7 @@ import org.assertj.core.util.Sets;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-class DDulMappedAuthorityUserRepositoryTest extends DataJpaTest {
+class DDulMappedAuthorityHierarchyUserRepositoryTest extends DataJpaTest {
 
   @Autowired
   DDulMappedAuthorityUserRepository repository;
@@ -24,7 +24,7 @@ class DDulMappedAuthorityUserRepositoryTest extends DataJpaTest {
     final Set<Authority> authorities = mapped.stream().map(MappedAuthorityUser::getAuthority)
         .collect(Collectors.toSet());
 
-    assertThat(Authority.spreadAll(authorities)).hasSizeGreaterThanOrEqualTo(5);
+    assertThat(authorities).hasSizeGreaterThanOrEqualTo(5);
   }
 
   @Test
@@ -36,7 +36,8 @@ class DDulMappedAuthorityUserRepositoryTest extends DataJpaTest {
 
     entity.setAuthority(admin);
 
-    final HashSet<MappedAuthorityUser> entities = Sets.newHashSet(Collections.singletonList(entity));
+    final HashSet<MappedAuthorityUser> entities = Sets.newHashSet(
+        Collections.singletonList(entity));
     final Set<MappedAuthorityUser> mappedAuthorityUsers = repository.saveAll(entities);
 
     assertThat(mappedAuthorityUsers).hasSize(1);

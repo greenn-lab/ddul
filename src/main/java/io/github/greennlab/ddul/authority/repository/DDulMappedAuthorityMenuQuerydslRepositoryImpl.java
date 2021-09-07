@@ -8,8 +8,10 @@ import com.querydsl.core.types.QBean;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import io.github.greennlab.ddul.authority.Authority;
 import io.github.greennlab.ddul.authority.MappedAuthorityMenu;
+import io.github.greennlab.ddul.authority.QAuthority;
 import io.github.greennlab.ddul.authority.QMappedAuthorityMenu;
 import io.github.greennlab.ddul.menu.Menu;
+import io.github.greennlab.ddul.menu.QMenu;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
 
@@ -17,16 +19,24 @@ import lombok.RequiredArgsConstructor;
 public class DDulMappedAuthorityMenuQuerydslRepositoryImpl
     implements DDulMappedAuthorityMenuQuerydslRepository {
 
-  private static final QMappedAuthorityMenu mam = mappedAuthorityMenu;
+  private static final QMappedAuthorityMenu mapped = mappedAuthorityMenu;
+  private static final QAuthority authority = mappedAuthorityMenu.authority;
+  private static final QMenu menu = mappedAuthorityMenu.menu;
 
 
   private final JPAQueryFactory queryFactory;
 
   private final QBean<MappedAuthorityMenu> columns = Projections.bean(
       MappedAuthorityMenu.class,
-      mam.id,
-      Projections.bean(Authority.class, mam.authority.role).as("a"),
-      Projections.bean(Menu.class, mam.menu.uri).as("m")
+      mapped.id,
+      Projections.bean(Authority.class,
+          authority.id,
+          authority.role
+      ).as("authority"),
+      Projections.bean(Menu.class,
+          menu.id,
+          menu.uri
+      ).as("menu")
   );
 
 
@@ -34,10 +44,11 @@ public class DDulMappedAuthorityMenuQuerydslRepositoryImpl
   public Set<MappedAuthorityMenu> findAll() {
     return Sets.newHashSet(queryFactory
         .select(columns)
-        .from(mam)
-        .leftJoin(mam.authority).on(mam.authority.removal.eq(false))
-        .leftJoin(mam.menu).on(mam.menu.removal.eq(false))
-        .where(mam.removal.eq(false))
+        .from(mapped)
+        .leftJoin(authority).on(authority.removal.eq(false))
+        .leftJoin(menu).on(menu.removal.eq(false))
+        .where(mapped.removal.eq(false))
         .fetch());
   }
+
 }

@@ -5,20 +5,19 @@ import static org.mockito.BDDMockito.given;
 
 import io.github.greennlab.ddul.authority.Authority;
 import io.github.greennlab.ddul.authority.MappedAuthorityMenu;
-import io.github.greennlab.ddul.authority.repository.DDulAuthorityRepository;
+import io.github.greennlab.ddul.authority.dto.AuthorityOutputDTO;
 import io.github.greennlab.ddul.authority.repository.DDulMappedAuthorityMenuRepository;
 import io.github.greennlab.ddul.menu.Menu;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 @SpringBootTest()
-class AuthorityServiceImplTest {
+class AuthorityHierarchyServiceImplTest {
 
   @Autowired
   AuthorityService service;
@@ -46,7 +45,7 @@ class AuthorityServiceImplTest {
 
     given(authorityMenuRepository.findAll()).willReturn(mapped);
 
-    final Map<Long, Set<String>> menuRoles = service.getMenuRoles();
+    final Map<Long, Set<AuthorityOutputDTO>> menuRoles = service.getAuthoritiesByMenu();
 
     assertThat(menuRoles).hasSize(1);
 //    assertThat(menuRoles).hasEntrySatisfying(-1L, i -> {

@@ -8,16 +8,17 @@ import java.util.Set;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-class DDulMappedAuthorityMenuRepositoryTest extends DataJpaTest {
+class DDulMappedAuthorityHierarchyMenuQuerydslRepositoryImplTest
+    extends DataJpaTest {
 
   @Autowired
   DDulMappedAuthorityMenuRepository repository;
 
   @Test
-  void shouldFindAll() {
+  void shouldGet() {
     final Set<MappedAuthorityMenu> all = repository.findAll();
 
-    assertThat(all).hasSizeGreaterThanOrEqualTo(3);
+    assertThat(all).isNotEmpty();
   }
 
 }

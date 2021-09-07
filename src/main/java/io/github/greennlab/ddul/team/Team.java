@@ -3,6 +3,7 @@ package io.github.greennlab.ddul.team;
 import io.github.greennlab.ddul.entity.BaseEntity;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -22,6 +23,8 @@ public class Team extends BaseEntity {
 
   private Long pid;
   private String name;
+
+  @Column(name = "ORD")
   private int order;
 
   @Transient
@@ -35,4 +38,8 @@ public class Team extends BaseEntity {
     this.order = teamHierarchy.getOrder();
   }
 
+  @Override
+  public String toString() {
+    return name;
+  }
 }

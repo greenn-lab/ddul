@@ -1,6 +1,6 @@
 package io.github.greennlab.ddul.authority.dto;
 
-import io.github.greennlab.ddul.authority.Authority;
+import io.github.greennlab.ddul.authority.AuthorityHierarchy;
 import io.github.greennlab.ddul.mapstruct.EntityDtoMapping;
 import java.util.HashSet;
 import java.util.Set;
@@ -20,11 +20,13 @@ public class AuthorityOutputDTO {
   private Long pid;
   private String role;
   private String description;
+  private boolean removal;
   private Set<AuthorityOutputDTO> children = new HashSet<>();
 
 
   @Mapper
-  public interface AuthorityOutputMapper extends EntityDtoMapping<Authority, AuthorityOutputDTO> {
+  public interface AuthorityOutputMapper extends
+      EntityDtoMapping<AuthorityHierarchy, AuthorityOutputDTO> {
 
   }
 

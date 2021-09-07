@@ -1,13 +1,12 @@
 package io.github.greennlab.ddul.user.service;
 
-import io.github.greennlab.ddul.authority.Authority;
+import io.github.greennlab.ddul.authority.AuthorityHierarchy;
 import io.github.greennlab.ddul.authority.AuthorizedUser;
-import io.github.greennlab.ddul.authority.MappedAuthorityUser;
 import io.github.greennlab.ddul.authority.repository.DDulMappedAuthorityUserRepository;
 import io.github.greennlab.ddul.user.User;
 import io.github.greennlab.ddul.user.repository.DDulUserRepository;
+import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -20,7 +19,7 @@ public class UserService implements UserDetailsService {
 
   private final DDulUserRepository repository;
 
-  private final DDulMappedAuthorityUserRepository authorityRepository;
+  private final DDulMappedAuthorityUserRepository mappedAuthorityUserRepository;
 
 
   @Override
@@ -31,13 +30,11 @@ public class UserService implements UserDetailsService {
       throw new UsernameNotFoundException(username);
     }
 
-    final Set<Authority> authorities = authorityRepository
-        .findAllByUserId(user.getId())
-        .stream()
-        .map(MappedAuthorityUser::getAuthority)
-        .collect(Collectors.toSet());
+    final Set<AuthorityHierarchy> authorities = new HashSet<>();
 
-    return new AuthorizedUser(user, Authority.spreadAll(authorities));
+    // TODO mapping user-authority
+
+    return new AuthorizedUser(user, AuthorityHierarchy.spreadAll(authorities));
   }
 
 }

@@ -1,1 +1,4 @@
 GET {{host}}/_authority?id=0
+
+###
+GET {{host}}/_authority/team
