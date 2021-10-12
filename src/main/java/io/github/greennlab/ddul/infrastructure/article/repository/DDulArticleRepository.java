@@ -10,10 +10,10 @@ public interface DDulArticleRepository
 
   @Modifying
   @Query("UPDATE Article a SET a.bunch = :id WHERE a.id = :id")
-  void updateBid(Long id);
+  void updateBunch(Long id);
 
   @Modifying
   @Query("UPDATE Article a SET a.sequel = a.sequel + 1 WHERE a.bunch = :bunch AND a.sequel >= :sequel")
-  void shovedReplyOrders(Long bunch, Integer sequel);
+  void shoveUpReplyOrders(Long bunch, Integer sequel);
 
 }

@@ -88,7 +88,8 @@ public class Article extends BaseEntity {
   @PreUpdate
   public void removeAllHtmlInContent() {
     if (null != content) {
-      this.fulltext = content.replaceAll("<[^>]*>", "");
+      this.fulltext = content
+          .replaceAll("<[^>]*>", "");
     }
   }
 

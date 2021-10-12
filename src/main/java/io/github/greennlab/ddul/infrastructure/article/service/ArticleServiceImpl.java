@@ -9,6 +9,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
@@ -19,6 +20,8 @@ import org.springframework.util.ObjectUtils;
 public class ArticleServiceImpl implements ArticleService, GraphQLQueryResolver {
 
   private final DDulArticleRepository repository;
+
+  private final PasswordEncoder passwordEncoder;
 
 
   @Override
@@ -36,6 +39,10 @@ public class ArticleServiceImpl implements ArticleService, GraphQLQueryResolver 
   public Article insert(@NonNull final Article article) {
     fillUserInfo(article);
 
+    if (null != article.getPassword()) {
+      article.setPassword(passwordEncoder.encode(article.getPassword()));
+    }
+
     final Article saved;
 
     // 새로운 게시글이 입력될 때 부모 ID(PID) 가
@@ -47,7 +54,7 @@ public class ArticleServiceImpl implements ArticleService, GraphQLQueryResolver 
       final Long newId = saved.getId();
       saved.setBunch(newId);
 
-      repository.updateBid(newId);
+      repository.updateBunch(newId);
     } else {
       repository.findById(article.getPid()).ifPresent(parent -> {
         final Long bunch = parent.getBunch();
@@ -57,7 +64,7 @@ public class ArticleServiceImpl implements ArticleService, GraphQLQueryResolver 
         article.setSequel(sequel);
         article.setDepth(parent.getDepth() + 1);
 
-        repository.shovedReplyOrders(bunch, sequel);
+        repository.shoveUpReplyOrders(bunch, sequel);
       });
 
       saved = repository.save(article);
@@ -82,7 +89,6 @@ public class ArticleServiceImpl implements ArticleService, GraphQLQueryResolver 
       repository.save(i);
     });
   }
-
 
   private void fillUserInfo(Article article) {
     final User user = AuthorizedUser.currently().orElseThrow(NullPointerException::new);

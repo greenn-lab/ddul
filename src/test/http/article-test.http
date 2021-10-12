@@ -1,38 +1,36 @@
 ###
-GET {{host}}/_article/list/notice
+GET {{host}}/_article/notice/list
 
 ###
 GET {{host}}/_article/-1
 
-###
+### 새로운 글 등록
 POST {{host}}/_article
 Content-Type: application/json
 
 {
-  "pid": 4,
-  "group": "notice",
+  "category": "notice",
   "title": "TEST",
-  "author": {
-    "name": "hello",
-    "email": "hello@test.com"
+  "user": {
+    "id": -1,
+    "username": "test"
   },
-  "content": {
-    "body": "<h1>TITLE</h1><p>hello</p>"
+  "author": "hello",
+  "email": "hello@test.com",
+  "content": "<h1>TITLE</h1><p>hello</p>",
+  "extra": {
+    "width": "1234px",
+    "height": "4321px",
+    "square": false,
+    "axis": 4
   },
-  "extras": [
+  "attachFiles": [
     {
-      "name": "width",
-      "value": "1234px"
+      "id": "-1"
     },
     {
-      "name": "height",
-      "value": "4321px"
+      "id": "-2"
     }
-  ],
-  "addFileIds": [
-    "key1",
-    "key2",
-    "key3"
   ]
 }
 
@@ -50,19 +48,7 @@ Content-Type: application/json
   "user": {
     "id": -1,
     "removal": false,
-    "username": "tester",
-    "passwordExpired": "2022-01-08",
-    "email": "tester@test.com",
-    "name": "foo",
-    "use": true,
-    "team": {
-      "id": -911,
-      "removal": false,
-      "pid": -910,
-      "name": "실장실",
-      "order": 0,
-      "children": []
-    }
+    "username": "tester"
   },
   "author": "anonymity",
   "email": "anonymous@xxx.xyz",
@@ -90,7 +76,12 @@ Content-Type: application/json
       "removal": false
     }
   ],
-  "extra": null
+  "extra": {
+     "width": "1234px",
+     "height": "4321px",
+     "rectangle": true,
+     "axis": 4
+   }
 }
 
 

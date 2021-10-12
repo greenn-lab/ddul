@@ -174,13 +174,13 @@ SELECT -7 AS A, -1 AS B, 2 AS C, 2 AS D, 'notice' AS E, -1 AS F, 'anonymity' AS 
 ) WHERE NOT EXISTS( SELECT * FROM _ARTICLE );
 
 INSERT INTO _ARTICLE_COMMENT (ID, BUNCH, SEQUEL, DEPTH, ARTICLE_ID, USER_ID, AUTHOR, EMAIL, COMMENT) SELECT * FROM (
-SELECT -1 AS A, -1 AS B, 0 AS C, 0 AS D, -1 AS E, -1 AS F, 'anonymity' AS G, 'anonymous@xxx.xyz' AS H, 'data 1' FROM DUAL UNION ALL
-SELECT -2 AS A, -2 AS B, 0 AS C, 0 AS D, -1 AS E, -1 AS F, 'anonymity' AS G, 'anonymous@xxx.xyz' AS H, 'Annual result data #2' FROM DUAL UNION ALL
+SELECT -1 AS A, -1 AS B, 0 AS C, 0 AS D, -1 AS E, -1 AS F, 'anonymity' AS G, 'anonymous@xxx.xyz' AS H, 'comment 1' FROM DUAL UNION ALL
+SELECT -2 AS A, -2 AS B, 0 AS C, 0 AS D, -1 AS E, -1 AS F, 'anonymity' AS G, 'anonymous@xxx.xyz' AS H, 'Annual result comment #2' FROM DUAL UNION ALL
 SELECT -3 AS A, -3 AS B, 0 AS C, 0 AS D, -1 AS E, -1 AS F, 'anonymity' AS G, 'anonymous@xxx.xyz' AS H, 'Daily archive of transaction performance' FROM DUAL UNION ALL
-SELECT -4 AS A, -4 AS B, 0 AS C, 0 AS D, -1 AS E, -1 AS F, 'anonymity' AS G, 'anonymous@xxx.xyz' AS H, 'Analysis management data cleansing' FROM DUAL UNION ALL
-SELECT -5 AS A, -1 AS B, 1 AS C, 1 AS D, -1 AS E, -1 AS F, 'anonymity' AS G, 'anonymous@xxx.xyz' AS H, 'data 1-1' FROM DUAL UNION ALL
-SELECT -6 AS A, -1 AS B, 3 AS C, 1 AS D, -1 AS E, -1 AS F, 'anonymity' AS G, 'anonymous@xxx.xyz' AS H, 'data 1-2' FROM DUAL UNION ALL
-SELECT -7 AS A, -1 AS B, 2 AS C, 2 AS D, -1 AS E, -1 AS F, 'anonymity' AS G, 'anonymous@xxx.xyz' AS H, 'data 1-1-1'
+SELECT -4 AS A, -4 AS B, 0 AS C, 0 AS D, -1 AS E, -1 AS F, 'anonymity' AS G, 'anonymous@xxx.xyz' AS H, 'Analysis management comment cleansing' FROM DUAL UNION ALL
+SELECT -5 AS A, -1 AS B, 1 AS C, 1 AS D, -1 AS E, -1 AS F, 'anonymity' AS G, 'anonymous@xxx.xyz' AS H, 'comment 1-1' FROM DUAL UNION ALL
+SELECT -6 AS A, -1 AS B, 3 AS C, 1 AS D, -1 AS E, -1 AS F, 'anonymity' AS G, 'anonymous@xxx.xyz' AS H, 'comment 1-2' FROM DUAL UNION ALL
+SELECT -7 AS A, -1 AS B, 2 AS C, 2 AS D, -1 AS E, -1 AS F, 'anonymity' AS G, 'anonymous@xxx.xyz' AS H, 'comment 1-1-1'
 ) WHERE NOT EXISTS ( SELECT * FROM _ARTICLE_COMMENT );
 
 

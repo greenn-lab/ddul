@@ -1,0 +1,43 @@
+###
+GET {{host}}/_article/comment/-1/list
+
+###
+GET {{host}}/_article/comment/-7
+
+###
+POST {{host}}/_article/comment
+Content-Type: application/json
+
+{
+  "articleId": -1,
+  "user": {
+    "id": -1
+  },
+  "author": "anonymity",
+  "email": "anonymous@xxx.xyz",
+  "comment": "data 1-1-1",
+  "password": "test123",
+  "secret": false
+}
+
+###
+PUT {{host}}/_article/comment
+Content-Type: application/json
+
+{
+  "id": -7,
+  "bunch": -1,
+  "articleId": -1,
+  "user": {
+    "id": -1
+  },
+  "author": "anonymity",
+  "email": "anonymous@xxx.xyz",
+  "comment": "comment 2",
+  "password": "test1234",
+  "secret": false
+}
+
+
+###
+DELETE {{host}}/_article/comment/-7

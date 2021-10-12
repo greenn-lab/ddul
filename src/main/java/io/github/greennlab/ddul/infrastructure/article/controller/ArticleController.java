@@ -1,8 +1,10 @@
 package io.github.greennlab.ddul.infrastructure.article.controller;
 
+import static io.github.greennlab.ddul.infrastructure.article.dto.ArticleDTO.mapped;
+
 import io.github.greennlab.ddul.infrastructure.article.Article;
-import io.github.greennlab.ddul.infrastructure.article.dto.ArticleInputDTO;
-import io.github.greennlab.ddul.infrastructure.article.dto.ArticleInputDTO.EDIT;
+import io.github.greennlab.ddul.infrastructure.article.dto.ArticleDTO;
+import io.github.greennlab.ddul.infrastructure.article.dto.ArticleDTO.EDIT;
 import io.github.greennlab.ddul.infrastructure.article.service.ArticleService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -44,23 +46,22 @@ public class ArticleController {
   }
 
   @GetMapping("{id}")
-  public Article paginate(@PathVariable Long id) {
-    return service.select(id);
+  public ArticleDTO paginate(@PathVariable Long id) {
+    return mapped.to(service.select(id));
   }
-
 
   @PostMapping
   @PutMapping
-  public Article save(@Validated @RequestBody ArticleInputDTO input) {
-    final Article article = ArticleInputDTO.mapped.by(input);
+  public ArticleDTO save(@Validated @RequestBody ArticleDTO article) {
+    final Article input = mapped.by(article);
 
-    return service.insert(article);
+    return mapped.to(service.insert(input));
   }
 
-
   @PutMapping
-  public Article edit(@Validated(EDIT.class) @RequestBody ArticleInputDTO article) {
-    return service.update(ArticleInputDTO.mapped.by(article));
+  public ArticleDTO edit(@Validated(EDIT.class) @RequestBody ArticleDTO article) {
+    final Article input = mapped.by(article);
+    return mapped.to(service.update(input));
   }
 
   @DeleteMapping

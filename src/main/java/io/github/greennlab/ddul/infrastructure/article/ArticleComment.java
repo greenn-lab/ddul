@@ -1,6 +1,8 @@
 package io.github.greennlab.ddul.infrastructure.article;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import io.github.greennlab.ddul.entity.BaseEntity;
 import io.github.greennlab.ddul.infrastructure.user.User;
 import javax.persistence.Column;
@@ -8,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,13 +20,19 @@ import lombok.Setter;
 @Setter
 public class ArticleComment extends BaseEntity {
 
+  @Transient
+  @JsonProperty(access = Access.WRITE_ONLY)
+  private Long pid;
+
   private Long bunch;
+
+  @Column(updatable = false)
+  private Integer depth = 0;
 
   @Column(updatable = false)
   private Integer sequel = 0;
 
-  @Column(updatable = false)
-  private Integer depth = 0;
+  private Long articleId;
 
   @ManyToOne
   @JoinColumn(name = "USER_ID", updatable = false)
