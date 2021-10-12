@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController("DDulMenuController")
-@RequestMapping("_menu")
+@RequestMapping("${ddul.api.menu:_menu}")
 @RequiredArgsConstructor
 public class MenuController {
 

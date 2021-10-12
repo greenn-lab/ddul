@@ -29,7 +29,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 @RestController("DDulFileController")
-@RequestMapping("_file")
+@RequestMapping("${ddul.api.file:_file}")
 @RequiredArgsConstructor
 public class FileController {
 

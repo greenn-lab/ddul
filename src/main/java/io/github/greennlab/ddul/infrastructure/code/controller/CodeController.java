@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController("DDulCodeController")
-@RequestMapping("_code")
+@RequestMapping("${ddul.api.code:_code}")
 @RequiredArgsConstructor
 @Slf4j
 public class CodeController {

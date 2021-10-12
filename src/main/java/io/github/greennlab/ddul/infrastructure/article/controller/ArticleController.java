@@ -4,7 +4,9 @@ import io.github.greennlab.ddul.infrastructure.article.Article;
 import io.github.greennlab.ddul.infrastructure.article.dto.ArticleInputDTO;
 import io.github.greennlab.ddul.infrastructure.article.dto.ArticleInputDTO.EDIT;
 import io.github.greennlab.ddul.infrastructure.article.service.ArticleService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,7 +23,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController("DDulArticleController")
-@RequestMapping("_article")
+@RequestMapping("${ddul.api.article:_article}")
+@Tag(name = "게시글", description = "articles api")
 @RequiredArgsConstructor
 public class ArticleController {
 
@@ -29,6 +32,7 @@ public class ArticleController {
 
 
   @GetMapping("{category}/list")
+  @Operation(description = "category 에 해당하는 게시글 목록")
   public Page<Article> paginate(
       @Parameter(name = "category", description = "notice(공지사항), faq, qna 등등.")
       @PathVariable String category,

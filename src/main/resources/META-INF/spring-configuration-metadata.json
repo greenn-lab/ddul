@@ -27,6 +27,12 @@
       "description": "Set a prefix on database table name",
       "sourceType": "io.github.greennlab.ddul.DDulProperties",
       "defaultValue": "(empty)"
+    },
+    {
+      "name": "ddul.api",
+      "type": "java.util.Properties",
+      "description": "Set a api path",
+      "sourceType": "io.github.greennlab.ddul.DDulProperties"
     }
   ],
   "hints": []

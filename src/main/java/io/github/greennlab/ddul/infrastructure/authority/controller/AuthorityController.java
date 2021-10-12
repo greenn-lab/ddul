@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController("DDulAuthorityController")
-@RequestMapping("_authority")
+@RequestMapping("${ddul.api.authority:_authority}")
 @RequiredArgsConstructor
 public class AuthorityController {
 
