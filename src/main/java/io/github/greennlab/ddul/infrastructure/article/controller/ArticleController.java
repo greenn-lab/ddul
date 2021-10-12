@@ -2,11 +2,13 @@ package io.github.greennlab.ddul.infrastructure.article.controller;
 
 import io.github.greennlab.ddul.infrastructure.article.Article;
 import io.github.greennlab.ddul.infrastructure.article.dto.ArticleInputDTO;
+import io.github.greennlab.ddul.infrastructure.article.dto.ArticleInputDTO.EDIT;
 import io.github.greennlab.ddul.infrastructure.article.service.ArticleService;
 import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,13 +28,14 @@ public class ArticleController {
   private final ArticleService service;
 
 
-  @GetMapping("list/{category}")
+  @GetMapping("{category}/list")
   public Page<Article> paginate(
-      @Parameter(name = "분류", description = "공지사항, 자료실 등등.")
+      @Parameter(name = "category", description = "notice(공지사항), faq, qna 등등.")
       @PathVariable String category,
-      @RequestParam(required = false) String searchType,
-      @RequestParam(required = false) String keyword,
-      Pageable pageable) {
+      @Parameter(name = "검색항목") @RequestParam(required = false) String searchType,
+      @Parameter(name = "검색어") @RequestParam(required = false) String keyword,
+      @Parameter(name = "페이지", description = "page=페이지번호&size=목록당출력행수")
+      @RequestParam(required = false) @PageableDefault Pageable pageable) {
     return service.paginate(pageable, category, searchType, keyword);
   }
 
@@ -52,8 +55,8 @@ public class ArticleController {
 
 
   @PutMapping
-  public Article edit(@Validated @RequestBody Article article) {
-    return service.update(article);
+  public Article edit(@Validated(EDIT.class) @RequestBody ArticleInputDTO article) {
+    return service.update(ArticleInputDTO.mapped.by(article));
   }
 
   @DeleteMapping
